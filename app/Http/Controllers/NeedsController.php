@@ -46,9 +46,9 @@ class NeedsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Need $need)
     {
-        //
+        view('needs.show', compact('need'));
     }
 
     /**

@@ -17,10 +17,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('needs');
 });
 
 Route::get('/needs', 'NeedsController@index')->name('needs');
+Route::get('/needs/{need}', 'NeedsController@show')->name('need');
 
 
 

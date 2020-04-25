@@ -80,7 +80,7 @@ class UsersSeeder extends Seeder
 
             if($user['helper']){
                 array_map(function($category) use ($user){
-                    DB::table('categorizable')->insert([
+                    DB::table('categorizables')->insert([
                         'category_id' => $category,
                         'categorizable_id' => $user['id'],
                         'categorizable_type' => 'App\User'

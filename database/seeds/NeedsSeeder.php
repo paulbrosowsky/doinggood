@@ -19,7 +19,7 @@ class NeedsSeeder extends Seeder
         // factory(Need::class, 100)->create();
 
         factory(Need::class, 100)->state('from_existing_data')->create()->each(function($need){
-            DB::table('categorizable')->insert([
+            DB::table('categorizables')->insert([
                 'category_id' => Category::all()->random()->id,
                 'categorizable_id' => $need->id,
                 'categorizable_type' => 'App\Need'

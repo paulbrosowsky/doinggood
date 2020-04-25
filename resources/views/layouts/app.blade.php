@@ -14,8 +14,8 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -24,9 +24,14 @@
         
         @include('partials._navbar')
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="flex flex-col">
+            <main class="min-h-screen flex-1 w-full mx-auto py-5" style="max-width:1280px">
+                @yield('content')
+            </main>
+
+            @include('partials._footer')
+        </div>
+        
     </div>
 </body>
 </html>

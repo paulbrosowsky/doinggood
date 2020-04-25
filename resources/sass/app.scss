@@ -1,8 +1,119 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+body{
+    font-family: 'Open Sans', sans-serif;    
+}
 
-// Variables
-@import 'variables';
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 2em;
+  cursor: pointer;
+}
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 1.5em; height: 1.5em;
+  background:#e2e8f0;
+  border-radius: 5px;
+}
+
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: '\2713\0020';
+  position: absolute;
+  top: .5em; left: .1em;
+  font-size: 1.5em;
+  line-height: 0;
+  color: #1a202c;
+}
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+}
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+/* hover style just for information */
+label:hover:before {
+  border: 2px solid #f7a81b !important;
+}
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+
+body{
+    @apply .text-gray-900;
+}
+
+h1, h2, h3, h4{
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn{
+    @apply .bg-gray-200 .rounded-full .text-xs .font-bold .uppercase .tracking-tight .leading-none .shadow .py-3 .px-5;  
+    
+    &:hover{
+        @apply .bg-gray-500 .text-white;
+    }
+
+    &:focus{
+        @apply .outline-none;
+    }
+}
+
+.btn-yellow{
+    @apply .bg-dg-yellow .text-white ;
+
+    &:hover{
+        @apply .bg-yellow-600;
+    }
+}
+
+.btn-blue{
+    @apply .bg-dg-blue .text-white ;
+
+    &:hover{
+        @apply .bg-blue-700;
+    }
+}
+
+.input{
+    @apply relative flex items-center .mb-2;
+
+    input{
+        @apply .h-12 .bg-gray-300 .w-full .rounded-lg .border-2;
+
+        &:focus{
+            @apply .outline-none .bg-white .border-dg-yellow;
+        }
+
+        &::placeholder{
+            @apply .text-gray-600;
+        }
+    }
+
+    svg{
+        @apply .h-6 .fill-current .absolute .text-gray-500 .px-3;
+    }
+}
+
+.container{
+    @apply .bg-gray-100 .py-8 .px-5 .w-full;
+}
+
+.container-title{
+    @apply .text-xl .text-gray-500 .leading-none .mb-5;
+}
+
+
+@import "tailwindcss/utilities";

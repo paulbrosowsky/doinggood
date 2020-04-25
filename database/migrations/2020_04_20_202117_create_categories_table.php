@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('icon')->nullable();
+            $table->text('icon')->nullable();
             $table->string('color', 7)->default('#000000'); 
             $table->timestamps();
         });

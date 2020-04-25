@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="w-full mx-auto mt-10 md:mt-20 md:w-1/2 lg:w-1/3">
+    <div class="container md:px-8 md:rounded-xl">
+        <h4 class="container-title">Passwort zurücksetzen</h4>
+    </div>
+</div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
