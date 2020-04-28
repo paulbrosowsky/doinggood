@@ -789,10 +789,10 @@ h1, h2, h3, h4 {
 
 .container {
   background-color: #f7fafc;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   width: 100%;
 }
 

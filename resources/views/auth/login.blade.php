@@ -73,13 +73,7 @@
                     <button type="submit" class="w-full btn btn-yellow mt-2">
                         Anmelden
                     </button>               
-                </div>                                           
-
-                
-               
-               
-                    
-                
+                </div>   
             </form>
         </div>
     </div>

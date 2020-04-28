@@ -12,7 +12,7 @@ window.Event = new Vue();
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-
+Vue.component('categories', require('./components/Categories.vue').default);
 Vue.component('need-card', require('./components/NeedCard.vue').default);
 
 

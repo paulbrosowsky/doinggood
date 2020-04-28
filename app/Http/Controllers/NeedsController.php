@@ -47,8 +47,8 @@ class NeedsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Need $need)
-    {
-        view('needs.show', compact('need'));
+    {        
+        return view('needs.show', compact('need'));
     }
 
     /**

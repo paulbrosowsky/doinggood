@@ -1,7 +1,7 @@
 <template>
     <div class="mb-10">
         <div class="relative bg-gray-500 rounded-xl overflow-hidden pb-2/3">
-            <a href="#">
+           
                 <img class="absolute w-full h-full object-cover" src="https://source.unsplash.com/600x820/?nature" alt="">
              
                 <div v-if="need.status != 'opened'">
@@ -12,25 +12,13 @@
                         v-text="status.name"
                     ></span>             
                 </div>
-            </a> 
+          
         </div> 
-        <div class="mx-3 my-3">  
-            <div class="">
-                <p class="text-xs text-gray-500 leading-none">wir brauchen </p>
-                <div class="flex items-center">   
-                    <div 
-                        v-for="(category, index) in need.categories" 
-                        :key="index" 
-                        :style="{color: category.color}"
-                        class="flex uppercase font-bold text-sm text-white"
-                    >                    
-                        <div class="mr-1" v-html="category.icon"></div>
-                        <p v-text="category.name"></p>
-                    </div>
-                </div>             
-            </div>
+        <div class="mx-3 my-3">
 
-            <h4 class="leading-tight font-bold my-2 text-lg" v-text="need.title"></h4>           
+           <categories :categories="need.categories"></categories>
+
+            <h4 class="leading-tight font-bold my-2 text-lg" v-text="need.title"></h4>          
             
         </div>
 

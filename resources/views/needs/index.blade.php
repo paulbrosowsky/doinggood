@@ -8,10 +8,13 @@
         :gutter="{default: '2rem', 700: '15px'}"
     >       
         @foreach ($needs as $need)
-            <need-card             
-                class="mb-5"                             
-                :need="{{$need}}"
-            ></need-card>
+            <a href="{{ route('need', ['need' => $need->id]) }}">
+                <need-card             
+                    class="mb-5"                             
+                    :need="{{$need}}"
+                ></need-card>
+            </a>
+            
         @endforeach
 
     </masonry> 
