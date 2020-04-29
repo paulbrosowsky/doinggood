@@ -737,6 +737,27 @@ h1, h2, h3, h4 {
   background-color: #2b6cb0;
 }
 
+.icon-btn {
+  color: #4a5568;
+  border-radius: 9999px;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.icon-btn:hover {
+  background-color: #edf2f7;
+}
+
+.icon-btn:focus {
+  background-color: #edf2f7;
+  outline: 0;
+}
+
+.icon-btn svg {
+  height: 1.5rem;
+  fill: currentColor;
+}
+
 .input {
   position: relative;
   display: flex;
@@ -801,6 +822,23 @@ h1, h2, h3, h4 {
   color: #a0aec0;
   line-height: 1;
   margin-bottom: 1.25rem;
+}
+
+.nav-link {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #4a5568;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.nav-link:hover {
+  background-color: #edf2f7;
 }
 
 .space-y-0 > :not(template) ~ :not(template){

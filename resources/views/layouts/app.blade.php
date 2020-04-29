@@ -32,6 +32,7 @@
             @include('partials._footer')
         </div>
         
+        @include('partials._modals')
     </div>
 </body>
 </html>
