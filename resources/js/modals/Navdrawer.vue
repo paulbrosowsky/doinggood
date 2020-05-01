@@ -13,9 +13,7 @@
         <div class="flex h-full w-full flex flex-col items-center justify-center">
 
             <div class="flex flex-col items-center mb-10" v-if="user">
-                <div class="relative h-20 w-20 rounded-full bg-gray-500 overflow-hidden mb-2">
-                    <img class="absolute w-full h-full object-cover" src="https://source.unsplash.com/800x600/?avatar" alt="">                    
-                </div>
+                <avatar :user="user" size="md"></avatar>
 
                 <h4 class="font-semibold" v-text="user.name"></h4>
             </div>
@@ -32,6 +30,7 @@
                     class="nav-link mb-1" 
                     :class="route == 'profile' ? 'bg-gray-200' : ''"
                     v-if="user"
+                    @click="goto('/profiles/'+user.username)"
                 >Profil</a>
                 <a 
                     class="nav-link" 

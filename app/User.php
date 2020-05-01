@@ -26,6 +26,8 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
+    protected $with= ['categories'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -52,4 +54,22 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Overwrite route key of the Model (ID by default)
+     */
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
+
+    /**
+     *  A User Belongs to Many Categories
+     * 
+     * @return morphToMany
+     */
+    public function categories()
+    {
+        return $this->morphToMany(Category::class, 'categorizable');
+    }
 }

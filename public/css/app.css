@@ -738,6 +738,7 @@ h1, h2, h3, h4 {
 }
 
 .icon-btn {
+  display: flex;
   color: #4a5568;
   border-radius: 9999px;
   cursor: pointer;
@@ -755,6 +756,7 @@ h1, h2, h3, h4 {
 
 .icon-btn svg {
   height: 1.5rem;
+  width: 1.5rem;
   fill: currentColor;
 }
 
@@ -839,6 +841,20 @@ h1, h2, h3, h4 {
 
 .nav-link:hover {
   background-color: #edf2f7;
+}
+
+.dg-category {
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #fff;
+}
+
+.dg-category svg {
+  height: 1.25rem;
+  fill: currentColor;
 }
 
 .space-y-0 > :not(template) ~ :not(template){

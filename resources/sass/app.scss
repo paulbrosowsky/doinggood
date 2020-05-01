@@ -88,7 +88,7 @@ h1, h2, h3, h4{
 }
 
 .icon-btn{
-    @apply .text-gray-700 .rounded-full .cursor-pointer .p-2;
+    @apply .flex .text-gray-700 .rounded-full .cursor-pointer .p-2;
 
     &:hover{
         @apply .bg-gray-200;
@@ -99,7 +99,7 @@ h1, h2, h3, h4{
     }
 
     svg{
-        @apply .h-6 .fill-current;
+        @apply .h-6 .w-6 .fill-current;
     }
 }
 
@@ -136,6 +136,14 @@ h1, h2, h3, h4{
 
     &:hover{
         @apply .bg-gray-200;
+    }
+}
+
+.dg-category{
+    @apply .flex .items-center .uppercase .font-bold .text-sm .text-white;
+
+    svg {
+        @apply .h-5 .fill-current;
     }
 }
 

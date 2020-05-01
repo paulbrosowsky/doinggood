@@ -64,10 +64,10 @@
                         <div class="flex items-center">
                             <!-- Authentication Links -->                 
                             <p class="hidden text-sm text-gray-700 font-semibold mr-3 md:block">{{ Auth::user()->name }}</p>
+
+
                             <a class="cursor-pointer" @click="$modal.show('navdrawer')">                        
-                                <div class="relative h-10 w-10 rounded-full bg-gray-500 overflow-hidden shadow">
-                                    <img class="absolute w-full h-full object-cover" src="https://source.unsplash.com/800x600/?avatar" alt="">                    
-                                </div>
+                                <avatar :user="{{auth()->user()}}" size="sm"></avatar>
                             </a>                                      
                         </div>
                     @endguest                    

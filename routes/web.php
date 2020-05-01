@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function(){
+    return redirect(route('profile', auth()->user()->username));
+})->name('home');
 
 Route::get('/', function () {
     return redirect('needs');
@@ -22,6 +24,14 @@ Route::get('/', function () {
 
 Route::get('/needs', 'NeedsController@index')->name('needs');
 Route::get('/needs/{need}', 'NeedsController@show')->name('need');
+
+Route::group([
+    'middleware' => 'auth'
+], function(){
+
+    Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
+
+});
 
 
 

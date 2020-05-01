@@ -14,10 +14,12 @@ window.Event = new Vue();
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+Vue.component('avatar', require('./components/Avatar.vue').default);
 Vue.component('categories', require('./components/Categories.vue').default);
 Vue.component('navbar', require('./components/Navbar.vue').default);
 Vue.component('navdrawer', require('./modals/Navdrawer.vue').default);
 Vue.component('need-card', require('./components/NeedCard.vue').default);
+Vue.component('tags', require('./components/Tags.vue').default);
 
 
 const app = new Vue({

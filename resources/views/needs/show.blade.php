@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')    
-    <section class="w-full mx-auto md:w-1/2">
+    <section class="w-full mx-auto md:w-2/3 lg:w-1/2">
         <div class="px-5 md:px-0">
 
             <div class="relative bg-gray-500 rounded-xl overflow-hidden pb-2/3 mb-5">           
@@ -9,6 +9,7 @@
             </div>
 
             <div class="px-3">
+                <p class="text-xs text-gray-500 leading-none">wir brauchen </p>
                 <categories :categories="{{$need->categories}}"></categories>
 
                 <h2 class="leading-tight font-bold my-2 text-xl md:text-2xl">{{$need->title}}</h2> 
@@ -39,12 +40,13 @@
             <h4 class="text-gray-500 mb-3">Über uns</h4>
 
             <div class="flex items-center mb-5">
-                <div class="relative h-20 w-20 rounded-full bg-gray-500 overflow-hidden mr-5">
-                    <img class="absolute w-full h-full object-cover" src="https://source.unsplash.com/800x600/?avatar" alt="">                    
-                </div>
+                <avatar class="mr-3" :user="{{$need->creator}}" size="md"></avatar>
                 <div>
-                    <h4 class="font-bold mb-2">{{$need->creator->name}}</h4>
-                    <button class="btn btn-blue">zum Profil</button>
+                    <h4 class="font-semibold mb-2">{{$need->creator->name}}</h4>
+                    <a href="{{route('profile', $need->creator->username)}}">
+                          <button class="btn btn-blue">zum Profil</button>
+                    </a>
+                    
                 </div>                
             </div>
 

@@ -15,40 +15,21 @@
           
         </div> 
         <div class="mx-3 my-3">
+            <p class="text-xs text-gray-500 leading-none">wir brauchen </p>
+            <categories :categories="need.categories"></categories>
 
-           <categories :categories="need.categories"></categories>
-
-            <h4 class="leading-tight font-bold my-2 text-lg" v-text="need.title"></h4>          
+            <h4 class="leading-tight font-semibold my-2 text-lg" v-text="need.title"></h4>          
             
         </div>
 
-        <div class="flex flex-wrap mt-3">
-            <div 
-                    v-for="(tag, index) in tags" 
-                    :key="index" 
-                    class="bg-gray-300 text-sm lowercase leading-none rounded-full text-gray-600 px-3 py-1 mr-1"
-                >
-                    <span v-text="tag.name"></span>
-                </div>
-        </div>       
+        <tags></tags>            
         
     </div>
 </template>
 
 <script>
     export default {
-        props:['need'],
-
-        data(){
-            return{
-                tags:[
-                    { name: 'Umwelt'},
-                    { name: 'Fisch'},
-                    { name: 'Plastik'},
-                    { name: 'Meer'}
-                ]
-            }
-        },
+        props:['need'],        
 
         computed:{
             status(){
