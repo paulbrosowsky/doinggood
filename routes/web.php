@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfilesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,8 @@ Route::group([
 ], function(){
 
     Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
+    Route::get('/profiles/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
+    Route::post('/profiles/{user}', 'ProfilesController@update')->name('profile.update');
 
 });
 

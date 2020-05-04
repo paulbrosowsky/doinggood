@@ -24,6 +24,10 @@ class CreateUsersTable extends Migration
             $table->text('description')->nullable();
             $table->text('excerpt')->nullable();            
             $table->boolean('helper')->default(false);
+            $table->string('web_link')->nullable();
+            $table->string('facebook_link')->nullable();
+            $table->string('instagram_link')->nullable();
+            $table->string('tweeter_link')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -843,13 +843,18 @@ h1, h2, h3, h4 {
   background-color: #edf2f7;
 }
 
+.nav-link:focus {
+  background-color: #edf2f7;
+  outline: 0;
+}
+
 .dg-category {
   display: flex;
   align-items: center;
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.875rem;
-  color: #fff;
+  color: #a0aec0;
 }
 
 .dg-category svg {

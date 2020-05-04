@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -55,9 +56,14 @@ class ProfilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $this->authorize('update', $user);
+
+        return view('profiles.edit', [
+            'user' => $user,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -67,9 +73,37 @@ class ProfilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, User $user)
+    {     
+        $this->authorize('update', $user);
+        
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'excerpt' => ['max:255'],
+            'categories.*.slug'=> ['exists:categories'],
+            'web_link' => ['url', 'nullable'],
+            'facebook_link' => ['url', 'nullable'],
+            'instagram_link' => ['url', 'nullable'],
+            'tweeter_link' => ['url', 'nullable'],
+        ]);        
+            
+        $user->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'excerpt' => $request->excerpt,
+            'helper' => $request->helper,
+            'web_link' => $request->web_link,
+            'facebook_link' => $request->facebook_link,
+            'instagram_link' => $request->instagram_link,
+            'tweeter_link' => $request->tweeter_link,
+        ]);
+        
+        // Attach Categories        
+        $user->categories()->detach();
+        foreach ($request->categories as $category) {            
+            $user->categories()->attach($category['id']);
+        }   
+                
     }
 
     /**

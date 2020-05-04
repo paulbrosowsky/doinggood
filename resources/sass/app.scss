@@ -137,10 +137,14 @@ h1, h2, h3, h4{
     &:hover{
         @apply .bg-gray-200;
     }
+
+    &:focus{
+        @apply .bg-gray-200 .outline-none;
+    }
 }
 
 .dg-category{
-    @apply .flex .items-center .uppercase .font-bold .text-sm .text-white;
+    @apply .flex .items-center .uppercase .font-bold .text-sm text-gray-500;
 
     svg {
         @apply .h-5 .fill-current;

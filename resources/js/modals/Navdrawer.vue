@@ -15,7 +15,7 @@
             <div class="flex flex-col items-center mb-10" v-if="user">
                 <avatar :user="user" size="md"></avatar>
 
-                <h4 class="font-semibold" v-text="user.name"></h4>
+                <h4 class="font-semibold mt-5" v-text="user.name"></h4>
             </div>
             
 
@@ -36,6 +36,7 @@
                     class="nav-link" 
                     :class="route == 'settings' ? 'bg-gray-200' : ''"
                     v-if="user"
+                    @click="goto('/profiles/'+user.username+'/edit')"
                 >Einstellungen</a>
 
                 <a 

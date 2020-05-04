@@ -8,10 +8,9 @@
         <div>
             <form method="POST" action="{{ route('register') }}">
                 @csrf
-
-                <div class="form-group row">
+                <div>
                     @error('name')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="text-sm text-red-500 mb-2" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                     @enderror
@@ -19,10 +18,8 @@
                     <div class="input">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 256c52.805 0 96-43.201 96-96s-43.195-96-96-96-96 43.201-96 96 43.195 96 96 96zm0 48c-63.598 0-192 32.402-192 96v48h384v-48c0-63.598-128.402-96-192-96z"/></svg>
                         <input 
-                            class="pl-12 pr-5"
-                            id="name" 
-                            type="text" 
-                            class="form-control @error('name') is-invalid @enderror" 
+                            class="pl-12 pr-5"                            
+                            type="text"                             
                             name="name" 
                             value="{{ old('name') }}" 
                             required 

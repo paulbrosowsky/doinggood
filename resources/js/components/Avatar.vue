@@ -1,5 +1,5 @@
 <template>
-    <div class="relative">
+    <div class="relative" :class="imgSize">
         <div class="relative rounded-full bg-gray-500 overflow-hidden mb-2" :class="imgSize">
             <img class="absolute w-full h-full object-cover" src="https://source.unsplash.com/800x600/?avatar" alt="">
         </div>
