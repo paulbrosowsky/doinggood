@@ -19,7 +19,7 @@ class RegistrationTest extends TestCase
     {  
         $response= $this->registerUser();
 
-        $response->assertRedirect('/needs');
+        $response->assertRedirect('/home');
         
         $this->assertTrue(Auth::check());
         $this->assertCount(1, User::all());       

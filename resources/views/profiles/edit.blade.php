@@ -10,7 +10,11 @@
             <tabs class="w-full">
                 <tab name="Benutzerprofil" hash="">
                     
-                    <profile-form :user="{{ $user }}" :categories="{{ $categories }}"></profile-form>
+                    <profile-form 
+                        :user="{{ $user }}" 
+                        :categories="{{ $categories }}" 
+                        :tags="{{ $tags }}"
+                    ></profile-form>
                     
                 </tab>
                 <tab name="Benutzerkonto" hash="account">

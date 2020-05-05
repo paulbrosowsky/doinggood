@@ -1,28 +1,16 @@
 <template>
-    <div class="flex flex-wrap mt-3">
+    <div class="flex flex-wrap justify-center mt-3">
         <div 
             v-for="(tag, index) in tags" 
             :key="index" 
-            class="bg-gray-300 text-sm lowercase leading-none rounded-full text-gray-600 px-3 py-1 mr-1"
+            class="bg-gray-500 text-white font-semibold text-sm leading-tight rounded-full px-3 py-1 mr-2 mb-2"
         >
-            <span v-text="tag.name"></span>
+            <span v-text="tag"></span>
         </div>
     </div>   
 </template>
 <script>
 export default {
-    
-
-    data(){
-        return{
-            tags:[
-                { name: 'Umwelt'},
-                { name: 'Fisch'},
-                { name: 'Plastik'},
-                { name: 'Meer'} 
-            ]               
-        }
-    },
-    
+    props:['tags']     
 }
 </script>

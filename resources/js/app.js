@@ -23,6 +23,7 @@ Vue.component('profile-form', require('./views/ProfileForm.vue').default);
 Vue.component('tab', require('./components/Tab.vue').default);
 Vue.component('tabs', require('./components/Tabs.vue').default);
 Vue.component('tags', require('./components/Tags.vue').default);
+Vue.component('tags-input', require('./components/TagsInput.vue').default);
 Vue.component('textfield', require('./components/Textfield.vue').default);
 
 const app = new Vue({

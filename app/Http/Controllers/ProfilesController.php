@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\User;
+use Conner\Tagging\Model\Tag;
 use Illuminate\Http\Request;
 
 class ProfilesController extends Controller
@@ -62,7 +63,8 @@ class ProfilesController extends Controller
 
         return view('profiles.edit', [
             'user' => $user,
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'tags' => Tag::all()->pluck('name')
         ]);
     }
 
@@ -97,13 +99,9 @@ class ProfilesController extends Controller
             'instagram_link' => $request->instagram_link,
             'tweeter_link' => $request->tweeter_link,
         ]);
-        
-        // Attach Categories        
-        $user->categories()->detach();
-        foreach ($request->categories as $category) {            
-            $user->categories()->attach($category['id']);
-        }   
-                
+            
+        $user->updateCategories($request->categories);   
+        $user->updateTags($request->tags);
     }
 
     /**

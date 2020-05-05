@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Conner\Tagging\Taggable;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, Taggable;
 
     protected static function boot()
     {
@@ -26,7 +27,15 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
-    protected $with= ['categories'];
+    /**
+     *  Eager Load with the User Model
+     */
+    protected $with = ['categories'];
+
+    /**
+     *  Append to the User Model 
+     */
+    protected $appends = ['tagNames'];
 
     /**
      * The attributes that are mass assignable.
@@ -82,5 +91,30 @@ class User extends Authenticatable implements MustVerifyEmail
     public function categories()
     {
         return $this->morphToMany(Category::class, 'categorizable');
+    }
+
+    /**
+     *  Update Categories the User attached to
+     *  
+     *  @param array $categories
+     */
+    public function updateCategories($categories)
+    {
+        $this->categories()->detach();
+        if ($categories) {
+            foreach ($categories as $category) {            
+                $this->categories()->attach($category['id']);
+            }
+        }
+    }
+
+    /**
+     *  Update Tags attached to the User
+     *  
+     *  @param array $categories
+     */
+    public function updateTags($tags)
+    {       
+        $this->retag($tags);
     }
 }

@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "vue-js-modal": "^2.0.0-rc.3",
-    "vue-masonry-css": "^1.0.3"
+    "vue-masonry-css": "^1.0.3",
+    "vue-multiselect": "^2.1.6"
   }
 }

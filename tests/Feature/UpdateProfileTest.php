@@ -113,6 +113,16 @@ class UpdateProfileTest extends TestCase
         ]])->assertSessionHasErrors('categories.*');
     }
 
+    /** @test */
+    function tags_can_be_attached()
+    {
+        $this->withoutExceptionHandling();
+        $this->updateProfile(['tags' => ['foo', 'bar']]);
+
+        $this->assertCount(2, $this->user->tagged);
+        $this->assertEquals($this->user->tagNames, ['Foo', 'Bar']);
+    }   
+
     public function updateProfile($overrides = [])
     {
         $this->signIn($this->user);

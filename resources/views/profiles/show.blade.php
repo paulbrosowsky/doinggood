@@ -52,18 +52,13 @@
                     @endif  
                 </div>
 
-                <p class="text-center">{{ $user->excerpt }}</p>                
+                <p class="text-center">{{ $user->excerpt }}</p>   
                
                 <div class="mt-5">
-                    <p class="text-sm text-gray-500 leading-none text-center -mb-1">unsere Themen</p>
-                    <tags></tags>  
-                </div>        
-
-            </div>
-
-            <div>
-
-            </div>
+                    <p class="text-sm text-gray-500 leading-none text-center ">unsere Themen</p>
+                    <tags :tags="{{ json_encode($user->tagNames) }}"></tags>  
+                </div>                
+            </div>           
             
             <div class="w-full mt-10">
                 <div class=" container md:rounded-xl">                      
