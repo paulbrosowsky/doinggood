@@ -60,7 +60,7 @@ h1, h2, h3, h4{
 }
 
 .btn{
-    @apply .bg-gray-200 .rounded-full .text-xs .font-bold .uppercase .tracking-tight .leading-none .shadow .py-3 .px-5;  
+    @apply .flex .items-center .justify-center .bg-gray-200 .rounded-full .text-xs .text-gray-700 .font-bold .uppercase .tracking-tight .leading-none .shadow .py-3 .px-5;  
     
     &:hover{
         @apply .bg-gray-500 .text-white;
@@ -68,6 +68,10 @@ h1, h2, h3, h4{
 
     &:focus{
         @apply .outline-none;
+    }
+
+    svg{
+        @apply .h-4 .fill-current .mr-2
     }
 }
 

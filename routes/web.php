@@ -33,7 +33,8 @@ Route::group([
     Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
     Route::get('/profiles/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
     Route::post('/profiles/{user}', 'ProfilesController@update')->name('profile.update');
-
+    
+    Route::post('/profiles/{user}/avatar', 'UserAvatarsController@update')->name('profile.avatar');
 });
 
 

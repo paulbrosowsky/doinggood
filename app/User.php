@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -54,6 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'facebook_link',
         'instagram_link',
         'tweeter_link',
+        'avatar'
     ];
 
     /**
@@ -91,6 +93,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function categories()
     {
         return $this->morphToMany(Category::class, 'categorizable');
+    }
+
+      /**
+     * Get the Proper Avatar Path
+     * 
+     * @return string
+     */
+    public function getAvatarAttribute($avatar)
+    {          
+        if(Storage::disk('public')->exists($avatar)){        
+            return Storage::url($avatar);
+        }
+       return Storage::url('assets/default_avatar.png'); 
+
     }
 
     /**

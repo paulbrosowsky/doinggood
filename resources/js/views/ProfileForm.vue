@@ -1,6 +1,6 @@
 <template>
 
-    <div class="mt-10">
+    <div>
 
         <div class="container mb-5 md:rounded-xl"> 
             <h4 class="text-gray-500">Was habt ihr vor?</h4>

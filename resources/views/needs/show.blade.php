@@ -40,8 +40,13 @@
             <h4 class="text-gray-500 mb-3">Über uns</h4>
 
             <div class="flex items-center mb-5">
-                <avatar class="mr-3" :user="{{$need->creator}}" size="md"></avatar>
-                <div>
+                <avatar 
+                    :image="{{ json_encode($need->creator->avatar) }}" 
+                    :badge="{{json_encode( $need->creator->helper)}}" 
+                    size="md"
+                ></avatar>
+                
+                <div class="ml-5">
                     <h4 class="font-semibold mb-2">{{$need->creator->name}}</h4>
                     <a href="{{route('profile', $need->creator->username)}}">
                           <button class="btn btn-blue">zum Profil</button>

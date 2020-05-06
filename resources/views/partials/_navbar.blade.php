@@ -67,7 +67,7 @@
 
 
                             <a class="cursor-pointer" @click="$modal.show('navdrawer')">                        
-                                <avatar :user="{{auth()->user()}}" size="sm"></avatar>
+                                <avatar :image="{{ json_encode(auth()->user()->avatar) }}" :badge="{{ auth()->user()->helper}}" size="sm"></avatar>
                             </a>                                      
                         </div>
                     @endguest                    

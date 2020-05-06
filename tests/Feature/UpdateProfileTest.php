@@ -32,7 +32,7 @@ class UpdateProfileTest extends TestCase
 
     /** @test */
     function unauthorized_users_may_not_update_profiles()
-    {
+    {        
         $this->signIn();
 
         $this->get(route('profile.edit', $this->user->username))
@@ -47,7 +47,7 @@ class UpdateProfileTest extends TestCase
     {
         $this->signIn($this->user);
 
-        $this->get(route('profile.edit', $this->user->username))
+        $this->get(route('profile.edit', $this->user->username))            
             ->assertSee($this->user->name)
             ->assertSee($this->category->name);
     }

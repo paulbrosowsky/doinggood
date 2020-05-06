@@ -6,8 +6,12 @@
 
         <section class="mt-10">
 
-            <div class="flex flex-col items-center px-5">
-                <avatar :user="{{$user}}" size="lg"></avatar>
+            <div class="flex flex-col items-center px-5">              
+                <avatar 
+                    :image="{{ json_encode($user->avatar) }}" 
+                    :badge="{{json_encode( $user->helper)}}" 
+                    size="lg"
+                ></avatar>
             
                 <div class="mt-5 mb-2"> 
                     @if ($user->helper)
