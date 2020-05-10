@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Taggable;
+    use Notifiable, Taggable, Categorizable;
 
     protected static function boot()
     {
@@ -22,8 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
             
             if (static::whereUsername($username)->exists()) {
                 $username = "{$username}_" . $user->id;
-            }   
-            
+            }               
             $user->update(['username' => $username]);                   
         });
     }
@@ -55,7 +54,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'facebook_link',
         'instagram_link',
         'tweeter_link',
-        'avatar'
+        'avatar',
+        'email_verified_at'
     ];
 
     /**
@@ -83,19 +83,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getRouteKeyName()
     {
         return 'username';
-    }
+    }   
 
     /**
-     *  A User Belongs to Many Categories
-     * 
-     * @return morphToMany
-     */
-    public function categories()
-    {
-        return $this->morphToMany(Category::class, 'categorizable');
-    }
-
-      /**
      * Get the Proper Avatar Path
      * 
      * @return string
@@ -106,23 +96,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return Storage::url($avatar);
         }
        return Storage::url('assets/default_avatar.png'); 
-
-    }
-
-    /**
-     *  Update Categories the User attached to
-     *  
-     *  @param array $categories
-     */
-    public function updateCategories($categories)
-    {
-        $this->categories()->detach();
-        if ($categories) {
-            foreach ($categories as $category) {            
-                $this->categories()->attach($category['id']);
-            }
-        }
-    }
+    }    
 
     /**
      *  Update Tags attached to the User

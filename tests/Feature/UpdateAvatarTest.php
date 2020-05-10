@@ -37,7 +37,7 @@ class UpdateAvatarTest extends TestCase
             'image' => $file = UploadedFile::fake()->image('avatar.jpg')
         ]);
 
-        $this->assertEquals(asset('assets/avatars/' .$file->hashName()), auth()->user()->avatar);       
+        $this->assertEquals('/storage/assets/avatars/' .$file->hashName(), auth()->user()->avatar);       
             
         Storage::disk('public')->assertExists('assets/avatars/' .$file->hashName());
         

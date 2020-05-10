@@ -58,10 +58,12 @@
 
                 <p class="text-center">{{ $user->excerpt }}</p>   
                
-                <div class="mt-5">
-                    <p class="text-sm text-gray-500 leading-none text-center ">unsere Themen</p>
-                    <tags :tags="{{ json_encode($user->tagNames) }}"></tags>  
-                </div>                
+                @if($user->tagNames)
+                    <div class="mt-5">
+                        <p class="text-sm text-gray-500 leading-none text-center ">unsere Themen</p>
+                        <tags :tags="{{ json_encode($user->tagNames) }}"></tags>  
+                    </div>              
+                @endif  
             </div>           
             
             <div class="w-full mt-10">

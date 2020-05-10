@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfilesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,9 +31,12 @@ Route::group([
 
     Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
     Route::get('/profiles/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
-    Route::post('/profiles/{user}', 'ProfilesController@update')->name('profile.update');
-    
+    Route::post('/profiles/{user}', 'ProfilesController@update')->name('profile.update');    
     Route::post('/profiles/{user}/avatar', 'UserAvatarsController@update')->name('profile.avatar');
+
+    Route::post('/account/update/email', 'UserAccountsController@updateEmail' )->name('account.email');
+    Route::post('/account/update/password', 'UserAccountsController@updatePassword' )->name('account.password');
+    Route::delete('/account/destroy', 'UserAccountsController@destroy')->name('account.destroy');
 });
 
 

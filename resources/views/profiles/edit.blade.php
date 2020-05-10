@@ -28,7 +28,7 @@
                         
                     </tab>
                     <tab name="Benutzerkonto" hash="account">
-                        Account
+                        <account-form :user="user"></account-form>
                     </tab>
                 </tabs>
             </div>

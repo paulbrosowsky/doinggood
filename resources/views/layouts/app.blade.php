@@ -31,6 +31,8 @@
 
             @include('partials._footer')
         </div>
+
+        <flash message="{{ session('flash') }}"></flash>
         
         @include('partials._modals')
     </div>

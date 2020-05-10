@@ -1,8 +1,9 @@
 <script>
+    import AccountForm from './AccountForm';
     import ProfileForm from "./ProfileForm";
 
     export default {
-        components:{ ProfileForm },
+        components:{ AccountForm, ProfileForm },
 
         props:['user', 'categories', 'tags'],
 

@@ -6,17 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Need extends Model
 {
-    protected $with= ['categories', 'creator'];
-
-    /**
-     *  A Need Belongs to Many Categories
-     * 
-     * @return morphToMany
-     */
-    public function categories()
-    {
-        return $this->morphToMany(Category::class, 'categorizable');
-    }
+    use Categorizable;
+    
+    // Eager load with the Model
+    protected $with= ['categories', 'creator'];   
 
     /**
      *  A Need Belongs to Many Categories

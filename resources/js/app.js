@@ -14,9 +14,15 @@ window.Event = new Vue();
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+window.flash = function(message, level = 'success') {
+    window.Event.$emit('flash', { message, level });
+};
+
 Vue.component('avatar', require('./components/Avatar.vue').default);
 Vue.component('categories', require('./components/Categories.vue').default);
+Vue.component('confirm-dialog', require('./modals/ConfirmDialog.vue').default);
 Vue.component('edit-profile', require('./views/EditProfile.vue').default);
+Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('image-upload', require('./components/ImageUpload.vue').default);
 Vue.component('loading', require('./components/Loading.vue').default);
 Vue.component('navbar', require('./components/Navbar.vue').default);
