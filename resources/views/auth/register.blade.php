@@ -50,8 +50,7 @@
                     </div>
                 </div>
 
-                <div >
-
+                <div>
                     @error('password')
                         <p class="text-sm text-red-500 mb-2" role="alert">
                             {{ $message }}
@@ -70,7 +69,7 @@
                     </div>
                 </div>      
                 
-                <div >
+                <div>
                     <div class="input">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M249.2 224c-14.2-40.2-55.1-72-100.2-72-57.2 0-101 46.8-101 104s45.8 104 103 104c45.1 0 84.1-31.8 98.2-72H352v64h69.1v-64H464v-64H249.2zm-97.6 66.5c-19 0-34.5-15.5-34.5-34.5s15.5-34.5 34.5-34.5 34.5 15.5 34.5 34.5-15.5 34.5-34.5 34.5z"/></svg>
                         
@@ -89,8 +88,7 @@
                     <p class="text-xs leading-tight mb-2 mt-5 text-gray-700">Mit deiner Registrierung erstellst du ein neues Benutzerkonto, und gibst dein Einvertändnis mit unserem Datenschutz und unseren Nutzungsbedingungen.</p>
                     <button type="submit" class="btn btn-blue w-full">
                         Registrieren 
-                    </button>
-                    
+                    </button>                    
                 </div>
             </form>
         </div>

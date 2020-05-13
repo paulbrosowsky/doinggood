@@ -6348,7 +6348,7 @@ var render = function() {
             _c(
               "label",
               { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
-              [_vm._v("Link zum Instagram-Profil")]
+              [_vm._v("Link zum Tweeter-Profil")]
             ),
             _vm._v(" "),
             _vm.errors.twitter_link

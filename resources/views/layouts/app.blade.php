@@ -24,8 +24,15 @@
         
         @include('partials._navbar')
 
-        <div class="flex flex-col">
-            <main class="min-h-screen flex-1 w-full mx-auto py-5" style="max-width:1280px">
+        <div class="flex flex-col"> 
+            <main class="min-h-screen flex-1 w-full mx-auto py-10" style="max-width:1280px">                
+                @if(auth()->check() && !auth()->user()->hasVerifiedEmail())
+                    <div class="mx-auto mb-10 px-5 lg:w-1/2">
+                        @include('partials._unlock-notification') 
+                        @include('partials._verify-notification') 
+                    </div>
+                @endif
+                
                 @yield('content')
             </main>
 

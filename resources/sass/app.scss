@@ -91,6 +91,14 @@ h1, h2, h3, h4{
     }
 }
 
+.btn-red{
+    @apply .bg-dg-red .text-white ;
+
+    &:hover{
+        @apply .bg-red-700;
+    }
+}
+
 .icon-btn{
     @apply .flex .text-gray-700 .rounded-full .cursor-pointer .p-2;
 

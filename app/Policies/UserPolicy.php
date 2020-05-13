@@ -20,10 +20,20 @@ class UserPolicy
     }
 
     /**
-     *  Determine whether the User is Allowed to Update the Profile
+     *  Determine wether the User is Allowed to Update the Profile
      */
     public function update(User $user, User $profile)
     {
         return $user->id === $profile->id;
     }
+
+    /**
+     *  Determine Wether the User may Unlock the Profile
+     */
+    public function unlock(User $user)
+    {
+        return $this->user->isAdmin;
+    }
+
+   
 }

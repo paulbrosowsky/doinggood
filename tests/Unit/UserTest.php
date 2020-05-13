@@ -36,5 +36,26 @@ class UserTest extends TestCase
         );
     }
 
+    /** @test */
+    function it_knows_wether_is_administrator()
+    {
+        $this->user->update([
+            'email' => config('doinggood.administrators')[0]
+        ]);
+
+        $this->assertTrue($this->user->fresh()->isAdmin);
+    }
+
+
+    /** @test */
+    function it_knows_wether_is_unlocked()
+    {
+        $this->user->update([
+            'unlocked_at' => now()
+        ]);      
+       
+
+        $this->assertTrue($this->user->isUnlocked);
+    }
 
 }

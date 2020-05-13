@@ -35,7 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      *  Append to the User Model 
      */
-    protected $appends = ['tagNames'];
+    protected $appends = ['tagNames', 'isAdmin', 'isUnlocked'];
 
     /**
      * The attributes that are mass assignable.
@@ -55,6 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'instagram_link',
         'tweeter_link',
         'avatar',
+        'unlocked_at',
         'email_verified_at'
     ];
 
@@ -96,7 +97,31 @@ class User extends Authenticatable implements MustVerifyEmail
             return Storage::url($avatar);
         }
        return Storage::url('assets/default_avatar.png'); 
-    }    
+    }
+    
+    /**
+     *  Determine if The User is an Administrator
+     *  
+     * @return boolean
+     */
+    public function getIsAdminAttribute()
+    {
+        return in_array(
+            strtolower($this->email),
+            array_map('strtolower', config('doinggood.administrators'))
+        );
+    }
+
+    /**
+     *  Determine if The User Profile is Unlocked
+     * 
+     * @return booleans
+     */
+    public function getIsUnlockedAttribute()
+    {
+        return isset($this->unlocked_at);
+    }
+
 
     /**
      *  Update Tags attached to the User

@@ -37,7 +37,21 @@ Route::group([
     Route::post('/account/update/email', 'UserAccountsController@updateEmail' )->name('account.email');
     Route::post('/account/update/password', 'UserAccountsController@updatePassword' )->name('account.password');
     Route::delete('/account/destroy', 'UserAccountsController@destroy')->name('account.destroy');
+
+    Route::patch('profiles/{user}/unlock', 'UnlockProfilesController@update')->name('profile.unlock');
 });
+
+
+
+// Route::get('mail', function () {     
+//     $admin = App\User::where('email', config('doinggood.administrators')[0])
+//         ->first();   
+        
+//     $user = App\User::where('id', 2)->first();
+        
+//     return (new App\Notifications\UnlockProfile($user))
+//                 ->toMail($admin);
+// });
 
 
 

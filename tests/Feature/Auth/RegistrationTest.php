@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Notifications\UnlockProfile;
 use App\User;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Tests\TestCase;
@@ -113,7 +114,20 @@ class RegistrationTest extends TestCase
         $this->registerUser();
 
         Notification::assertSentTo(User::first(), VerifyEmail::class);
-    }  
+    }
+    
+    /** @test */
+    function a_unlock_profile_email_is_send_upon_registration()
+    {   
+        $admin = factory('App\User')->create([
+            'email' => config('doinggood.administrators')[0]
+        ]);
+        
+        Notification::fake();
+        $this->registerUser();        
+        
+        Notification::assertSentTo($admin, UnlockProfile::class);
+    }
 
     public function registerUser($overrides = [])
     {
