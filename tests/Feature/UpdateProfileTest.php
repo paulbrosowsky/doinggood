@@ -115,8 +115,7 @@ class UpdateProfileTest extends TestCase
 
     /** @test */
     function tags_can_be_attached()
-    {
-        $this->withoutExceptionHandling();
+    {        
         $this->updateProfile(['tags' => ['foo', 'bar']]);
 
         $this->assertCount(2, $this->user->tagged);

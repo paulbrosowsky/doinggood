@@ -27,13 +27,13 @@
         <div class="container py-3 mb-5 mt-5  md:rounded-xl">
             <h4 class="text-gray-500 mb-3">Was haben wir vor ?</h4>
 
-            <p>{{$need->project_description}}</p>
+            <p>{!!$need->project_description!!}</p>
         </div>
 
         <div class="container py-3 mb-5 md:rounded-xl">
             <h4 class="text-gray-500 mb-3">Was brauchen wir ?</h4>
 
-            <p>{{$need->need_description}}</p>
+            <p>{!!$need->need_description!!}</p>
         </div>
 
         <div class="container py-3 md:rounded-xl">

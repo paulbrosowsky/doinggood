@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Need;
+use Conner\Tagging\Model\Tag;
+use DateTime;
 use Illuminate\Http\Request;
 
 class NeedsController extends Controller
@@ -25,8 +28,11 @@ class NeedsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {        
+        return view('needs.create', [                    
+            'categories' => Category::all(),
+            'tags' => Tag::all()->pluck('name')            
+        ]);
     }
 
     /**
@@ -36,8 +42,26 @@ class NeedsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {        
+        $request->validate([
+            'title' => ['required', 'max:140'],
+            'deadline' => ['required', 'date'],
+            'categories.*.slug'=> ['exists:categories'],
+        ]);
+
+
+        $need = Need::create([
+            'user_id' => auth()->id(),
+            'title' => $request->title,
+            'project_description' => $request->project_description,
+            'need_description' => $request->need_description,
+            'deadline' => new DateTime($request->deadline)
+        ]);
+
+        $need->updateCategories($request->categories);
+        $need->retag($request->tags);
+
+        return $need;
     }
 
     /**

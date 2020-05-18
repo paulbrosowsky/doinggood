@@ -35,7 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      *  Append to the User Model 
      */
-    protected $appends = ['tagNames', 'isAdmin', 'isUnlocked'];
+    protected $appends = ['tagNames', 'isAdmin', 'isUnlocked', 'fullyVerified'];
 
     /**
      * The attributes that are mass assignable.
@@ -115,7 +115,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      *  Determine if The User Profile is Unlocked
      * 
-     * @return booleans
+     * @return boolean
      */
     public function getIsUnlockedAttribute()
     {
@@ -124,12 +124,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     /**
-     *  Update Tags attached to the User
-     *  
-     *  @param array $categories
+     * Determine if User is Fully Verified
+     * 
+     * @return boolean
      */
-    public function updateTags($tags)
-    {       
-        $this->retag($tags);
-    }
+    public function getFullyVerifiedAttribute()
+    {
+        return $this->isUnlocked && $this->hasVerifiedEmail();
+    }   
 }

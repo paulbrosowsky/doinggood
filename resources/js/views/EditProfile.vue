@@ -1,6 +1,6 @@
 <script>
     import AccountForm from './AccountForm';
-    import ProfileForm from "./ProfileForm";
+    import ProfileForm from './ProfileForm';
 
     export default {
         components:{ AccountForm, ProfileForm },

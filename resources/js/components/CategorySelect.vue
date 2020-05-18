@@ -19,7 +19,17 @@
 </template>
 <script>
 export default {
-    props:['categories', 'selected'],
+    props:{
+        categories: {
+            type: Array
+        }, 
+        selected:{
+            default(){
+                return [];
+            }
+             
+        }
+    },
 
     data(){
         return{
@@ -36,7 +46,10 @@ export default {
         },
 
         isSelected(category){
-            return this.selectedCategories.some(item => item.id === category.id );            
+            
+            return this.selectedCategories 
+                    ? this.selectedCategories.some(item => item.id === category.id )
+                    : '';            
         },
 
         toggleCategory(category){        

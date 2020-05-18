@@ -79,7 +79,7 @@ class ProfilesController extends Controller
             'tweeter_link' => $request->tweeter_link,
         ]);
             
-        $user->updateCategories($request->categories);   
-        $user->updateTags($request->tags);
+        $user->updateCategories($request->categories); 
+        $user->retag($request->tags);          
     }    
 }

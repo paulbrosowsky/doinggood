@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,9 +23,6 @@ Route::get('/', function () {
     return redirect('needs');
 });
 
-Route::get('/needs', 'NeedsController@index')->name('needs');
-Route::get('/needs/{need}', 'NeedsController@show')->name('need');
-
 Route::group([
     'middleware' => 'auth'
 ], function(){
@@ -39,7 +37,19 @@ Route::group([
     Route::delete('/account/destroy', 'UserAccountsController@destroy')->name('account.destroy');
 
     Route::patch('profiles/{user}/unlock', 'UnlockProfilesController@update')->name('profile.unlock');
+    
+    Route::group([
+        'middleware' => 'fully.verified'
+    ], function(){
+
+        Route::get('needs/create', 'NeedsController@create')->name('need.create');
+        Route::post('needs/store', 'NeedsController@store')->name('need.store');
+        
+    });
 });
+
+Route::get('/needs', 'NeedsController@index')->name('needs');
+Route::get('/needs/{need}', 'NeedsController@show')->name('need');
 
 
 

@@ -90,7 +90,7 @@
                         </div>                        
                     </div>
                 
-                    <p>{{ $user->description}}</p>
+                    <p>{!! $user->description !!}</p>
                     
                     @if ($user->web_link || $user->facebook_link || $user->instagram_link || $user->tweeter_link)
                         <div>

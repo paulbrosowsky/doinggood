@@ -142,13 +142,9 @@
     </div>
     
 </template>
-<script>
-    import CategorySelect from '../components/CategorySelect';
-    import TagsInput from '../components/TagsInput';
+<script>    
 
-    export default {
-
-        components:{CategorySelect, TagsInput},
+    export default {        
 
         props:[ 'user', 'categories', 'tags'],
 

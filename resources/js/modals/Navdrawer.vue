@@ -49,6 +49,13 @@
                     class="nav-link"
                     :class="route == 'about' ? 'bg-gray-200' : ''"
                 >Kontakt</a>
+
+                <a 
+                    class="nav-link" 
+                    :class="route == 'settings' ? 'bg-gray-200' : ''"
+                    v-if="user"
+                    @click="goto('/needs/create')"
+                >Neuer Bedarf</a>
             </div>
 
             <div class="flex flex-col items-center" v-if="!user">
