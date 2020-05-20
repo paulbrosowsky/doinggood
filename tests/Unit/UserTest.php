@@ -52,8 +52,7 @@ class UserTest extends TestCase
     {
         $this->user->update([
             'unlocked_at' => now()
-        ]);      
-       
+        ]);    
 
         $this->assertTrue($this->user->isUnlocked);
     }

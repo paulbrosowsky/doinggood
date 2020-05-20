@@ -42,7 +42,11 @@
                         }),                               
                     ],
                     onUpdate: ({getHTML}) => { 
-                        this.$emit('update', getHTML());                         
+                        var removeRegexP = /<p><\/p>/g;
+                        let html = getHTML();
+                        html = html.replace(removeRegexP, "<br>");
+
+                        this.$emit('update', html);                         
                     },                    
                 }),                
             }
@@ -76,6 +80,6 @@
             outline: none; 
             border: 2px solid #f7a81b;    
         }
-    }
+    }  
 
 </style>

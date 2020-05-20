@@ -28,4 +28,24 @@ class Need extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     *  Sanitize Project Description
+     * 
+     * @return text
+     */
+    public function getProjectDescriptionAttribute($project_description)
+    {   
+
+        return \Purify::clean($project_description);
+    }
+    /**
+     *  Sanitize Need Description
+     * 
+     * @return text
+     */
+    public function getNeedDescriptionAttribute($need_description)
+    {
+        return \Purify::clean($need_description);
+    }
 }

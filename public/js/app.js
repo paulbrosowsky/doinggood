@@ -2634,8 +2634,11 @@ __webpack_require__.r(__webpack_exports__);
         })],
         onUpdate: function onUpdate(_ref) {
           var getHTML = _ref.getHTML;
+          var removeRegexP = /<p><\/p>/g;
+          var html = getHTML();
+          html = html.replace(removeRegexP, "<br>");
 
-          _this.$emit('update', getHTML());
+          _this.$emit('update', html);
         }
       })
     };

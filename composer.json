@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "rtconner/laravel-tagging": "~4.0",
+        "stevebauman/purify": "^3.0",
         "vinkla/hashids": "^8.1"
     },
     "require-dev": {
