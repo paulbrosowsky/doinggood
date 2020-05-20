@@ -5,7 +5,7 @@
         <div class="px-5 md:px-0">
 
             <div class="relative bg-gray-500 rounded-xl overflow-hidden pb-2/3 mb-5">           
-                <img class="absolute w-full h-full object-cover" src="https://source.unsplash.com/800x600/?nature" alt="">
+                <img class="absolute w-full h-full object-cover" src="{{ $need->title_image }}" alt="">
             </div>
 
             <div class="px-3">

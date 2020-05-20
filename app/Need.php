@@ -4,6 +4,7 @@ namespace App;
 
 use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Need extends Model
 {
@@ -27,6 +28,19 @@ class Need extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Get the Proper Title Image Path
+     * 
+     * @return string
+     */
+    public function getTitleImageAttribute($title_image)
+    {    
+        if(Storage::disk('public')->exists($title_image)){        
+            return Storage::url($title_image);
+        }
+       return Storage::url('assets/default_need.png'); 
     }
 
     /**

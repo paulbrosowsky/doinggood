@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Storage;
 
 class UserAvatarsController extends Controller
 {
+    /**
+     *  Update User Avatar
+     * 
+     * @param User $user
+     * @param Request $request
+     */
     public function update(User $user, Request $request)
     {  
         $request->validate([            

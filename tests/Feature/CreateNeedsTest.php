@@ -8,23 +8,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateNeedsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase;    
     
-    protected $verifiedUser;
-
-    public function setUp():void
-    {
-        parent::setUp();
-
-        $this->verifiedUser = factory('App\User')->create([
-            'email_verified_at' => now(),
-            'unlocked_at' => now()
-        ]);        
-    }
     /** @test */
     function not_fully_verified_may_not_create_needs()
     {
-        $this->signIn();
+        $notVerified = factory('App\User')->create([
+            'email_verified_at' => NULL,
+            'unlocked_at' => NULL
+        ]);        
+        $this->signIn($notVerified);
         
         $this->get(route('need.create'))
             ->assertRedirect(route('home'));
@@ -37,7 +30,7 @@ class CreateNeedsTest extends TestCase
     /** @test */
     function verified_users_may_create_needs()
     {
-        $this->signIn($this->verifiedUser);
+        $this->signIn();
 
         $this->get(route('need.create'))->assertViewIs('needs.create');
 
@@ -93,6 +86,13 @@ class CreateNeedsTest extends TestCase
     }
 
     /** @test */
+    function categories_are_required()
+    {
+        $this->createNeed(['categories' => []])
+            ->assertSessionHasErrors('categories');
+    }
+
+    /** @test */
     function category_must_exists_in_db()
     {        
         $this->createNeed(['categories' => [
@@ -103,6 +103,7 @@ class CreateNeedsTest extends TestCase
      /** @test */
     function tags_can_be_attached()
     {        
+        $this->withoutExceptionHandling();
         $this->createNeed(['tags' => ['foo', 'bar']]);
 
         $this->assertCount(2, Need::first()->tagged);
@@ -111,13 +112,16 @@ class CreateNeedsTest extends TestCase
 
     public function createNeed($overrides = [])
     {
-        $this->signIn($this->verifiedUser);
+        $this->signIn();
+
+        $categories = factory('App\Category', 2)->create();
         
         return $this->post(route('need.store'), array_merge([
             'title' => 'New Need',
             'project_description' => 'New Project Description',
             'need_description' => 'New Nees Description',
-            'deadline' => now()->addDay()
+            'deadline' => now()->addDay(),
+            'categories' => $categories->toArray()
         ], $overrides));
     }
     

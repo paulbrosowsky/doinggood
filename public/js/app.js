@@ -2208,6 +2208,12 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     url: {
       type: String
+    },
+    autoUpload: {
+      "default": false
+    },
+    triggerUpload: {
+      "default": false
     }
   },
   data: function data() {
@@ -2220,7 +2226,7 @@ __webpack_require__.r(__webpack_exports__);
         paramName: 'image',
         uploadMultiple: false,
         // previewTemplate: this.template(),                   
-        resizeWidth: 380,
+        resizeWidth: 1280,
         maxFilesize: 10,
         acceptedFiles: '.jpg,.jpeg,.png,.gif',
         autoProcessQueue: false,
@@ -2233,15 +2239,25 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  watch: {
+    triggerUpload: function triggerUpload() {
+      var _this = this;
+
+      this.$refs.imageUpload.setOption('url', this.url);
+      setTimeout(function () {
+        _this.autoUpload ? _this.uploadImage() : '';
+      }, 500);
+    }
+  },
   methods: {
     setPreview: function setPreview(file) {
-      var _this = this;
+      var _this2 = this;
 
       this.image = file[0];
       var reader = new FileReader();
 
       reader.onload = function () {
-        _this.$emit('preview', reader.result);
+        _this2.$emit('preview', reader.result);
       };
 
       reader.readAsDataURL(file[0]);
@@ -2261,9 +2277,12 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.imageUpload.processQueue();
     },
     completed: function completed() {
-      this.cancel();
+      this.$refs.imageUpload.removeAllFiles();
+      this.error = null;
+      this.image = null;
       this.loading = false;
       window.location.reload();
+      this.$emit('complete');
     }
   }
 });
@@ -3160,8 +3179,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['categories', 'needs', 'tags'],
+  props: ['need', 'categories', 'needs', 'tags'],
   data: function data() {
     return {
       form: {
@@ -3172,8 +3195,25 @@ __webpack_require__.r(__webpack_exports__);
         deadline: null,
         tags: null
       },
-      errors: []
+      errors: [],
+      uploadImage: false,
+      imagePreview: null,
+      needId: null
     };
+  },
+  computed: {
+    imageUploadUrl: function imageUploadUrl() {
+      return this.needId ? "/needs/".concat(this.needId, "/image") : '/';
+    },
+    imageSrc: function imageSrc() {
+      if (this.imagePreview) {
+        return this.imagePreview;
+      } else if (this.need) {
+        return this.need.title_image;
+      }
+
+      return '/storage/assets/default_need.png';
+    }
   },
   methods: {
     updateCategories: function updateCategories(value) {
@@ -3195,7 +3235,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post("/needs/store", this.form).then(function (response) {
-        window.location.href = "/needs/".concat(response.data.id);
+        _this.needId = response.data.id;
+        setTimeout(function () {
+          if (_this.imagePreview) {
+            _this.uploadImage = true;
+          } else {
+            _this.redirectToNeed();
+          }
+        }, 1000);
       })["catch"](function (errors) {
         _this.errors = errors.response.data.errors;
       });
@@ -3203,8 +3250,15 @@ __webpack_require__.r(__webpack_exports__);
     cancel: function cancel() {
       window.history.back();
     },
-    showPreview: function showPreview() {},
-    removePreview: function removePreview() {}
+    showPreview: function showPreview(image) {
+      this.imagePreview = image;
+    },
+    removePreview: function removePreview() {
+      this.imagePreview = null;
+    },
+    redirectToNeed: function redirectToNeed() {
+      window.location.href = "/needs/".concat(this.needId);
+    }
   }
 });
 
@@ -41244,7 +41298,7 @@ var render = function() {
               _c("span", [_vm._v("abbrechen")])
             ]),
             _vm._v(" "),
-            !_vm.error
+            !_vm.error && !_vm.autoUpload
               ? _c(
                   "button",
                   {
@@ -41360,10 +41414,7 @@ var render = function() {
         [
           _c("img", {
             staticClass: "absolute w-full h-full object-cover",
-            attrs: {
-              src: "https://source.unsplash.com/600x820/?nature",
-              alt: ""
-            }
+            attrs: { src: _vm.need.title_image, alt: "" }
           }),
           _vm._v(" "),
           _vm.need.status != "opened"
@@ -42285,15 +42336,35 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "w-full" }, [
-    _vm._m(0),
+    _c(
+      "div",
+      {
+        staticClass:
+          "relative bg-gray-500 rounded-xl overflow-hidden pb-2/3 mb-5 mx-5 md:mx-0 "
+      },
+      [
+        _c("img", {
+          staticClass: "absolute w-full h-full object-cover",
+          attrs: { src: _vm.imageSrc, alt: "" }
+        })
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "flex justify-center mb-5" },
       [
         _c("image-upload", {
-          attrs: { url: "/" },
-          on: { preview: _vm.showPreview, cancel: _vm.removePreview }
+          attrs: {
+            url: _vm.imageUploadUrl,
+            "auto-upload": true,
+            "trigger-upload": _vm.uploadImage
+          },
+          on: {
+            preview: _vm.showPreview,
+            cancel: _vm.removePreview,
+            complete: _vm.redirectToNeed
+          }
         })
       ],
       1
@@ -42306,6 +42377,12 @@ var render = function() {
         _c("h4", { staticClass: "text-gray-500 mb-5" }, [
           _vm._v("Welche Art von Untestüzung braucht ihr?")
         ]),
+        _vm._v(" "),
+        _vm.errors.categories
+          ? _c("p", { staticClass: "text-sm text-red-500 mb-2 ml-2" }, [
+              _vm._v(_vm._s(_vm.errors.categories[0]))
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("category-select", {
           attrs: { categories: _vm.categories },
@@ -42478,26 +42555,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "relative bg-gray-500 rounded-xl overflow-hidden pb-2/3 mb-5 mx-5 md:mx-0 "
-      },
-      [
-        _c("img", {
-          staticClass: "absolute w-full h-full object-cover",
-          attrs: { src: "/storage/assets/default_need.png", alt: "" }
-        })
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

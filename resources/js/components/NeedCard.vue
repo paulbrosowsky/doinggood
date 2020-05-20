@@ -2,7 +2,7 @@
     <div class="mb-10">
         <div class="relative bg-gray-500 rounded-xl overflow-hidden pb-2/3">
            
-                <img class="absolute w-full h-full object-cover" src="https://source.unsplash.com/600x820/?nature" alt="">
+                <img class="absolute w-full h-full object-cover" :src="need.title_image" alt="">
              
                 <div v-if="need.status != 'opened'">
                     <div class="absolute w-full h-full bg-white opacity-75"></div>                  

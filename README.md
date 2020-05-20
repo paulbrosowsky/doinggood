@@ -22,7 +22,7 @@ composer install
 
 php artisan key:generate
 
-SSH-Key wird in `.env` automatisch eingetragen
+APP-Key wird in `.env` automatisch eingetragen
 APP_KEY= **DEIN SCHLÜSSEL**
 
 Erstelle neue Datenbank (e.g. SQL-Editor or mysql via terminal)

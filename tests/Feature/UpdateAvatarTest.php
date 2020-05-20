@@ -22,7 +22,7 @@ class UpdateAvatarTest extends TestCase
     /** @test */
     function guests_may_not_update_avatars()
     {
-        $this->post(route('profile.update', $this->user->username))
+        $this->post(route('profile.avatar', $this->user->username))
             ->assertStatus(302);
     }    
 

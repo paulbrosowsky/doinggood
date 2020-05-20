@@ -44,7 +44,7 @@ Route::group([
 
         Route::get('needs/create', 'NeedsController@create')->name('need.create');
         Route::post('needs/store', 'NeedsController@store')->name('need.store');
-        
+        Route::post('needs/{need}/image', 'NeedImagesController@update')->name('need.image');
     });
 });
 

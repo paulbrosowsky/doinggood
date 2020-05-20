@@ -23,7 +23,7 @@
             <button class="btn" @click="cancel">               
                 <span>abbrechen</span>
             </button>
-            <button class="btn btn-yellow ml-2" @click="uploadImage" v-if="!error">
+            <button class="btn btn-yellow ml-2" @click="uploadImage" v-if="!error && !autoUpload">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M403.002 217.001C388.998 148.002 328.998 96 256 96c-57.998 0-107.998 32.998-132.998 81.001C63.002 183.002 16 233.998 16 296c0 65.996 53.999 120 120 120h260c55 0 100-45 100-100 0-52.998-40.996-96.001-92.998-98.999zM288 276v76h-64v-76h-68l100-100 100 100h-68z"/></svg>
                 <span>hochladen</span>
             </button>
@@ -44,6 +44,12 @@
         props:{
             url:{
                 type: String
+            },
+            autoUpload:{
+                default: false
+            },
+            triggerUpload:{
+                default:false
             }
         },
 
@@ -58,7 +64,7 @@
                     paramName: 'image',
                     uploadMultiple: false, 
                     // previewTemplate: this.template(),                   
-                    resizeWidth: 380,
+                    resizeWidth: 1280,
                     maxFilesize: 10,                    
                     acceptedFiles: '.jpg,.jpeg,.png,.gif',                  
                     autoProcessQueue: false,  
@@ -69,6 +75,16 @@
                         'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content  
                     },                                
                 },               
+            }
+        },
+
+        watch:{
+            triggerUpload(){
+                this.$refs.imageUpload.setOption('url', this.url);
+
+                setTimeout(() => {
+                    this.autoUpload ? this.uploadImage() : ''; 
+                }, 500);                
             }
         },
 
@@ -102,9 +118,12 @@
             },
 
             completed(){
-                this.cancel();
+                this.$refs.imageUpload.removeAllFiles();
+                this.error = null;  
+                this.image = null;
                 this.loading = false;  
                 window.location.reload();
+                this.$emit('complete');
             }
             
         }

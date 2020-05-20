@@ -2,19 +2,23 @@
     <div class="w-full">
 
         <div class="relative bg-gray-500 rounded-xl overflow-hidden pb-2/3 mb-5 mx-5 md:mx-0 ">           
-            <img class="absolute w-full h-full object-cover" src="/storage/assets/default_need.png" alt="">
+            <img class="absolute w-full h-full object-cover" :src="imageSrc" alt="">
         </div>
 
         <div class="flex justify-center mb-5">
             <image-upload                    
-                url="/"
+                :url="imageUploadUrl"
+                :auto-upload="true"
+                :trigger-upload="uploadImage"
                 @preview="showPreview"
                 @cancel="removePreview"
+                @complete="redirectToNeed"
             ></image-upload>
         </div>        
 
         <div class="container mb-5 md:rounded-xl"> 
             <h4 class="text-gray-500 mb-5">Welche Art von Untestüzung braucht ihr?</h4>
+            <p class="text-sm text-red-500 mb-2 ml-2" v-if="errors.categories">{{errors.categories[0]}}</p>
             <category-select                 
                 :categories="categories"                                  
                 @update="updateCategories"
@@ -86,7 +90,7 @@
 </template>
 <script>
 export default {
-    props:['categories', 'needs', 'tags'],
+    props:['need', 'categories', 'needs', 'tags'],
 
     data(){
         return{
@@ -98,8 +102,27 @@ export default {
                 deadline: null,
                 tags: null
             },
-            errors:[]
+            errors:[],
+            uploadImage: false,
+            imagePreview: null,
+            needId: null
         }
+    },
+
+    computed:{
+        imageUploadUrl(){
+            return this.needId ? `/needs/${this.needId}/image` : '/';
+        },
+
+        imageSrc(){
+            if(this.imagePreview){
+                return this.imagePreview;
+            }else if(this.need){
+                return this.need.title_image;
+            }
+            return  '/storage/assets/default_need.png'; 
+        }
+    
     },
 
     methods:{
@@ -124,11 +147,18 @@ export default {
         },
 
         createNeed(){ 
-
             axios
                 .post(`/needs/store`, this.form)
-                .then((response)=>{   
-                    window.location.href = `/needs/${response.data.id}`;
+                .then((response)=>{
+                    this.needId = response.data.id;
+
+                    setTimeout(() => {
+                        if(this.imagePreview){                        
+                            this.uploadImage = true;    
+                        }else{
+                            this.redirectToNeed();
+                        }
+                    }, 1000);                    
                 })
                 .catch((errors) => {
                     this.errors = errors.response.data.errors; 
@@ -139,11 +169,17 @@ export default {
             window.history.back();
         },
 
-        showPreview(){
+        showPreview(image){
+            this.imagePreview = image;
+        },  
 
+        removePreview(){
+            this.imagePreview = null;
         },
 
-        removePreview(){}
+        redirectToNeed(){
+            window.location.href = `/needs/${this.needId}`;
+        }
     }
 }
 </script>

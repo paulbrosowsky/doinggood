@@ -42,10 +42,12 @@ class NeedsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {  
+        // dd($request->categories);      
         $request->validate([
             'title' => ['required', 'max:140'],
             'deadline' => ['required', 'date'],
+            'categories' => ['required'],
             'categories.*.slug'=> ['exists:categories'],
         ]);
 
