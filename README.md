@@ -9,10 +9,12 @@
 
 Erselle eine `.env` Datei von `.env.example`.
 
+```
 APP_NAME=DoingGoodCommunity
 APP_ENV=local
 APP_DEBUG=true
 APP_URL=http://doinggood.test
+```
 
 Beckend:
 ```
@@ -43,10 +45,10 @@ php artisan db:seed
 ```
 
 Frontend:
-```
-NodeJs sollte global istalliert sein
+NodeJs sollte global installiert sein
 https://nodejs.org/en/
 
+```
 npm install
 
 npm run hot // runs the app in hot reload mode
