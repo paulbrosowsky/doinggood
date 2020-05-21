@@ -41,10 +41,14 @@ Route::group([
     Route::group([
         'middleware' => 'fully.verified'
     ], function(){
-
-        Route::get('needs/create', 'NeedsController@create')->name('need.create');
-        Route::post('needs/store', 'NeedsController@store')->name('need.store');
+        
+        Route::get('needs/create', 'NeedsController@create')->name('need.create');        
+        Route::post('needs/store', 'NeedsController@store')->name('need.store');  
+           
+        Route::patch('needs/{need}', 'NeedsController@update')->name('need.update');
+        Route::get('needs/{need}/edit', 'NeedsController@edit')->name('need.edit');   
         Route::post('needs/{need}/image', 'NeedImagesController@update')->name('need.image');
+        
     });
 });
 

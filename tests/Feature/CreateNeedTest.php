@@ -6,7 +6,7 @@ use App\Need;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CreateNeedsTest extends TestCase
+class CreateNeedTest extends TestCase
 {
     use RefreshDatabase;    
     
@@ -41,8 +41,7 @@ class CreateNeedsTest extends TestCase
         tap(Need::first(), function($need){
             $this->assertEquals($need->title, 'New Need' );
             $this->assertEquals($need->project_description, 'New Project Description');
-            $this->assertEquals($need->need_description, 'New Nees Description');
-            $this->assertEquals($need->deadline, now()->addDay());
+            $this->assertEquals($need->need_description, 'New Nees Description');            
         });        
     }
 

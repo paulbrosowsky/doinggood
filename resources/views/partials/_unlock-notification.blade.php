@@ -1,4 +1,4 @@
-@if (auth()->user()->isUnlocked)
+@if (!auth()->user()->isUnlocked)
     <div class="border-2 border-dg-blue rounded-xl py-3 px-5 mb-5">
         <h4 class="text-lg font-semibold leading-tight text-dg-blue mb-2">Profil muss freigeschaltet werden</h4>
         

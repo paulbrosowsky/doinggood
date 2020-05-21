@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Need;
+use Carbon\Carbon;
 use Conner\Tagging\Model\Tag;
 use DateTime;
 use Illuminate\Http\Request;
@@ -42,15 +43,13 @@ class NeedsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {  
-        // dd($request->categories);      
+    {              
         $request->validate([
             'title' => ['required', 'max:140'],
             'deadline' => ['required', 'date'],
             'categories' => ['required'],
             'categories.*.slug'=> ['exists:categories'],
         ]);
-
 
         $need = Need::create([
             'user_id' => auth()->id(),
@@ -73,31 +72,56 @@ class NeedsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Need $need)
-    {        
+    {            
         return view('needs.show', compact('need'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Need $need
+     * @return view
      */
-    public function edit($id)
-    {
-        //
+    public function edit(Need $need)
+    {        
+        $this->authorize('update', $need);
+        
+        return view('needs.edit', [
+            'need' => $need,
+            'categories' => Category::all(),
+            'tags' => Tag::all()->pluck('name')  
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Need $need
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Need $need)
     {
-        //
+        $this->authorize('update', $need);
+
+        $request->validate([
+            'title' => ['required', 'max:140'],
+            'deadline' => ['required', 'date'],
+            'categories' => ['required'],
+            'categories.*.slug'=> ['exists:categories'],
+        ]);
+        
+        $need->update([            
+            'title' => $request->title,
+            'project_description' => $request->project_description,
+            'need_description' => $request->need_description,
+            'deadline' => Carbon::parse($request->deadline)
+        ]);
+        
+        $need->updateCategories($request->categories);        
+        $need->retag($request->tags);
+
+        return $need;
     }
 
     /**

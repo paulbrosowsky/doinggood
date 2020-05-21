@@ -20,12 +20,13 @@
             <h4 class="text-gray-500 mb-5">Welche Art von Untestüzung braucht ihr?</h4>
             <p class="text-sm text-red-500 mb-2 ml-2" v-if="errors.categories">{{errors.categories[0]}}</p>
             <category-select                 
-                :categories="categories"                                  
+                :categories="categories"  
+                :selected="form.categories"                                 
                 @update="updateCategories"
             ></category-select> 
         </div>
 
-        <form @submit.prevent="createNeed">
+        <form @submit.prevent="submit">
             <div class="container mb-5 md:rounded-xl">
             
                 <div>
@@ -45,7 +46,10 @@
                 <div class="mb-2">
                     <label class="text-gray-500 text-sm font-semibold ml-2">Deadline</label>
                     <p class="text-sm text-red-500 mb-2 ml-2" v-if="errors.deadline">{{errors.deadline[0]}}</p>
-                    <datetime-input @update="updateDeadline"></datetime-input>
+                    <datetime-input 
+                        :selected="form.deadline" 
+                        @update="updateDeadline"
+                    ></datetime-input>
                 </div>
 
                 <div>
@@ -53,7 +57,7 @@
                     <tags-input 
                         class="mb-2"
                         :options="tags" 
-                        :selected="[]" 
+                        :selected="form.tags" 
                         @update="updateTags"
                     ></tags-input>
                 </div>
@@ -65,6 +69,7 @@
                         class="mt-1"
                         placeholder="Erzählt etwas über ihr Projekt ..."
                         :editorId="'project-description'"
+                        :text="form.project_description"
                         @update="updateProjectDescription"
                     ></text-editor>
                 </div>
@@ -76,6 +81,7 @@
                         class="mt-1"
                         placeholder="Erzählt etwas über euren Bedarf ..."
                         :editorId="'need-description'"
+                        :text="form.need_description"
                         @update="updateNeedDescription"
                     ></text-editor>
                 </div>                
@@ -83,33 +89,55 @@
 
             <div class="flex justify-end px-5">
                 <button class="btn mr-2" @click.prevent="cancel">Zurück</button>
-                <button class="btn btn-yellow" type="submit">Bedarf Veröffentlichen</button>
+                <button class="btn btn-yellow" type="submit">
+                    {{ formType == 'create' ? 'Bedarf Veröffentlichen' : 'Bedarf Ändern'}}                    
+                </button>
             </div> 
-        </form>        
+        </form>  
+        <loading :loading="loading"></loading>      
     </div>
 </template>
 <script>
 export default {
-    props:['need', 'categories', 'needs', 'tags'],
+    props:{
+        need:{
+            default(){
+               return {}
+            }
+        }, 
+        categories:{
+            type: Array
+        },         
+        tags:{
+            type: Array
+        }        
+    },
 
     data(){
         return{
             form:{
-                categories:null,
-                title: null,
-                project_description: null,
-                need_description:null,
-                deadline: null,
-                tags: null
+                categories:this.need.categories,
+                title: this.need.title,
+                project_description: this.need.project_description,
+                need_description:this.need.need_description,
+                deadline: this.need.deadline,
+                tags: this.need.tagNames
             },
             errors:[],
             uploadImage: false,
             imagePreview: null,
-            needId: null
+            needId: this.need.id,
+            loading: false,
         }
     },
 
     computed:{
+        formType(){   
+            let path = window.location.pathname;     
+
+            return path.substring(path.lastIndexOf('/') + 1);
+        },
+
         imageUploadUrl(){
             return this.needId ? `/needs/${this.needId}/image` : '/';
         },
@@ -117,7 +145,7 @@ export default {
         imageSrc(){
             if(this.imagePreview){
                 return this.imagePreview;
-            }else if(this.need){
+            }else if(this.needId){
                 return this.need.title_image;
             }
             return  '/storage/assets/default_need.png'; 
@@ -146,23 +174,47 @@ export default {
             this.form.tags = tags;
         },
 
-        createNeed(){ 
+        submit(){
+            this[this.formType]();
+        },
+
+        create(){ 
+            this.loading = true;
             axios
                 .post(`/needs/store`, this.form)
                 .then((response)=>{
-                    this.needId = response.data.id;
-
-                    setTimeout(() => {
-                        if(this.imagePreview){                        
-                            this.uploadImage = true;    
-                        }else{
-                            this.redirectToNeed();
-                        }
-                    }, 1000);                    
+                    this.submitResponse(response.data);                  
                 })
                 .catch((errors) => {
+                    this.loading = false;
                     this.errors = errors.response.data.errors; 
                 });
+        },
+
+        edit(){
+            this.loading = true;
+            axios
+                .patch(`/needs/${this.need.id}`, this.form)
+                .then((response)=>{
+                    this.submitResponse(response.data);  
+                })
+                .catch((errors) => {
+                    this.loading = false;
+                    this.errors = errors.response.data.errors; 
+                });
+        },
+
+        submitResponse(need){            
+            this.needId = need.id;
+
+            setTimeout(() => {
+                this.loading = false;
+                if(this.imagePreview){                        
+                    this.uploadImage = true;    
+                }else{
+                    this.redirectToNeed();
+                }
+            }, 1000); 
         },
 
         cancel(){

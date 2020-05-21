@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Conner\Tagging\Taggable;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +20,12 @@ class Need extends Model
     /**
      *  Eager load with the Model
      */ 
-    protected $with= ['categories', 'creator'];   
+    protected $with= ['categories', 'creator']; 
+    
+     /**
+     *  Append to the User Model 
+     */
+    protected $appends = ['tagNames'];
 
     /**
      *  A Need Belongs to Many Categories
@@ -50,7 +57,6 @@ class Need extends Model
      */
     public function getProjectDescriptionAttribute($project_description)
     {   
-
         return \Purify::clean($project_description);
     }
     /**
@@ -61,5 +67,17 @@ class Need extends Model
     public function getNeedDescriptionAttribute($need_description)
     {
         return \Purify::clean($need_description);
+    }  
+
+    /**
+     *  Get Dedline in ISO8601 Format
+     * 
+     * @param DateTime $deadline
+     * @return string
+     */
+    public function getDeadlineAttribute($deadline)
+    {
+        return Carbon::parse($deadline)->format('c');
     }
+
 }

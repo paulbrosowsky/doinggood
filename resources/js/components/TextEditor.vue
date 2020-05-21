@@ -23,13 +23,16 @@
             },
             editorId:{
                 default: 'editor'
+            },
+            text: {
+                default: ''
             }
         },
 
         data() {
             return {                
                 editor: new Editor({
-                    // content: '<p>This is just a boring paragraph</p>',
+                    content: this.text,
                     
                     extensions: [
                         new Link(),

@@ -22,7 +22,7 @@
 <body>
     <div id="app">
         
-        @include('partials._navbar')
+        @include('partials._navbar')       
 
         <div class="flex flex-col mt-16"> 
             <main class="min-h-screen flex-1 w-full mx-auto py-10" style="max-width:1280px">                

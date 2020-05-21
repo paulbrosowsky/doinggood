@@ -22,14 +22,7 @@
                 date: this.selected
             }
         },
-
-        mounted(){           
-            
-        }
+       
     }
 </script>
 
-<style lang="scss" >
-
-
-</style>

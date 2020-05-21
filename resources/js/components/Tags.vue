@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-wrap justify-center mt-3">
+    <div class="flex flex-wrap mt-3">
         <div 
             v-for="(tag, index) in tags" 
             :key="index" 

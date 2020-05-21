@@ -12,7 +12,7 @@
                 <p class="text-xs text-gray-500 leading-none">wir brauchen </p>
                 <categories :categories="{{$need->categories}}"></categories>
 
-                <h2 class="leading-tight font-bold my-2 text-xl md:text-2xl">{{$need->title}}</h2> 
+                <h2 class="leading-tight font-bold my-2 text-xl md:text-2xl">{{$need->title}}</h2>                 
 
                 <div class="flex items-center mt-5">
                     <svg class="h-8 fill-current text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M368.005 272h-96v96h96v-96zm-32-208v32h-160V64h-48v32h-24.01c-22.002 0-40 17.998-40 40v272c0 22.002 17.998 40 40 40h304.01c22.002 0 40-17.998 40-40V136c0-22.002-17.998-40-40-40h-24V64h-48zm72 344h-304.01V196h304.01v212z"/></svg>
@@ -21,10 +21,17 @@
                         <p class="leading-none">{{ Carbon\Carbon::parse($need->deadline)->format('d.m.Y') }}</p>
                     </div>
                 </div>
+
+                @if($need->tagNames)
+                    <div class="mt-5">
+                        {{-- <p class="text-sm text-gray-500 leading-none ">unsere Themen</p> --}}
+                        <tags :tags="{{ json_encode($need->tagNames) }}"></tags>  
+                    </div>              
+                @endif 
             </div>  
         </div>
 
-        <div class="container py-3 mb-5 mt-5  md:rounded-xl">
+        <div class="container py-3 mb-5 mt-3  md:rounded-xl">
             <h4 class="text-gray-500 mb-3">Was haben wir vor ?</h4>
 
             <p>{!!$need->project_description!!}</p>
@@ -56,14 +63,22 @@
             </div>
 
             <p>{{$need->creator->excerpt}}</p>
-        </div>  
+        </div>   
         
-        <div class="flex justify-end py-5 px-5">
-            <button class="btn mr-2">Frage stellen</button>
-            <button class="btn btn-yellow">Interesse ziegen</button>            
-        </div>
-
-
+        @if (auth()->check())        
+            <div class="flex justify-end py-5 px-5">
+                @can('update', $need)
+                    <a href="{{route('need.edit', $need->id)}}">
+                        <button class="btn btn-blue">Bearbeiten</button>
+                    </a>                    
+                @endcan                
+                @cannot('update', $need)                        
+                    <button class="btn mr-2">Frage stellen</button>
+                    <button class="btn btn-yellow">Interesse ziegen</button>  
+                @endcannot
+            </div>
+        @endif
+       
 
     </section> 
 @endsection

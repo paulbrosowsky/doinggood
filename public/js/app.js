@@ -2081,8 +2081,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       date: this.selected
     };
-  },
-  mounted: function mounted() {}
+  }
 });
 
 /***/ }),
@@ -2636,6 +2635,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     editorId: {
       "default": 'editor'
+    },
+    text: {
+      "default": ''
     }
   },
   data: function data() {
@@ -2643,7 +2645,7 @@ __webpack_require__.r(__webpack_exports__);
 
     return {
       editor: new tiptap__WEBPACK_IMPORTED_MODULE_0__["Editor"]({
-        // content: '<p>This is just a boring paragraph</p>',
+        content: this.text,
         extensions: [new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["Link"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["Placeholder"]({
           emptyEditorClass: 'is-editor-empty',
           emptyNodeClass: 'is-empty',
@@ -3183,32 +3185,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['need', 'categories', 'needs', 'tags'],
+  props: {
+    need: {
+      "default": function _default() {
+        return {};
+      }
+    },
+    categories: {
+      type: Array
+    },
+    tags: {
+      type: Array
+    }
+  },
   data: function data() {
     return {
       form: {
-        categories: null,
-        title: null,
-        project_description: null,
-        need_description: null,
-        deadline: null,
-        tags: null
+        categories: this.need.categories,
+        title: this.need.title,
+        project_description: this.need.project_description,
+        need_description: this.need.need_description,
+        deadline: this.need.deadline,
+        tags: this.need.tagNames
       },
       errors: [],
       uploadImage: false,
       imagePreview: null,
-      needId: null
+      needId: this.need.id,
+      loading: false
     };
   },
   computed: {
+    formType: function formType() {
+      var path = window.location.pathname;
+      return path.substring(path.lastIndexOf('/') + 1);
+    },
     imageUploadUrl: function imageUploadUrl() {
       return this.needId ? "/needs/".concat(this.needId, "/image") : '/';
     },
     imageSrc: function imageSrc() {
       if (this.imagePreview) {
         return this.imagePreview;
-      } else if (this.need) {
+      } else if (this.needId) {
         return this.need.title_image;
       }
 
@@ -3231,21 +3259,44 @@ __webpack_require__.r(__webpack_exports__);
     updateTags: function updateTags(tags) {
       this.form.tags = tags;
     },
-    createNeed: function createNeed() {
+    submit: function submit() {
+      this[this.formType]();
+    },
+    create: function create() {
       var _this = this;
 
+      this.loading = true;
       axios.post("/needs/store", this.form).then(function (response) {
-        _this.needId = response.data.id;
-        setTimeout(function () {
-          if (_this.imagePreview) {
-            _this.uploadImage = true;
-          } else {
-            _this.redirectToNeed();
-          }
-        }, 1000);
+        _this.submitResponse(response.data);
       })["catch"](function (errors) {
+        _this.loading = false;
         _this.errors = errors.response.data.errors;
       });
+    },
+    edit: function edit() {
+      var _this2 = this;
+
+      this.loading = true;
+      axios.patch("/needs/".concat(this.need.id), this.form).then(function (response) {
+        _this2.submitResponse(response.data);
+      })["catch"](function (errors) {
+        _this2.loading = false;
+        _this2.errors = errors.response.data.errors;
+      });
+    },
+    submitResponse: function submitResponse(need) {
+      var _this3 = this;
+
+      this.needId = need.id;
+      setTimeout(function () {
+        _this3.loading = false;
+
+        if (_this3.imagePreview) {
+          _this3.uploadImage = true;
+        } else {
+          _this3.redirectToNeed();
+        }
+      }, 1000);
     },
     cancel: function cancel() {
       window.history.back();
@@ -41580,7 +41631,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex flex-wrap justify-center mt-3" },
+    { staticClass: "flex flex-wrap mt-3" },
     _vm._l(_vm.tags, function(tag, index) {
       return _c(
         "div",
@@ -42335,225 +42386,250 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-full" }, [
-    _c(
-      "div",
-      {
-        staticClass:
-          "relative bg-gray-500 rounded-xl overflow-hidden pb-2/3 mb-5 mx-5 md:mx-0 "
-      },
-      [
-        _c("img", {
-          staticClass: "absolute w-full h-full object-cover",
-          attrs: { src: _vm.imageSrc, alt: "" }
-        })
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "flex justify-center mb-5" },
-      [
-        _c("image-upload", {
-          attrs: {
-            url: _vm.imageUploadUrl,
-            "auto-upload": true,
-            "trigger-upload": _vm.uploadImage
-          },
-          on: {
-            preview: _vm.showPreview,
-            cancel: _vm.removePreview,
-            complete: _vm.redirectToNeed
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "container mb-5 md:rounded-xl" },
-      [
-        _c("h4", { staticClass: "text-gray-500 mb-5" }, [
-          _vm._v("Welche Art von Untestüzung braucht ihr?")
-        ]),
-        _vm._v(" "),
-        _vm.errors.categories
-          ? _c("p", { staticClass: "text-sm text-red-500 mb-2 ml-2" }, [
-              _vm._v(_vm._s(_vm.errors.categories[0]))
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("category-select", {
-          attrs: { categories: _vm.categories },
-          on: { update: _vm.updateCategories }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.createNeed($event)
-          }
-        }
-      },
-      [
-        _c("div", { staticClass: "container mb-5 md:rounded-xl" }, [
-          _c("div", [
-            _c(
-              "label",
-              { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
-              [_vm._v("Überschrift")]
-            ),
-            _vm._v(" "),
-            _vm.errors.title
-              ? _c("p", { staticClass: "text-sm text-red-500 mb-2 ml-2" }, [
-                  _vm._v(_vm._s(_vm.errors.title[0]))
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "input mt-1" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.title,
-                    expression: "form.title"
-                  }
-                ],
-                staticClass: "px-3",
-                attrs: {
-                  type: "text",
-                  name: "title",
-                  required: "",
-                  placeholder: "Überschrift"
-                },
-                domProps: { value: _vm.form.title },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "title", $event.target.value)
-                  }
-                }
-              })
-            ])
+  return _c(
+    "div",
+    { staticClass: "w-full" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "relative bg-gray-500 rounded-xl overflow-hidden pb-2/3 mb-5 mx-5 md:mx-0 "
+        },
+        [
+          _c("img", {
+            staticClass: "absolute w-full h-full object-cover",
+            attrs: { src: _vm.imageSrc, alt: "" }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex justify-center mb-5" },
+        [
+          _c("image-upload", {
+            attrs: {
+              url: _vm.imageUploadUrl,
+              "auto-upload": true,
+              "trigger-upload": _vm.uploadImage
+            },
+            on: {
+              preview: _vm.showPreview,
+              cancel: _vm.removePreview,
+              complete: _vm.redirectToNeed
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "container mb-5 md:rounded-xl" },
+        [
+          _c("h4", { staticClass: "text-gray-500 mb-5" }, [
+            _vm._v("Welche Art von Untestüzung braucht ihr?")
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "mb-2" },
-            [
+          _vm.errors.categories
+            ? _c("p", { staticClass: "text-sm text-red-500 mb-2 ml-2" }, [
+                _vm._v(_vm._s(_vm.errors.categories[0]))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("category-select", {
+            attrs: {
+              categories: _vm.categories,
+              selected: _vm.form.categories
+            },
+            on: { update: _vm.updateCategories }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.submit($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "container mb-5 md:rounded-xl" }, [
+            _c("div", [
               _c(
                 "label",
                 { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
-                [_vm._v("Deadline")]
+                [_vm._v("Überschrift")]
               ),
               _vm._v(" "),
-              _vm.errors.deadline
+              _vm.errors.title
                 ? _c("p", { staticClass: "text-sm text-red-500 mb-2 ml-2" }, [
-                    _vm._v(_vm._s(_vm.errors.deadline[0]))
+                    _vm._v(_vm._s(_vm.errors.title[0]))
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _c("datetime-input", { on: { update: _vm.updateDeadline } })
-            ],
-            1
-          ),
+              _c("div", { staticClass: "input mt-1" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.title,
+                      expression: "form.title"
+                    }
+                  ],
+                  staticClass: "px-3",
+                  attrs: {
+                    type: "text",
+                    name: "title",
+                    required: "",
+                    placeholder: "Überschrift"
+                  },
+                  domProps: { value: _vm.form.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "title", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mb-2" },
+              [
+                _c(
+                  "label",
+                  { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
+                  [_vm._v("Deadline")]
+                ),
+                _vm._v(" "),
+                _vm.errors.deadline
+                  ? _c("p", { staticClass: "text-sm text-red-500 mb-2 ml-2" }, [
+                      _vm._v(_vm._s(_vm.errors.deadline[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("datetime-input", {
+                  attrs: { selected: _vm.form.deadline },
+                  on: { update: _vm.updateDeadline }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c(
+                  "label",
+                  { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
+                  [_vm._v("Themen")]
+                ),
+                _vm._v(" "),
+                _c("tags-input", {
+                  staticClass: "mb-2",
+                  attrs: { options: _vm.tags, selected: _vm.form.tags },
+                  on: { update: _vm.updateTags }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mb-2" },
+              [
+                _c(
+                  "label",
+                  { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
+                  [_vm._v("Was habt ihr vor?")]
+                ),
+                _vm._v(" "),
+                _c("text-editor", {
+                  staticClass: "mt-1",
+                  attrs: {
+                    placeholder: "Erzählt etwas über ihr Projekt ...",
+                    editorId: "project-description",
+                    text: _vm.form.project_description
+                  },
+                  on: { update: _vm.updateProjectDescription }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c(
+                  "label",
+                  { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
+                  [_vm._v("Was braucht ihr dafür?")]
+                ),
+                _vm._v(" "),
+                _c("text-editor", {
+                  staticClass: "mt-1",
+                  attrs: {
+                    placeholder: "Erzählt etwas über euren Bedarf ...",
+                    editorId: "need-description",
+                    text: _vm.form.need_description
+                  },
+                  on: { update: _vm.updateNeedDescription }
+                })
+              ],
+              1
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            [
-              _c(
-                "label",
-                { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
-                [_vm._v("Themen")]
-              ),
-              _vm._v(" "),
-              _c("tags-input", {
-                staticClass: "mb-2",
-                attrs: { options: _vm.tags, selected: [] },
-                on: { update: _vm.updateTags }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "mb-2" },
-            [
-              _c(
-                "label",
-                { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
-                [_vm._v("Was habt ihr vor?")]
-              ),
-              _vm._v(" "),
-              _c("text-editor", {
-                staticClass: "mt-1",
-                attrs: {
-                  placeholder: "Erzählt etwas über ihr Projekt ...",
-                  editorId: "project-description"
-                },
-                on: { update: _vm.updateProjectDescription }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            [
-              _c(
-                "label",
-                { staticClass: "text-gray-500 text-sm font-semibold ml-2" },
-                [_vm._v("Was braucht ihr dafür?")]
-              ),
-              _vm._v(" "),
-              _c("text-editor", {
-                staticClass: "mt-1",
-                attrs: {
-                  placeholder: "Erzählt etwas über euren Bedarf ...",
-                  editorId: "need-description"
-                },
-                on: { update: _vm.updateNeedDescription }
-              })
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex justify-end px-5" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn mr-2",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.cancel($event)
+          _c("div", { staticClass: "flex justify-end px-5" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn mr-2",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.cancel($event)
+                  }
                 }
-              }
-            },
-            [_vm._v("Zurück")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-yellow", attrs: { type: "submit" } },
-            [_vm._v("Bedarf Veröffentlichen")]
-          )
-        ])
-      ]
-    )
-  ])
+              },
+              [_vm._v("Zurück")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-yellow", attrs: { type: "submit" } },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(
+                      _vm.formType == "create"
+                        ? "Bedarf Veröffentlichen"
+                        : "Bedarf Ändern"
+                    ) +
+                    "                    \n            "
+                )
+              ]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("loading", { attrs: { loading: _vm.loading } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
