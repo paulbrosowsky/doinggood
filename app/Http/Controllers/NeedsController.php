@@ -127,11 +127,12 @@ class NeedsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Need $need 
      */
-    public function destroy($id)
+    public function destroy(Need $need)
     {
-        //
+        $this->authorize('update', $need);
+
+        $need->delete();
     }
 }

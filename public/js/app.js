@@ -2581,6 +2581,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2589,13 +2590,14 @@ __webpack_require__.r(__webpack_exports__);
   props: ['options', 'selected'],
   data: function data() {
     return {
-      selectedTags: this.selected
+      selectedTags: this.selected,
+      selectable: this.options
     };
   },
   methods: {
-    addTag: function addTag(tag) {
+    addTags: function addTags(tag) {
+      this.selectable.push(tag);
       this.selectedTags.push(tag);
-      this.$emit('update', this.selectedTags);
     }
   }
 });
@@ -3194,6 +3196,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     need: {
@@ -3309,6 +3319,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     redirectToNeed: function redirectToNeed() {
       window.location.href = "/needs/".concat(this.needId);
+    },
+    deleteNeed: function deleteNeed() {
+      var _this4 = this;
+
+      this.$modal.show('confirm-dialog', {
+        title: 'Willst du dein Bedarf wirklich löschen?',
+        handler: function handler() {
+          return _this4.deleteNeedHandler();
+        }
+      });
+    },
+    deleteNeedHandler: function deleteNeedHandler() {
+      var _this5 = this;
+
+      this.loading = true;
+      axios["delete"]("/needs/".concat(this.need.id)).then(function () {
+        flash('Dein Bedarf wurde gelöscht.');
+        setTimeout(function () {
+          _this5.loading = false;
+          window.location.href = "/needs";
+        }, 2000);
+      });
     }
   }
 });
@@ -41680,7 +41712,12 @@ var render = function() {
       tagPlaceholder: "Neues Thema erstellen",
       placeholder: "Wähle eure Themen aus ..."
     },
-    on: { tag: _vm.addTag },
+    on: {
+      tag: _vm.addTags,
+      input: function($event) {
+        return _vm.$emit("update", _vm.selectedTags)
+      }
+    },
     model: {
       value: _vm.selectedTags,
       callback: function($$v) {
@@ -42589,42 +42626,56 @@ var render = function() {
                 })
               ],
               1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex justify-end px-5" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn mr-2",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.cancel($event)
-                  }
-                }
-              },
-              [_vm._v("Zurück")]
             ),
             _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-yellow", attrs: { type: "submit" } },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(
-                      _vm.formType == "create"
-                        ? "Bedarf Veröffentlichen"
-                        : "Bedarf Ändern"
-                    ) +
-                    "                    \n            "
-                )
-              ]
-            )
+            _c("div", { staticClass: "flex justify-end mt-5" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn mr-2",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.cancel($event)
+                    }
+                  }
+                },
+                [_vm._v("Zurück")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-yellow", attrs: { type: "submit" } },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(
+                        _vm.formType == "create"
+                          ? "Bedarf Veröffentlichen"
+                          : "Bedarf Ändern"
+                      ) +
+                      "                    \n                "
+                  )
+                ]
+              )
+            ])
           ])
         ]
       ),
+      _vm._v(" "),
+      _vm.formType == "edit"
+        ? _c("div", { staticClass: "container md:rounded-xl" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-red w-full md:w-auto",
+                attrs: { type: "input" },
+                on: { click: _vm.deleteNeed }
+              },
+              [_vm._v(" \n            Bedarf Löschen\n        ")]
+            )
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("loading", { attrs: { loading: _vm.loading } })
     ],

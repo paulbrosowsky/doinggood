@@ -10,7 +10,8 @@
         selectedLabel="gewählt"
         tagPlaceholder="Neues Thema erstellen"
         placeholder="Wähle eure Themen aus ..."
-        @tag="addTag"
+        @tag="addTags"
+        @input="$emit('update', selectedTags)"
     ></multiselect>
 </template>
 <script>
@@ -23,15 +24,15 @@
 
         data(){
             return{
-                selectedTags: this.selected
+                selectedTags: this.selected,
+                selectable: this.options
             }
-        },
-
+        },   
+        
         methods:{
-            addTag(tag){
-                this.selectedTags.push(tag);
-
-                this.$emit('update', this.selectedTags);
+            addTags(tag){
+                this.selectable.push(tag);
+                this.selectedTags.push(tag);                
             }
         }
     }

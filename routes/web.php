@@ -48,6 +48,7 @@ Route::group([
         Route::patch('needs/{need}', 'NeedsController@update')->name('need.update');
         Route::get('needs/{need}/edit', 'NeedsController@edit')->name('need.edit');   
         Route::post('needs/{need}/image', 'NeedImagesController@update')->name('need.image');
+        Route::delete('needs/{need}', 'NeedsController@destroy')->name('need.destroy');
         
     });
 });

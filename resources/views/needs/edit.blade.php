@@ -6,6 +6,6 @@
             :need="{{ $need }}"
             :categories="{{ $categories }}" 
             :tags="{{$tags}}"
-        ></need-form>
+        ></need-form>        
     </div>    
 @endsection

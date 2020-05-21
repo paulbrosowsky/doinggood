@@ -180,7 +180,7 @@
                 this.form.categories = categories;
             },
 
-            updateTags(tags){
+            updateTags(tags){  
                 this.form.tags = tags; 
             },
 

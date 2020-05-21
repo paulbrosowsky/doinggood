@@ -84,16 +84,24 @@
                         :text="form.need_description"
                         @update="updateNeedDescription"
                     ></text-editor>
-                </div>                
-            </div>   
+                </div> 
+            
+                <div class="flex justify-end mt-5">
+                    <button class="btn mr-2" @click.prevent="cancel">Zurück</button>
+                    <button class="btn btn-yellow" type="submit">
+                        {{ formType == 'create' ? 'Bedarf Veröffentlichen' : 'Bedarf Ändern'}}                    
+                    </button>
+                </div> 
 
-            <div class="flex justify-end px-5">
-                <button class="btn mr-2" @click.prevent="cancel">Zurück</button>
-                <button class="btn btn-yellow" type="submit">
-                    {{ formType == 'create' ? 'Bedarf Veröffentlichen' : 'Bedarf Ändern'}}                    
-                </button>
             </div> 
         </form>  
+
+        <div class="container md:rounded-xl" v-if="formType == 'edit'">
+            <button type="input" class="btn btn-red w-full md:w-auto" @click="deleteNeed"> 
+                Bedarf Löschen
+            </button>
+        </div>
+
         <loading :loading="loading"></loading>      
     </div>
 </template>
@@ -231,7 +239,28 @@ export default {
 
         redirectToNeed(){
             window.location.href = `/needs/${this.needId}`;
-        }
+        },
+
+        deleteNeed(){
+            this.$modal.show('confirm-dialog', {
+                title: 'Willst du dein Bedarf wirklich löschen?',                
+                handler: () => this.deleteNeedHandler()
+            });
+        },
+
+        deleteNeedHandler(){
+            this.loading = true;
+            axios
+                .delete(`/needs/${this.need.id}`)
+                .then(()=>{
+                    flash('Dein Bedarf wurde gelöscht.');
+
+                    setTimeout(() => {
+                        this.loading = false;
+                        window.location.href = `/needs`;
+                    }, 2000); 
+                });
+        },
     }
 }
 </script>

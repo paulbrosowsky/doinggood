@@ -21,9 +21,7 @@ class UpdateNeedTest extends TestCase
         $this->need = factory('App\Need')->create([
             'user_id' => $this->user->id
         ]);
-    }
-    
-    
+    }  
     
     /** @test */
     function unauthorized_users_may_not_update_needs()
