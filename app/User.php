@@ -131,5 +131,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getFullyVerifiedAttribute()
     {
         return $this->isUnlocked && $this->hasVerifiedEmail();
-    }   
+    } 
+    
+    /**
+     *  A User has Many Needs
+     * 
+     * @return hasMany 
+     */
+    public function needs()
+    {
+        return $this->hasMany(Need::class);
+    }
 }

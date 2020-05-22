@@ -23,6 +23,7 @@ window.flash = function(message, level = 'success') {
     window.Event.$emit('flash', { message, level });
 };
 
+Vue.component('accordion', require('./components/Accordion.vue').default);
 Vue.component('avatar', require('./components/Avatar.vue').default);
 Vue.component('categories', require('./components/Categories.vue').default);
 Vue.component('category-select', require('./components/CategorySelect.vue').default);

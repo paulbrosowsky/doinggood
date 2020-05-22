@@ -21,7 +21,7 @@ class CreateNeedsTable extends Migration
             $table->text('need_description')->nullable();
             $table->string('title_image')->nullable();
             $table->timestamp('deadline');
-            $table->string('status')->default('opened');
+            $table->string('status')->default('offen');
             $table->timestamps();
         });
     }

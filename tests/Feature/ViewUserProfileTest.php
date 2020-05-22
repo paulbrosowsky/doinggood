@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ViewUserProfile extends TestCase
+class ViewUserProfileTest extends TestCase
 {
     use RefreshDatabase;
     
@@ -33,5 +33,17 @@ class ViewUserProfile extends TestCase
 
         $this->get(route('profile', $this->user->username))
             ->assertSee($this->user->name);
+    }
+
+    /** @test */
+    function users_may_view_all_profiles_needss()
+    {        
+        $this->signIn();
+        $needs = factory('App\Need')->create([
+            'user_id' => $this->user->id
+        ]);        
+
+        $this->get(route('profile', $this->user->username))
+            ->assertSee($needs->first());
     }
 }

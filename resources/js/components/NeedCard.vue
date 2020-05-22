@@ -4,7 +4,7 @@
            
                 <img class="absolute w-full h-full object-cover" :src="need.title_image" alt="">
              
-                <div v-if="need.status != 'opened'">
+                <div v-if="need.status != 'offen'">
                     <div class="absolute w-full h-full bg-white opacity-75"></div>                  
                     <span  
                         :class="status.classes"                   
@@ -33,7 +33,7 @@
 
         computed:{
             status(){
-                return this.need.status == 'completed' 
+                return this.need.status == 'abgeschlossen' 
                     ? {name: 'abgeschlossen', classes: 'text-dg-yellow border-dg-yellow' } 
                     : {name: 'vergeben', classes: 'text-dg-blue border-dg-blue' } ;
             }

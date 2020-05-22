@@ -26,8 +26,15 @@ class ProfilesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
-    {        
-        return view('profiles.show', compact('user'));
+    {     
+        $needs = $user->needs->sortDesc()->groupBy('status')->sortBy(function($item, $key){            
+            return array_search($key, ['offen', 'vergeben', 'abgeschlossen']);
+        });
+        
+        return view('profiles.show', [
+            'user' => $user,
+            'needs' => $needs
+        ]);
     }
 
     /**

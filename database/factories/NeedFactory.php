@@ -27,7 +27,7 @@ $factory->state(Need::class, 'from_existing_data', function(Faker $faker){
         'project_description' => $faker->paragraph(10),
         'need_description' => $faker->paragraph(10),
         'deadline' => now()->addWeek(), 
-        'status' => $faker->randomElement(['opened', 'assigned', 'completed'])
+        'status' => $faker->randomElement(['offen', 'vergeben', 'abgeschlossen'])
     ];
 
 });
