@@ -66,4 +66,14 @@ class UserTest extends TestCase
         $this->assertTrue($this->user->isUnlocked);
     }
 
+     /** @test */
+    function its_description_is_sanitize_automaticaly()
+    {
+        $this->user->update([
+            'description' => '<script>alert("bad")</script><p>This is okay.</p>',            
+        ]);
+
+        $this->assertEquals($this->user->fresh()->description, '<p>This is okay.</p>');      
+    }
+
 }

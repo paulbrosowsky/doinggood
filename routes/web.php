@@ -49,7 +49,8 @@ Route::group([
         Route::get('needs/{need}/edit', 'NeedsController@edit')->name('need.edit');   
         Route::post('needs/{need}/image', 'NeedImagesController@update')->name('need.image');
         Route::delete('needs/{need}', 'NeedsController@destroy')->name('need.destroy');
-        
+
+        Route::post('needs/{need}/question', 'NeedQuestionsController@create')->name('need.question');        
     });
 });
 

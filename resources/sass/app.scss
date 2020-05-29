@@ -163,5 +163,9 @@ h1, h2, h3, h4{
     }
 }
 
+.dg-modal{
+    @apply rounded-lg p-5;
+}
+
 
 @import "tailwindcss/utilities";

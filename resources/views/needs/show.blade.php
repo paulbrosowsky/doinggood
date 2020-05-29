@@ -37,33 +37,35 @@
             <p>{!!$need->project_description!!}</p>
         </div>
 
-        <div class="container py-3 mb-5 md:rounded-xl">
+        <div class="container py-3 md:rounded-xl">
             <h4 class="text-gray-500 mb-3">Was brauchen wir ?</h4>
 
             <p>{!!$need->need_description!!}</p>
         </div>
 
-        <div class="container py-3 md:rounded-xl">
-            <h4 class="text-gray-500 mb-3">Über uns</h4>
+        @if ($need->creator->id != auth()->id())
+            <div class="container py-3 mt-5 md:rounded-xl">
+                <h4 class="text-gray-500 mb-3">Über uns</h4>
 
-            <div class="flex items-center mb-5">
-                <avatar 
-                    :image="{{ json_encode($need->creator->avatar) }}" 
-                    :badge="{{json_encode( $need->creator->helper)}}" 
-                    size="md"
-                ></avatar>
-                
-                <div class="ml-5">
-                    <h4 class="font-semibold mb-2">{{$need->creator->name}}</h4>
-                    <a href="{{route('profile', $need->creator->username)}}">
-                          <button class="btn btn-blue">zum Profil</button>
-                    </a>
+                <div class="flex items-center mb-5">
+                    <avatar 
+                        :image="{{ json_encode($need->creator->avatar) }}" 
+                        :badge="{{json_encode( $need->creator->helper)}}" 
+                        size="md"
+                    ></avatar>
                     
-                </div>                
-            </div>
+                    <div class="ml-5">
+                        <h4 class="font-semibold mb-2">{{$need->creator->name}}</h4>
+                        <a href="{{route('profile', $need->creator->username)}}">
+                            <button class="btn btn-blue">zum Profil</button>
+                        </a>
+                        
+                    </div>                
+                </div>
 
-            <p>{{$need->creator->excerpt}}</p>
-        </div>   
+                <p>{{$need->creator->excerpt}}</p>
+            </div>   
+        @endif
         
         @if (auth()->check())        
             <div class="flex justify-end py-5 px-5">
@@ -72,10 +74,9 @@
                         <button class="btn btn-blue">Bearbeiten</button>
                     </a>                    
                 @endcan                
-                @cannot('update', $need)                        
-                    <button class="btn mr-2">Frage stellen</button>
-                    <button class="btn btn-yellow">Interesse ziegen</button>  
-                @endcannot
+                @if ($need->creator->id != auth()->id())
+                    <need-action-buttons></need-action-buttons>
+                @endif   
             </div>
         @endif
        

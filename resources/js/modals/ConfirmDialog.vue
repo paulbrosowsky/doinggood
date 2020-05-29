@@ -49,9 +49,3 @@
         
     }
 </script>
-
-<style>
-   .dg-modal{
-       @apply rounded-lg p-5;
-   }
-</style>

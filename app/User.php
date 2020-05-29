@@ -134,7 +134,6 @@ class User extends Authenticatable implements MustVerifyEmail
     } 
     
     /**
-     *  A User has Many Needs
      * 
      * @return hasMany 
      */
@@ -142,4 +141,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Need::class);
     }
+
+     /**
+     *  Sanitize Description
+     * 
+     * @return text
+     */
+    public function getDescriptionAttribute($description)
+    {
+        return \Purify::clean($description);
+    }  
 }

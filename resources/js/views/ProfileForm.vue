@@ -70,14 +70,15 @@
                     ></tags-input>
                 </div>
 
-                <div>
-                    <label class="text-gray-500 text-sm font-semibold ml-2">Beschreibung</label>
-                    <textfield 
-                        class="mt-1" 
-                        :text="form.description" 
-                        placeholder="Ezählt etwas mehr ..." 
-                        @input="updateDescription"
-                    ></textfield>
+                <div class="mb-2">
+                    <label class="text-gray-500 text-sm font-semibold ml-2">Beschreibung</label>                    
+                    <text-editor 
+                        class="mt-1"
+                        placeholder="Ezählt etwas mehr ..."
+                        :editorId="'description'"
+                        :text="form.description"
+                        @update="updateDescription"
+                    ></text-editor>
                 </div>
 
                 <div>
