@@ -73,7 +73,10 @@ class NeedsController extends Controller
      */
     public function show(Need $need)
     {            
-        return view('needs.show', compact('need'));
+        return view('needs.show', [
+            'need' => $need,
+            'helps' => $need->helps
+        ]);
     }
 
     /**

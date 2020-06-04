@@ -53,7 +53,7 @@
                 <a 
                     class="nav-link" 
                     :class="route == 'settings' ? 'bg-gray-200' : ''"
-                    v-if="user"
+                    v-if="user && !user.helper"
                     @click="goto('/needs/create')"
                 >Neuer Bedarf</a>
             </div>

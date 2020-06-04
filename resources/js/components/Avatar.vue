@@ -13,7 +13,7 @@
 </template>
 <script>
     export default {
-        // aviliable size lg, md, sm
+        // aviliable size lg, md, sm, xs
         props:['image', 'badge', 'size'],
 
         computed:{
@@ -22,6 +22,8 @@
                     return 'h-40 w-40';
                 }else if(this.size == 'md'){
                     return 'h-20 w-20'
+                }else if(this.size == 'sm'){
+                    return 'h-16 w-16'
                 }
 
                 return 'h-10 w-10'                
@@ -32,6 +34,8 @@
                     return 'h-10 w-10';
                 }else if(this.size == 'md'){
                     return 'h-6 w-6'
+                }else if(this.size == 'sm'){
+                    return 'h-4 w-4'
                 }
 
                 return 'h-3 w-3' 

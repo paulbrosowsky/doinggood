@@ -25,6 +25,12 @@ class NeedTest extends TestCase
     }
 
     /** @test */
+    function it_belongs_to_a_state()
+    {
+       $this->assertInstanceOf('App\State', $this->need->state);
+    }
+
+    /** @test */
     function it_has_many_categories()
     {
         $this->assertInstanceOf(
@@ -43,6 +49,15 @@ class NeedTest extends TestCase
     }
 
     /** @test */
+    function it_has_many_helps()
+    {
+        $this->assertInstanceOf(
+            'Illuminate\Database\Eloquent\Collection',
+            $this->need->helps
+        );
+    }
+
+    /** @test */
     function its_descriptions_are_sanitize_automaticaly()
     {
         $this->need->update([
@@ -52,6 +67,15 @@ class NeedTest extends TestCase
 
         $this->assertEquals($this->need->fresh()->project_description, '<p>Project is okay.</p>');
         $this->assertEquals($this->need->fresh()->need_description, '<p>Need is okay.</p>');
+    }
+
+    /** @test */
+    function it_knows_this_owner()
+    {
+        $this->signIn();
+        $this->need->update(['user_id' => auth()->id()]);
+
+        $this->assertTrue($this->need->owner);
     }
 
     

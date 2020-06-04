@@ -28,6 +28,18 @@ class CreateNeedTest extends TestCase
     }
 
     /** @test */
+    function helper_may_not_create_needs()
+    {
+        $this->signIn(factory('App\User')->create(['helper' => true]));
+        
+        $this->get(route('need.create'))
+            ->assertRedirect(route('home'));
+
+        $this->post(route('need.store'))
+            ->assertRedirect(route('home'));
+    }
+
+    /** @test */
     function verified_users_may_create_needs()
     {
         $this->signIn();

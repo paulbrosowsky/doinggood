@@ -15,13 +15,13 @@ class CreateNeedsTable extends Migration
     {
         Schema::create('needs', function (Blueprint $table) {
             $table->id();            
-            $table->unsignedBigInteger('user_id');  
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');            
             $table->text('project_description')->nullable();
             $table->text('need_description')->nullable();
             $table->string('title_image')->nullable();
             $table->timestamp('deadline');
-            $table->string('status')->default('offen');
+            $table->string('state_id')->default(1);
             $table->timestamps();
         });
     }

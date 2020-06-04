@@ -2,7 +2,7 @@
     <div>
         <div class="flex">
             <button class="btn mr-2" @click="askQuestionModal">Frage stellen</button>
-            <button class="btn btn-yellow">Interesse ziegen</button> 
+            <button class="btn btn-yellow" @click="offerHelpModal">Interesse ziegen</button> 
         </div>
 
         <loading v-if="loading"></loading>
@@ -36,6 +36,30 @@
                         this.loading = false; 
                         
                         this.$modal.hide('message-form');
+                    })
+                    .catch(()=> this.loading = false)
+                
+            },
+
+            offerHelpModal(){
+                this.$modal.show('message-form', {
+                    title: 'Interesse zeigen',                   
+                    placeholder: 'Beschreibe hier deine Motivation ...', 
+                    action:  'offerHelp'                 
+                });
+            },
+
+            offerHelp(message){                
+                this.loading = true;
+
+                axios
+                    .post(`${window.location.href}/help`, {message: message})
+                    .then(()=> {
+                        flash('Dein Angebot wurde geschickt.');  
+                        this.loading = false; 
+                        
+                        this.$modal.hide('message-form');
+                        window.location.reload();
                     })
                     .catch(()=> this.loading = false)
                 

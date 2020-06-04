@@ -4,6 +4,7 @@ use App\Category;
 use App\Need;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class NeedsSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class NeedsSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+
         Need::truncate();
 
         // factory(Need::class, 100)->create();
@@ -25,5 +28,7 @@ class NeedsSeeder extends Seeder
                 'categorizable_type' => 'App\Need'
             ]);           
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 }

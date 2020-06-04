@@ -31,6 +31,7 @@ Vue.component('confirm-dialog', require('./modals/ConfirmDialog.vue').default);
 Vue.component('DatetimeInput', require('./components/DatetimeInput.vue').default);
 Vue.component('edit-profile', require('./views/EditProfile.vue').default);
 Vue.component('flash', require('./components/Flash.vue').default);
+Vue.component('help-card', require('./components/HelpCard.vue').default);
 Vue.component('image-upload', require('./components/ImageUpload.vue').default);
 Vue.component('loading', require('./components/Loading.vue').default);
 Vue.component('message-form', require('./modals/MessageForm.vue').default);

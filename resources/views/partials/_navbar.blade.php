@@ -69,7 +69,7 @@
                                 <avatar 
                                     :image="{{ json_encode(auth()->user()->avatar) }}" 
                                     :badge="{{ json_encode(auth()->user()->helper) }}" 
-                                    size="sm"
+                                    size="xs"
                                 ></avatar>
                             </a>                                      
                         </div>

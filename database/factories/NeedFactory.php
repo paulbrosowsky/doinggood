@@ -14,7 +14,9 @@ $factory->define(Need::class, function (Faker $faker) {
         'project_description' => $faker->paragraph(10),
         'need_description' => $faker->paragraph(10),
         'deadline' => now()->addWeek(),
-        'status' => $faker->randomElement(['open', 'assigned', 'completed'])
+        'state_id'=> function(){
+            return factory('App\State')->create()->id;
+        }, 
     ];
 });
 
@@ -27,7 +29,9 @@ $factory->state(Need::class, 'from_existing_data', function(Faker $faker){
         'project_description' => $faker->paragraph(10),
         'need_description' => $faker->paragraph(10),
         'deadline' => now()->addWeek(), 
-        'status' => $faker->randomElement(['offen', 'vergeben', 'abgeschlossen'])
+        'state_id'=> function(){
+            return \App\State::all()->random()->id;
+        },
     ];
 
 });

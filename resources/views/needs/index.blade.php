@@ -4,11 +4,14 @@
 
 <div class="mx-5 md:mx-10 lg:mx-32">
     <nav class="mb-5">
-        <a href="{{route('need.create')}}">
-            <button class="btn btn-blue">
-                Neuer Bedarf 
-            </button>
-        </a>
+        @if (auth()->check() && !auth()->user()->helper)
+            <a href="{{route('need.create')}}">
+                <button class="btn btn-blue">
+                    Neuer Bedarf 
+                </button>
+            </a>
+        @endif
+        
     </nav>
     <masonry
         :cols="{default: 3, 1500:3, 800: 2, 420: 1}"

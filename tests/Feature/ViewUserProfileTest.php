@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Need;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -36,14 +37,17 @@ class ViewUserProfileTest extends TestCase
     }
 
     /** @test */
-    function users_may_view_all_profiles_needss()
-    {        
+    function users_may_view_profile_feed()
+    {   
         $this->signIn();
-        $needs = factory('App\Need')->create([
-            'user_id' => $this->user->id
-        ]);        
+        $state = factory('App\State')->create();
+        $need = factory('App\Need')->create([
+            'user_id' => $this->user->id , 
+            'state_id' => $state->id          
+        ]); 
 
-        $this->get(route('profile', $this->user->username))
-            ->assertSee($needs->first());
-    }
+        $response = $this->get(route('profile', $this->user->username));  
+
+        $this->assertEquals($need->title, $response['needs'][$state->name][0]['title']);
+    }    
 }

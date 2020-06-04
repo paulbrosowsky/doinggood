@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -134,12 +135,21 @@ class User extends Authenticatable implements MustVerifyEmail
     } 
     
     /**
-     * 
+     * A User has Many Needs
      * @return hasMany 
      */
     public function needs()
     {
         return $this->hasMany(Need::class);
+    }
+
+    /**
+     * A User has many Helps
+     * @return hasMany 
+     */
+    public function helps()
+    {
+        return $this->hasMany(Help::class);
     }
 
      /**
@@ -150,5 +160,57 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getDescriptionAttribute($description)
     {
         return \Purify::clean($description);
-    }  
+    }
+    
+    /**
+     *  Get User Profile Feed
+     * 
+     * @return Collection 
+     */
+    public function feed()
+    {        
+        if($this->helper){            
+            return  Need::whereExists(function($query){                
+                        $query->from('helps')
+                            ->whereColumn('need_id', 'needs.id');
+                    })->get()
+                    ->sortDesc()                    
+                    ->groupBy('state.name')
+                    ->sortBy(function($query){
+                        return $query->first()->state_id;
+                    });   
+        }
+
+        return $this->needs
+                ->sortDesc()
+                ->groupBy('state.name')
+                ->sortBy(function($query){
+                    return $query->first()->state_id;
+                });  
+    }
+
+    /** 
+     *  Get Profile Feed Counter
+     * 
+     * @return array
+     */
+    public function getFeedCounterAttribute()
+    {
+        if ($this->helper) {
+            $completedHelps = $this->helps->where('state_id', 3)->count();
+            return [
+                'active' => $this->helps->count() - $completedHelps,
+                'completed' =>  $completedHelps,
+                'total' => $this->helps->count()                           
+            ];
+        }
+
+        $completedNeeds = $this->needs->where('state_id', 3)->count();
+        return [
+            'active' => $this->needs->count() - $completedNeeds,
+            'completed' =>  $completedNeeds ,
+            'total' => $this->needs->count()                            
+        ];
+
+    }
 }

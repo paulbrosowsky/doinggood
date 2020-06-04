@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')    
-    <section class="w-full mx-auto md:w-2/3 lg:w-1/2">
-        <div class="px-5 md:px-0">
+    <div class="w-full mx-auto md:w-2/3 lg:w-1/2">
+        <section class="px-5 md:px-0">
 
             <div class="relative bg-gray-500 rounded-xl overflow-hidden pb-2/3 mb-5">           
                 <img class="absolute w-full h-full object-cover" src="{{ $need->title_image }}" alt="">
@@ -29,22 +29,22 @@
                     </div>              
                 @endif 
             </div>  
-        </div>
+        </section>
 
-        <div class="container py-3 mb-5 mt-3  md:rounded-xl">
+        <section class="container py-3 mb-5 mt-3  md:rounded-xl">
             <h4 class="text-gray-500 mb-3">Was haben wir vor ?</h4>
 
             <p>{!!$need->project_description!!}</p>
-        </div>
+        </section>
 
-        <div class="container py-3 md:rounded-xl">
+        <section class="container py-3 md:rounded-xl">
             <h4 class="text-gray-500 mb-3">Was brauchen wir ?</h4>
 
             <p>{!!$need->need_description!!}</p>
-        </div>
+        </section>
 
-        @if ($need->creator->id != auth()->id())
-            <div class="container py-3 mt-5 md:rounded-xl">
+        @if (!$need->owner)
+            <section class="container py-3 my-5 md:rounded-xl">
                 <h4 class="text-gray-500 mb-3">Über uns</h4>
 
                 <div class="flex items-center mb-5">
@@ -64,9 +64,9 @@
                 </div>
 
                 <p>{{$need->creator->excerpt}}</p>
-            </div>   
+            </section>   
         @endif
-        
+
         @if (auth()->check())        
             <div class="flex justify-end py-5 px-5">
                 @can('update', $need)
@@ -74,12 +74,23 @@
                         <button class="btn btn-blue">Bearbeiten</button>
                     </a>                    
                 @endcan                
-                @if ($need->creator->id != auth()->id())
+                @if (auth()->user()->helper && $need->state_id == 1)
                     <need-action-buttons></need-action-buttons>
                 @endif   
             </div>
         @endif
-       
+        
+        @if(!$helps->isEmpty() && $need->owner)
+            <section>
+                <h4 class="text-gray-500 text-lg my-3 ml-3">Interessenten</h4>
+                @foreach ($helps as $help)                    
+                <help-card 
+                    :user="{{ $help->user}}" 
+                    :feed-count="{{ $help->user->feedCounter['total']}}"
+                ></help-card>                                      
+                @endforeach            
+            </section>
+        @endif          
 
-    </section> 
+    </div> 
 @endsection

@@ -41,16 +41,25 @@ Route::group([
     Route::group([
         'middleware' => 'fully.verified'
     ], function(){
-        
-        Route::get('needs/create', 'NeedsController@create')->name('need.create');        
-        Route::post('needs/store', 'NeedsController@store')->name('need.store');  
-           
-        Route::patch('needs/{need}', 'NeedsController@update')->name('need.update');
-        Route::get('needs/{need}/edit', 'NeedsController@edit')->name('need.edit');   
-        Route::post('needs/{need}/image', 'NeedImagesController@update')->name('need.image');
-        Route::delete('needs/{need}', 'NeedsController@destroy')->name('need.destroy');
 
-        Route::post('needs/{need}/question', 'NeedQuestionsController@create')->name('need.question');        
+        Route::group([
+            'middleware' => 'is.helper:0'
+        ], function(){
+            Route::get('needs/create', 'NeedsController@create')->name('need.create');        
+            Route::post('needs/store', 'NeedsController@store')->name('need.store');  
+               
+            Route::patch('needs/{need}', 'NeedsController@update')->name('need.update');
+            Route::get('needs/{need}/edit', 'NeedsController@edit')->name('need.edit');   
+            Route::post('needs/{need}/image', 'NeedImagesController@update')->name('need.image');
+            Route::delete('needs/{need}', 'NeedsController@destroy')->name('need.destroy');
+        });
+
+        Route::group([
+            'middleware' => 'is.helper:1'
+        ], function(){            
+            Route::post('needs/{need}/question', 'NeedQuestionsController@create')->name('need.question');  
+            Route::post('needs/{need}/help', 'HelpsController@store')->name('help.store');      
+        });          
     });
 });
 

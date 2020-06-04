@@ -20,12 +20,12 @@ class Need extends Model
     /**
      *  Eager load with the Model
      */ 
-    protected $with= ['categories', 'creator']; 
+    protected $with= ['categories', 'creator', 'state']; 
     
      /**
      *  Append to the User Model 
      */
-    protected $appends = ['tagNames'];
+    protected $appends = ['tagNames', 'owner'];    
 
     /**
      *  A Need Belongs to Many Categories
@@ -35,6 +35,21 @@ class Need extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     *  A Need has many Help Offers
+     * 
+     *  @return hasMany
+     */
+    public function helps()
+    {
+        return $this->hasMany(Help::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
     }
 
     /**
@@ -78,6 +93,16 @@ class Need extends Model
     public function getDeadlineAttribute($deadline)
     {
         return Carbon::parse($deadline)->format('c');
+    }
+
+    /**
+     *  Determine if Auth User is Owner of the Need
+     * 
+     * @return boolean
+     */
+    public function getOwnerAttribute()
+    {
+        return $this->creator->id === auth()->id();
     }
 
 }

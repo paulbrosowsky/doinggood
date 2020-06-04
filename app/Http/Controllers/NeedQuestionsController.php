@@ -8,8 +8,14 @@ use Illuminate\Http\Request;
 
 class NeedQuestionsController extends Controller
 {
+    /**
+     *  Ask Question About an Need
+     * 
+     * @param Need $need
+     * @param Request $request
+     */
     public function create(Need $need, Request $request)
-    {
+    {          
         $request->validate([
             'body' => ['required']
         ]);

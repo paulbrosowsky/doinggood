@@ -28,6 +28,7 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
         'description' => $faker->paragraph(10),
         'excerpt' => $faker->paragraph(3),
-        'unlocked_at' => now() 
+        'unlocked_at' => now(),
+        'helper' => false 
     ];
 });

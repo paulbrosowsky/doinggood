@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
-
-    
+@section('content')    
 
         <section class="w-full mx-auto md:w-2/3 lg:w-1/2 mt-10">
 
@@ -27,39 +25,30 @@
                 </div>
 
                 <div class="flex mb-5">
-                    @if ($user->helper)
-                        <div class="text-center mr-5">
-                            <h1 class="text-4xl font-light leading-tight ">12</h1>
-                            <div class="text-xs text-gray-500 leading-none">
-                                <p>aktive</p>
-                                <p>Hilfen</p>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <h1 class="text-4xl font-light leading-tight">6</h1>
-                            <div class="text-xs text-gray-500 leading-none">
-                                <p>abgeschl.</p>
-                                <p>Hilfen</p>
-                            </div>
-                        </div>
-                    @else
-                        <div class="text-center mr-5">
-                            <h1 class="text-4xl font-light leading-none">2</h1>
-                            <div class="text-xs text-gray-500 leading-none">
-                                <p>aktive</p>
-                                <p>Bedarfe</p>
-                            </div>
-                        </div>
 
-                        <div class="text-center">
-                            <h1 class="text-4xl font-light leading-none">23</h1>
-                            <div class="text-xs text-gray-500 leading-none">
-                                <p>abgeschl.</p>
-                                <p>Bedarfe</p>
-                            </div>
-                        </div> 
-                    
-                    @endif  
+                    <div class="text-center mr-5">
+                        <h1 class="text-4xl font-light leading-tight ">{{$user->feedCounter['active']}}</h1>
+                        <div class="text-xs text-gray-500 leading-none">
+                            <p>aktive</p>
+                            @if($user->helper)
+                            <p>Hilfen</p>
+                            @else
+                            <p>Bedarfe</p>
+                            @endif
+
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h1 class="text-4xl font-light leading-tight">{{$user->feedCounter['completed']}}</h1>
+                        <div class="text-xs text-gray-500 leading-none">
+                            <p>abgeschl.</p>
+                            @if($user->helper)
+                            <p>Hilfen</p>
+                            @else
+                            <p>Bedarfe</p>
+                            @endif
+                        </div>
+                    </div>
                 </div>
 
                 <p class="text-center">{{ $user->excerpt }}</p>   
@@ -150,20 +139,26 @@
             </div>
         </section>
       
-    <section class="mx-5 md:mx-10 lg:mx-32">      
+    <section class="mx-5 md:mx-10 lg:mx-32"> 
         
-            @foreach ($needs as $key => $chunk) 
+            @foreach ($needs as $key => $chunk)            
 
                 <div class="flex justify-center">
-                    <h4 class=" text-lg font-semibold text-gray-600 border-2 rounded-full px-3 py-1 my-5">Bedarfe {{ $key }}</h4> 
+                    <h4 class=" text-lg font-semibold text-gray-600 border-2 rounded-full px-3 py-1 my-5">
+                        @if ($user->helper)
+                            Hilfen
+                        @else
+                            Bedarfe 
+                        @endif
+                        {{ $key }}
+                    </h4> 
                 </div>                
                 
                 <masonry
                     :cols="{default: 3, 1500:3, 800: 2, 420: 1}"
                     :gutter="{default: '2rem', 700: '15px'}"
                 > 
-                    @foreach ($chunk as $key => $need)
-                        {{$key}}
+                    @foreach ($chunk as $key => $need)                        
                         <a href="{{ route('need', ['need' => $need->id]) }}">
                             <need-card             
                                 class="mb-5"                             

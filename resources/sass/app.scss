@@ -164,7 +164,8 @@ h1, h2, h3, h4{
 }
 
 .dg-modal{
-    @apply rounded-lg p-5;
+    border-radius: 0.5rem !important;
+    @apply p-5;    
 }
 
 

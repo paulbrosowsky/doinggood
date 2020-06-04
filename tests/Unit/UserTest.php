@@ -46,6 +46,15 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    function it_has_many_helps()
+    {
+        $this->assertInstanceOf(
+            'Illuminate\Database\Eloquent\Collection',
+            $this->user->helps
+        );
+    }
+
+    /** @test */
     function it_knows_wether_is_administrator()
     {
         $this->user->update([

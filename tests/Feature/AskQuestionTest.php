@@ -33,11 +33,22 @@ class AskQuestionTest extends TestCase
         $this->post(route('need.question', $this->need->id))
             ->assertStatus(302);
     }   
+
+    /** @test */
+    function searchers_may_not_ask_any_questions()
+    {        
+        $this->signIn();
+
+        $this->post(route('need.question', $this->need->id))
+            ->assertStatus(302);
+    }
     
     /** @test */
     function authorized_users_may_ask_questions_about_needs()
-    {        
-        $this->signIn();
+    {  
+        $this->signIn(factory('App\User')->create([
+            'helper' => true
+        ]));
         Notification::fake();
 
         $this->post(route('need.question', $this->need->id), ['body' => 'Question?']);
@@ -48,7 +59,9 @@ class AskQuestionTest extends TestCase
     /** @test */
     function question_body_is_required()
     {
-        $this->signIn();
+        $this->signIn(factory('App\User')->create([
+            'helper' => true
+        ]));
         
         $this->post(route('need.question', $this->need->id), ['body' => ''])
             ->assertSessionHasErrors('body');
