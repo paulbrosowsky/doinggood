@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Help;
 use App\Need;
+use App\Notifications\HelpWasAssigned;
 use App\Notifications\HelpWasOffered;
+use App\Notifications\HelpWasRejected;
 use Illuminate\Http\Request;
 
 class HelpsController extends Controller
@@ -29,5 +32,35 @@ class HelpsController extends Controller
             $need,
             $request->message           
         ));
+    }
+
+    /**
+     *  Update Help as Assigned
+     * 
+     * @param Help $help
+     */
+    public function assign(Help $help)
+    {
+        $this->authorize('assign', $help);
+
+        $help->update([ 'state_id' => 2 ]); 
+        
+        $help->user->notify(new HelpWasAssigned($help->need));
+    }
+
+    /**
+     *  Delete Help by Rejecting It
+     */
+    public function reject(Help $help, Request $request)
+    {
+        $this->authorize('assign', $help);
+
+        $request->validate([
+            'message' => ['required']
+        ]);
+        
+        $help->user->notify(new HelpWasRejected( $help->need, $request->message ));
+
+        $help->delete();
     }
 }

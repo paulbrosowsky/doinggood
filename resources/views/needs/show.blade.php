@@ -69,25 +69,31 @@
 
         @if (auth()->check())        
             <div class="flex justify-end py-5 px-5">
-                @can('update', $need)
+                @if($need->owner)
                     <a href="{{route('need.edit', $need->id)}}">
                         <button class="btn btn-blue">Bearbeiten</button>
                     </a>                    
-                @endcan                
+                @endif               
                 @if (auth()->user()->helper && $need->state_id == 1)
                     <need-action-buttons></need-action-buttons>
                 @endif   
             </div>
         @endif
         
-        @if(!$helps->isEmpty() && $need->owner)
-            <section>
-                <h4 class="text-gray-500 text-lg my-3 ml-3">Interessenten</h4>
-                @foreach ($helps as $help)                    
-                <help-card 
-                    :user="{{ $help->user}}" 
-                    :feed-count="{{ $help->user->feedCounter['total']}}"
-                ></help-card>                                      
+        @if(!$helps->isEmpty() && auth()->check())
+            <section>                
+                @foreach ($helps as $key => $chunk)
+                    @if ($chunk->first()->state_id != 1 || $need->owner || $chunk->first()->owner)
+                        <h4 class="text-gray-500 text-lg mt-5 mb-3 ml-3">Hilfen {{$key}}</h4>   
+                        @foreach($chunk as $help)                 
+                            <help-card                      
+                                :feed-count="{{ $help->user->feedCounter['total']}}"
+                                :help="{{ $help }}"
+                                :auth="{{ auth()->user() }}"
+                                :need="{{ $help->need }}"
+                            ></help-card>   
+                        @endforeach  
+                    @endif                                                    
                 @endforeach            
             </section>
         @endif          

@@ -11,6 +11,8 @@ class Help extends Model
      */
     protected $guarded = [];
 
+    protected $appends=['owner'];
+
     /**
      *  Help Belongs to User
      * 
@@ -29,5 +31,25 @@ class Help extends Model
     public function state()
     {
         return $this->belongsTo(State::class);
+    }
+
+     /**
+     *  Help Belongs to Need
+     * 
+     * @return belongsTo
+     */
+    public function need()
+    {
+        return $this->belongsTo(Need::class);
+    }
+
+     /**
+     *  Determine if Auth User is Owner of the Help
+     * 
+     * @return boolean
+     */
+    public function getOwnerAttribute()
+    {
+        return $this->user_id === auth()->id();
     }
 }

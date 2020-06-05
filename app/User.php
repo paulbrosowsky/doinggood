@@ -169,16 +169,16 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function feed()
     {        
-        if($this->helper){            
-            return  Need::whereExists(function($query){                
-                        $query->from('helps')
-                            ->whereColumn('need_id', 'needs.id');
-                    })->get()
-                    ->sortDesc()                    
+        if($this->helper){  
+
+            return $this->helps()
+                    ->with('need')
+                    ->get()
+                    ->sortDesc()
                     ->groupBy('state.name')
                     ->sortBy(function($query){
                         return $query->first()->state_id;
-                    });   
+                    }); 
         }
 
         return $this->needs

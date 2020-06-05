@@ -29,26 +29,105 @@
                                                                           
                         </div>
 
-                        <div class="flex md:mb-3 md:-mt-3">
-                            <button class="btn btn-red mr-2">Ablehnen</button>
-                            <button class="btn btn-yellow">Vermittlen</button>
+                        <div class="flex md:mb-3 md:-mt-3" >
+                            <button 
+                                class="btn btn-red mr-2" 
+                                @click="rejectModal"
+                                v-if="needOwner && !completed"
+                            >Ablehnen</button>
+
+                            <button 
+                                class="btn btn-yellow" 
+                                @click="assign" 
+                                v-if="needOwner && !assigned && !completed
+                            ">Vermitteln</button>
+
+                            <button class="btn btn-red mr-2" v-if="helpOwner && !completed">Zurückziehen</button>
+
+                            <button 
+                                class="btn btn-yellow mr-2" 
+                                v-if="helpOwner && assigned && !completed"
+                            >fertig</button>
                         </div>
                     
                 </div> 
             </div>                                            
             
-        </div>
+        </div>     
        
     </div>
 </template>
 <script>
 export default {
-    props:['user', 'feedCount'],
+    props:['help', 'feedCount', 'auth', 'need'],
+
+    data(){
+        return{
+            user: this.help.user            
+        }
+    },
+
+    computed:{
+        needOwner(){
+            return this.need.user_id === this.auth.id;
+        },
+
+        helpOwner(){
+            return this.help.user_id === this.auth.id;
+        },
+
+        assigned(){
+            return this.help.state_id === 2;
+        },
+
+        completed(){
+            return this.help.state_id === 3;
+        }
+    },
 
     methods:{
         toProfile(){
             window.location.href = `/profiles/${this.user.username}`;
+        },
+
+        assign(){            
+            axios
+                .put(`/helps/${this.help.id}/assign`)
+                .then(()=>{
+                    flash('Du hast dein Bedarf erfolgreich vermittelt.');
+                    window.location.reload();
+                })
+        },
+
+        rejectModal(){
+            this.$modal.show('message-form', {
+                title: 'Hilfe ablehnen',                   
+                placeholder: 'Wieso lehnst du ab? ...', 
+                action:  'reject',
+                messageId: this.help.id                
+            });
+        },
+
+        reject(body){
+            axios
+                .put(`/helps/${this.help.id}/reject`, {message: body} )
+                .then(()=>{
+                    flash('Die Hilfe wurde abgelehnt.');
+                    window.location.reload();
+                })
+        },
+
+        submitMessage(message){               
+            this[message.action](message.body);
         }
+    },
+
+    mounted(){
+        Event.$on(`submit-message-${this.help.id}`, (value)=> this.submitMessage(value))
+    },
+
+    beforeDestroy(){
+        Event.$off(`submit-message-${this.help.id}`, (value)=> this.submitMessage(value))
     }
     
 }

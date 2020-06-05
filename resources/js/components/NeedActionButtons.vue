@@ -22,7 +22,7 @@
                 this.$modal.show('message-form', {
                     title: 'Frage stellen',                   
                     placeholder: 'Stelle hier deine Frage ...', 
-                    action:  'askQuestion'                 
+                    action:  'askQuestion'                                                    
                 });
             },
 
@@ -45,7 +45,7 @@
                 this.$modal.show('message-form', {
                     title: 'Interesse zeigen',                   
                     placeholder: 'Beschreibe hier deine Motivation ...', 
-                    action:  'offerHelp'                 
+                    action:  'offerHelp'                    
                 });
             },
 

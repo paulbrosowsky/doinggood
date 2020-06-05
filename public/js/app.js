@@ -2257,12 +2257,86 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user', 'feedCount'],
+  props: ['help', 'feedCount', 'auth', 'need'],
+  data: function data() {
+    return {
+      user: this.help.user
+    };
+  },
+  computed: {
+    needOwner: function needOwner() {
+      return this.need.user_id === this.auth.id;
+    },
+    helpOwner: function helpOwner() {
+      return this.help.user_id === this.auth.id;
+    },
+    assigned: function assigned() {
+      return this.help.state_id === 2;
+    },
+    completed: function completed() {
+      return this.help.state_id === 3;
+    }
+  },
   methods: {
     toProfile: function toProfile() {
       window.location.href = "/profiles/".concat(this.user.username);
+    },
+    assign: function assign() {
+      axios.put("/helps/".concat(this.help.id, "/assign")).then(function () {
+        flash('Du hast dein Bedarf erfolgreich vermittelt.');
+        window.location.reload();
+      });
+    },
+    rejectModal: function rejectModal() {
+      this.$modal.show('message-form', {
+        title: 'Hilfe ablehnen',
+        placeholder: 'Wieso lehnst du ab? ...',
+        action: 'reject',
+        messageId: this.help.id
+      });
+    },
+    reject: function reject(body) {
+      axios.put("/helps/".concat(this.help.id, "/reject"), {
+        message: body
+      }).then(function () {
+        flash('Die Hilfe wurde abgelehnt.');
+        window.location.reload();
+      });
+    },
+    submitMessage: function submitMessage(message) {
+      this[message.action](message.body);
     }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    Event.$on("submit-message-".concat(this.help.id), function (value) {
+      return _this.submitMessage(value);
+    });
+  },
+  beforeDestroy: function beforeDestroy() {
+    var _this2 = this;
+
+    Event.$off("submit-message-".concat(this.help.id), function (value) {
+      return _this2.submitMessage(value);
+    });
   }
 });
 
@@ -3036,6 +3110,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3043,18 +3118,29 @@ __webpack_require__.r(__webpack_exports__);
       placeholder: 'Erzähl mehr ...',
       action: null,
       text: null,
+      messageId: null,
       error: null
     };
+  },
+  computed: {
+    submitEvent: function submitEvent() {
+      return this.messageId ? "submit-message-".concat(this.messageId) : 'submit-message';
+    }
   },
   methods: {
     beforeOpen: function beforeOpen(event) {
       this.title = event.params.title;
       this.placeholder = event.params.placeholder;
       this.action = event.params.action;
+      this.messageId = event.params.messageId;
+      console.log(event.params);
+    },
+    beforeClose: function beforeClose() {
+      this.messageId = null;
     },
     submit: function submit() {
       if (this.text) {
-        Event.$emit('submit-message', {
+        Event.$emit(this.submitEvent, {
           action: this.action,
           body: this.text
         });
@@ -41789,24 +41875,44 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "flex md:mb-3 md:-mt-3" }, [
+            _vm.needOwner && !_vm.completed
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-red mr-2",
+                    on: { click: _vm.rejectModal }
+                  },
+                  [_vm._v("Ablehnen")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.needOwner && !_vm.assigned && !_vm.completed
+              ? _c(
+                  "button",
+                  { staticClass: "btn btn-yellow", on: { click: _vm.assign } },
+                  [_vm._v("Vermitteln")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.helpOwner && !_vm.completed
+              ? _c("button", { staticClass: "btn btn-red mr-2" }, [
+                  _vm._v("Zurückziehen")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.helpOwner && _vm.assigned && !_vm.completed
+              ? _c("button", { staticClass: "btn btn-yellow mr-2" }, [
+                  _vm._v("fertig")
+                ])
+              : _vm._e()
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex md:mb-3 md:-mt-3" }, [
-      _c("button", { staticClass: "btn btn-red mr-2" }, [_vm._v("Ablehnen")]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-yellow" }, [_vm._v("Vermittlen")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -42494,7 +42600,7 @@ var render = function() {
         name: "message-form",
         height: "auto"
       },
-      on: { "before-open": _vm.beforeOpen }
+      on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }
     },
     [
       _c(

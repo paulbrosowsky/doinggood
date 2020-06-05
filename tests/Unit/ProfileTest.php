@@ -11,7 +11,7 @@ class ProfileTest extends TestCase
     
 
     /** @test */
-    function searcher_profile_contains_of_own_needs()
+    function searcher_profile_contains_of_needs()
     {
         $user = factory('App\User')->create();
         $state = factory('App\State')->create();
@@ -19,31 +19,27 @@ class ProfileTest extends TestCase
             'user_id' => $user->id , 
             'state_id' => $state->id          
         ]);   
-
-        $this->assertEquals(
-            $user->id, 
-            $user->feed()[$state->name][0]->creator->id
+           
+        $this->assertInstanceOf(
+            'App\Need',
+            $user->feed()[$state->name][0]
         );
     }
 
     /** @test */
-    function helper_profile_contains_of_needs_for_them_he_offered_help()
+    function helper_profile_contains_of_helps()
     {        
         $user = factory('App\User')->create(['helper' => true]);
-        $state = factory('App\State')->create();
-        $need = factory('App\Need')->create([
-            'user_id' => $user->id , 
-            'state_id' => $state->id          
-        ]);   
+        $state = factory('App\State')->create();         
         
         factory('App\Help')->create([
-            'user_id' => $user->id,
-            'need_id' => $need->id
+            'user_id' => $user->id,   
+            'state_id' => $state->id         
         ]);    
         
-        $this->assertEquals(
-            $user->helps->first()->need_id, 
-            $user->feed()[$state->name][0]->id
+        $this->assertInstanceOf(
+            'App\Help',
+            $user->feed()[$state->name][0]
         );
     }
 

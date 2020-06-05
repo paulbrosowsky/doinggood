@@ -72,10 +72,14 @@ class NeedsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Need $need)
-    {            
+    {   
+        $helps = $need->helps->groupBy('state.name')->sortBy(function($query){
+            return $query->first()->state_id;
+        });
+                 
         return view('needs.show', [
             'need' => $need,
-            'helps' => $need->helps
+            'helps' => $helps
         ]);
     }
 

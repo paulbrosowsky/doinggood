@@ -3,7 +3,8 @@
         classes="dg-modal relative"      
         name="message-form"
         height="auto"   
-        @before-open="beforeOpen"                    
+        @before-open="beforeOpen"  
+        @before-close="beforeClose"                  
     >
         <button class="icon-btn absolute right-0 top-0 m-3" @click="close">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
@@ -39,7 +40,14 @@ export default {
             placeholder: 'Erzähl mehr ...',
             action: null,            
             text: null,
+            messageId: null,
             error: null            
+        }
+    },
+
+    computed:{
+        submitEvent(){
+            return this.messageId ? `submit-message-${this.messageId}`: 'submit-message';
         }
     },
 
@@ -48,13 +56,17 @@ export default {
             this.title = event.params.title;
             this.placeholder = event.params.placeholder;
             this.action = event.params.action;
-
-            
-        },       
+            this.messageId = event.params.messageId;  
+            console.log(event.params);          
+        },    
+        
+        beforeClose(){            
+            this.messageId = null;         
+        },
 
         submit(){
             if(this.text){
-                Event.$emit('submit-message', {
+                Event.$emit( this.submitEvent , {
                     action: this.action,
                     body: this.text
                 }); 

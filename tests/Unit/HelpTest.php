@@ -30,4 +30,10 @@ class HelpTest extends TestCase
     {       
         $this->assertInstanceOf('App\State', $this->help->state);
     }
+
+     /** @test */
+    function it_belongs_to_a_need()
+    {
+        $this->assertInstanceOf('App\Need', $this->help->need);
+    }
 }

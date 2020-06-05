@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Policies;
+
+use App\Help;
+use App\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class HelpPolicy
+{
+    use HandlesAuthorization;
+
+    /**
+     * Create a new policy instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     *  Determine whether the User Can Assing the Help
+     * 
+     * @param User $user
+     * @param Help $help
+     * @return  boolean
+     */
+    public function assign(User $user, Help $help)
+    {
+        return $user->id === $help->need->creator->id;
+    }
+}
