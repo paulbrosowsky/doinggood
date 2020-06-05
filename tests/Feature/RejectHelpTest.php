@@ -25,6 +25,8 @@ class RejectHelpTest extends TestCase
                 'user_id' => $this->user->id
             ])->id           
         ]);
+
+        Notification::fake();
     }
     
     /** @test */
@@ -48,8 +50,7 @@ class RejectHelpTest extends TestCase
     /** @test */
     function help_creator_receives_email_upon_rejectin_help()
     {
-        $this->signIn($this->user);
-        Notification::fake();
+        $this->signIn($this->user);        
 
         $this->put(route('help.reject', $this->help->id), ['message' => 'Reject']);
 

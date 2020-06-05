@@ -63,6 +63,7 @@ Route::group([
             Route::post('needs/{need}/question', 'NeedQuestionsController@create')->name('need.question');  
             Route::post('needs/{need}/help', 'HelpsController@store')->name('help.store');
             
+            Route::delete('/helps/{help}', 'HelpsController@destroy')->name('help.destroy');
             
         });          
     });

@@ -38,11 +38,15 @@
 
                             <button 
                                 class="btn btn-yellow" 
-                                @click="assign" 
+                                @click="assign"                                 
                                 v-if="needOwner && !assigned && !completed
                             ">Vermitteln</button>
 
-                            <button class="btn btn-red mr-2" v-if="helpOwner && !completed">Zurückziehen</button>
+                            <button 
+                                class="btn btn-red mr-2" 
+                                @click="withdrawModal"
+                                v-if="helpOwner && !completed"
+                            >Zurückziehen</button>
 
                             <button 
                                 class="btn btn-yellow mr-2" 
@@ -113,6 +117,25 @@ export default {
                 .put(`/helps/${this.help.id}/reject`, {message: body} )
                 .then(()=>{
                     flash('Die Hilfe wurde abgelehnt.');
+                    window.location.reload();
+                })
+        },
+
+        withdrawModal(){
+            this.$modal.show('message-form', {
+                title: 'Hilfe zurückziehen',                   
+                placeholder: 'Wieso ziehst du deine Hilfe zurück? ...', 
+                action:  'withdraw',
+                messageId: this.help.id                
+            });
+        },
+
+        withdraw(body){          
+            
+            axios
+                .delete(`/helps/${this.help.id}`, {data:{ message: body }})
+                .then(()=>{
+                    flash('Deine Hilfe wurde zurückgezogen.');
                     window.location.reload();
                 })
         },

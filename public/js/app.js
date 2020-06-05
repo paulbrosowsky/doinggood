@@ -2273,6 +2273,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['help', 'feedCount', 'auth', 'need'],
   data: function data() {
@@ -2317,6 +2321,24 @@ __webpack_require__.r(__webpack_exports__);
         message: body
       }).then(function () {
         flash('Die Hilfe wurde abgelehnt.');
+        window.location.reload();
+      });
+    },
+    withdrawModal: function withdrawModal() {
+      this.$modal.show('message-form', {
+        title: 'Hilfe zurückziehen',
+        placeholder: 'Wieso ziehst du deine Hilfe zurück? ...',
+        action: 'withdraw',
+        messageId: this.help.id
+      });
+    },
+    withdraw: function withdraw(body) {
+      axios["delete"]("/helps/".concat(this.help.id), {
+        data: {
+          message: body
+        }
+      }).then(function () {
+        flash('Deine Hilfe wurde zurückgezogen.');
         window.location.reload();
       });
     },
@@ -3133,7 +3155,6 @@ __webpack_require__.r(__webpack_exports__);
       this.placeholder = event.params.placeholder;
       this.action = event.params.action;
       this.messageId = event.params.messageId;
-      console.log(event.params);
     },
     beforeClose: function beforeClose() {
       this.messageId = null;
@@ -41896,9 +41917,14 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _vm.helpOwner && !_vm.completed
-              ? _c("button", { staticClass: "btn btn-red mr-2" }, [
-                  _vm._v("Zurückziehen")
-                ])
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-red mr-2",
+                    on: { click: _vm.withdrawModal }
+                  },
+                  [_vm._v("Zurückziehen")]
+                )
               : _vm._e(),
             _vm._v(" "),
             _vm.helpOwner && _vm.assigned && !_vm.completed

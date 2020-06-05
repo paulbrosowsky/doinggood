@@ -7,6 +7,7 @@ use App\Need;
 use App\Notifications\HelpWasAssigned;
 use App\Notifications\HelpWasOffered;
 use App\Notifications\HelpWasRejected;
+use App\Notifications\HelpWasWithdrawn;
 use Illuminate\Http\Request;
 
 class HelpsController extends Controller
@@ -50,6 +51,9 @@ class HelpsController extends Controller
 
     /**
      *  Delete Help by Rejecting It
+     * 
+     * @param Help $help
+     * @param Request $request
      */
     public function reject(Help $help, Request $request)
     {
@@ -63,4 +67,25 @@ class HelpsController extends Controller
 
         $help->delete();
     }
+
+    /**
+     *  Delete Help by Withdrawing it
+     * 
+     * @param Help $help
+     * @param Request $reque
+     */
+    public function destroy(Help $help, Request $request)
+    {
+        $this->authorize('delete', $help);
+       
+        $request->validate([
+            'message' => ['required']
+        ]);
+        
+        $help->need->creator->notify(new HelpWasWithdrawn( $help, $request->message ));
+
+        $help->delete();
+    }
+
+
 }

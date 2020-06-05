@@ -56,8 +56,7 @@ export default {
             this.title = event.params.title;
             this.placeholder = event.params.placeholder;
             this.action = event.params.action;
-            this.messageId = event.params.messageId;  
-            console.log(event.params);          
+            this.messageId = event.params.messageId;                       
         },    
         
         beforeClose(){            
