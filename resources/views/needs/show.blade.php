@@ -6,6 +6,14 @@
 
             <div class="relative bg-gray-500 rounded-xl overflow-hidden pb-2/3 mb-5">           
                 <img class="absolute w-full h-full object-cover" src="{{ $need->title_image }}" alt="">
+
+                @if ($need->state_id != 1)
+                    <div class="absolute w-full h-full bg-white opacity-75"></div>                  
+                    <span                                           
+                        class="absolute right-0 border-2 rounded-full text-sm font-bold px-3 py-1 m-5" 
+                        style="border-color:{{$need->state->color}}; color:{{$need->state->color}};"
+                    >{{$need->state->name}}</span>                     
+                @endif
             </div>
 
             <div class="px-3">
@@ -68,11 +76,14 @@
         @endif
 
         @if (auth()->check())        
-            <div class="flex justify-end py-5 px-5">
+            <div class="flex justify-end items-center py-5 px-5">
                 @if($need->owner)
                     <a href="{{route('need.edit', $need->id)}}">
-                        <button class="btn btn-blue">Bearbeiten</button>
-                    </a>                    
+                        <button class="btn">Bearbeiten</button>
+                    </a> 
+                    @if ($need->assignable)
+                        <need-owner-buttons :need="{{ $need }}"></need-owner-buttons>                       
+                    @endif
                 @endif               
                 @if (auth()->user()->helper && $need->state_id == 1)
                     <need-action-buttons></need-action-buttons>

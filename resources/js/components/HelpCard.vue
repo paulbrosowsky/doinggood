@@ -50,6 +50,7 @@
 
                             <button 
                                 class="btn btn-yellow mr-2" 
+                                @click="completeModal"
                                 v-if="helpOwner && assigned && !completed"
                             >fertig</button>
                         </div>
@@ -138,6 +139,25 @@ export default {
                     flash('Deine Hilfe wurde zurückgezogen.');
                     window.location.reload();
                 })
+        },
+
+        completeModal(){
+            this.$modal.show('message-form', {
+                title: 'Hilfe abgeschlossen',                   
+                placeholder: 'Wie ist es gelaufen? ...', 
+                action:  'complete',
+                messageId: this.help.id                
+            });
+        },
+
+        complete(body){          
+            
+            axios
+                .put(`/helps/${this.help.id}/complete`, { message: body })
+                .then(()=>{
+                    flash('Deine Hilfe wurde als abgeschlossen markiert.');
+                    window.location.reload();
+                });
         },
 
         submitMessage(message){               

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Notifications\HelpWasAssigned;
 use Tests\TestCase;
+use App\Notifications\HelpWasAssigned;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 

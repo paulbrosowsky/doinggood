@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\HelpWasCompleted;
 use Illuminate\Database\Eloquent\Model;
 
 class Help extends Model
@@ -52,4 +53,39 @@ class Help extends Model
     {
         return $this->user_id === auth()->id();
     }
+
+    /**
+     *  Determine if Help is Comleted
+     * 
+     * @return boolean
+     */
+    public function getCompletedAttribute()
+    {
+        return $this->state_id == 3;
+    }
+
+    /**
+     *  Determine if Help is Comletables
+     * 
+     * @return boolean
+     */
+    public function getCompletableAttribute()
+    {
+        return $this->state_id == 2;
+    }   
+
+    /**
+     *  Set Help as Completed  
+     * 
+     * @param text $message   
+     */
+    public function complete($message)
+    {        
+        $this->update(['state_id' => 3]);
+
+        $this->need->creator->notify(new HelpWasCompleted($this, $message));
+    }
+
+
+
 }

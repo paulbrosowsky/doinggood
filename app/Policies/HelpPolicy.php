@@ -39,6 +39,18 @@ class HelpPolicy
      * @param Help $help
      * @return  boolean
      */
+    public function complete(User $user, Help $help)
+    {         
+        return $user->id == $help->user_id && $help->completable;
+    }
+
+    /**
+     *  Determine whether the User Can Delete the Help
+     * 
+     * @param User $user
+     * @param Help $help
+     * @return  boolean
+     */
     public function delete(User $user, Help $help)
     {        
         return $user->id == $help->user_id;

@@ -16,13 +16,13 @@ class AskQuestionTest extends TestCase
     public function setUp():void
     {
         parent::setUp();
-    
-        $this->need = factory('App\Need')->create();    
+
+        $this->need = factory('App\Need')->create();
     }
 
     /** @test */
     function unauthorized_users_may_not_ask_questions()
-    {        
+    {
         $this->post(route('need.question', $this->need->id))
             ->assertStatus(302);
 
@@ -32,20 +32,20 @@ class AskQuestionTest extends TestCase
 
         $this->post(route('need.question', $this->need->id))
             ->assertStatus(302);
-    }   
+    }
 
     /** @test */
     function searchers_may_not_ask_any_questions()
-    {        
+    {
         $this->signIn();
 
         $this->post(route('need.question', $this->need->id))
             ->assertStatus(302);
     }
-    
+
     /** @test */
     function authorized_users_may_ask_questions_about_needs()
-    {  
+    {
         $this->signIn(factory('App\User')->create([
             'helper' => true
         ]));
@@ -62,9 +62,9 @@ class AskQuestionTest extends TestCase
         $this->signIn(factory('App\User')->create([
             'helper' => true
         ]));
-        
+
         $this->post(route('need.question', $this->need->id), ['body' => ''])
             ->assertSessionHasErrors('body');
     }
-    
+
 }

@@ -2277,6 +2277,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['help', 'feedCount', 'auth', 'need'],
   data: function data() {
@@ -2339,6 +2340,22 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function () {
         flash('Deine Hilfe wurde zurückgezogen.');
+        window.location.reload();
+      });
+    },
+    completeModal: function completeModal() {
+      this.$modal.show('message-form', {
+        title: 'Hilfe abgeschlossen',
+        placeholder: 'Wie ist es gelaufen? ...',
+        action: 'complete',
+        messageId: this.help.id
+      });
+    },
+    complete: function complete(body) {
+      axios.put("/helps/".concat(this.help.id, "/complete"), {
+        message: body
+      }).then(function () {
+        flash('Deine Hilfe wurde als abgeschlossen markiert.');
         window.location.reload();
       });
     },
@@ -2693,6 +2710,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['need']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NeedOwnerButtons.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NeedOwnerButtons.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['need'],
+  computed: {
+    assigned: function assigned() {
+      return this.need.state_id == 2;
+    },
+    completed: function completed() {
+      return this.need.state_id == 3;
+    }
+  },
+  methods: {
+    assign: function assign() {
+      axios.put("/needs/".concat(this.need.id, "/assign")).then(function () {
+        flash('Dein Bedarf wurde als vermittelt markiert');
+      })["catch"](function (errors) {
+        return console.log(errors);
+      });
+    },
+    complete: function complete() {
+      var _this = this;
+
+      this.$modal.show('confirm-dialog', {
+        title: 'Hilfe wirklich als abgeschlossen markieren?',
+        handler: function handler() {
+          return _this.completeHandler();
+        }
+      });
+    },
+    completeHandler: function completeHandler() {
+      axios.put("/needs/".concat(this.need.id, "/complete")).then(function () {
+        flash('Dein Bedarf wurde als abgeschlossen markiert');
+        setTimeout(function () {
+          window.location.reload();
+        }, 3000);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -3133,6 +3208,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3147,6 +3223,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     submitEvent: function submitEvent() {
       return this.messageId ? "submit-message-".concat(this.messageId) : 'submit-message';
+    },
+    width: function width() {
+      return screen.width > 640 ? '600px' : '100%';
     }
   },
   methods: {
@@ -41928,9 +42007,14 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _vm.helpOwner && _vm.assigned && !_vm.completed
-              ? _c("button", { staticClass: "btn btn-yellow mr-2" }, [
-                  _vm._v("fertig")
-                ])
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-yellow mr-2",
+                    on: { click: _vm.completeModal }
+                  },
+                  [_vm._v("fertig")]
+                )
               : _vm._e()
           ])
         ])
@@ -42234,6 +42318,46 @@ var render = function() {
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NeedOwnerButtons.vue?vue&type=template&id=251abd22&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NeedOwnerButtons.vue?vue&type=template&id=251abd22& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    !_vm.assigned && !_vm.completed
+      ? _c(
+          "button",
+          { staticClass: "btn btn-blue ml-2", on: { click: _vm.assign } },
+          [_vm._v("vermittelt")]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.assigned && !_vm.completed
+      ? _c(
+          "button",
+          { staticClass: "btn btn-yellow ml-2", on: { click: _vm.complete } },
+          [_vm._v(" \n        abgeschlossen\n    ")]
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -42624,7 +42748,8 @@ var render = function() {
       attrs: {
         classes: "dg-modal relative",
         name: "message-form",
-        height: "auto"
+        height: "auto",
+        width: _vm.width
       },
       on: { "before-open": _vm.beforeOpen, "before-close": _vm.beforeClose }
     },
@@ -57138,6 +57263,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('navdrawer', __webpack_requ
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('need-action-buttons', __webpack_require__(/*! ./components/NeedActionButtons.vue */ "./resources/js/components/NeedActionButtons.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('need-card', __webpack_require__(/*! ./components/NeedCard.vue */ "./resources/js/components/NeedCard.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('need-form', __webpack_require__(/*! ./views/NeedForm.vue */ "./resources/js/views/NeedForm.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('need-owner-buttons', __webpack_require__(/*! ./components/NeedOwnerButtons.vue */ "./resources/js/components/NeedOwnerButtons.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('tab', __webpack_require__(/*! ./components/Tab.vue */ "./resources/js/components/Tab.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('tabs', __webpack_require__(/*! ./components/Tabs.vue */ "./resources/js/components/Tabs.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('tags', __webpack_require__(/*! ./components/Tags.vue */ "./resources/js/components/Tags.vue")["default"]);
@@ -57990,6 +58116,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NeedCard_vue_vue_type_template_id_75d07f31___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NeedCard_vue_vue_type_template_id_75d07f31___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/NeedOwnerButtons.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/NeedOwnerButtons.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NeedOwnerButtons_vue_vue_type_template_id_251abd22___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NeedOwnerButtons.vue?vue&type=template&id=251abd22& */ "./resources/js/components/NeedOwnerButtons.vue?vue&type=template&id=251abd22&");
+/* harmony import */ var _NeedOwnerButtons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NeedOwnerButtons.vue?vue&type=script&lang=js& */ "./resources/js/components/NeedOwnerButtons.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NeedOwnerButtons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NeedOwnerButtons_vue_vue_type_template_id_251abd22___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NeedOwnerButtons_vue_vue_type_template_id_251abd22___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/NeedOwnerButtons.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/NeedOwnerButtons.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/NeedOwnerButtons.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NeedOwnerButtons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./NeedOwnerButtons.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NeedOwnerButtons.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NeedOwnerButtons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/NeedOwnerButtons.vue?vue&type=template&id=251abd22&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/NeedOwnerButtons.vue?vue&type=template&id=251abd22& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NeedOwnerButtons_vue_vue_type_template_id_251abd22___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NeedOwnerButtons.vue?vue&type=template&id=251abd22& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NeedOwnerButtons.vue?vue&type=template&id=251abd22&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NeedOwnerButtons_vue_vue_type_template_id_251abd22___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NeedOwnerButtons_vue_vue_type_template_id_251abd22___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

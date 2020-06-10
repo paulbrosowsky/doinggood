@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Exceptions\NeedNotAssignable;
+use App\Exceptions\NeedNotCompletable;
 use App\Need;
 use Carbon\Carbon;
 use Conner\Tagging\Model\Tag;
@@ -141,5 +143,37 @@ class NeedsController extends Controller
         $this->authorize('update', $need);
 
         $need->delete();
+    }
+
+    /**
+     *  Set The given Need as Assigned
+     * 
+     * @param Need $need
+     */
+    public function assign(Need $need)
+    {
+        $this->authorize('update', $need);
+
+        try{
+            $need->assign(); 
+        }catch(NeedNotAssignable $e){   
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     *  Set Need as Completed
+     * 
+     * @param Need $need
+     */
+    public function complete(Need $need)
+    {
+        $this->authorize('update', $need);
+
+        try{
+            $need->complete(); 
+        }catch(NeedNotCompletable $e){   
+            return $e->getMessage();
+        }
     }
 }

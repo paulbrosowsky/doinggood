@@ -2,7 +2,8 @@
     <modal   
         classes="dg-modal relative"      
         name="message-form"
-        height="auto"   
+        height="auto" 
+        :width="width"        
         @before-open="beforeOpen"  
         @before-close="beforeClose"                  
     >
@@ -48,8 +49,12 @@ export default {
     computed:{
         submitEvent(){
             return this.messageId ? `submit-message-${this.messageId}`: 'submit-message';
-        }
-    },
+        },
+        
+        width(){
+            return screen.width > 640 ? '600px' : '100%'
+        }, 
+    },       
 
     methods:{
         beforeOpen(event){

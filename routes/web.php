@@ -52,6 +52,8 @@ Route::group([
             Route::get('needs/{need}/edit', 'NeedsController@edit')->name('need.edit');   
             Route::post('needs/{need}/image', 'NeedImagesController@update')->name('need.image');
             Route::delete('needs/{need}', 'NeedsController@destroy')->name('need.destroy');
+            Route::put('needs/{need}/assign', 'NeedsController@assign')->name('need.assign');
+            Route::put('needs/{need}/complete', 'NeedsController@complete')->name('need.complete');
 
             Route::put('/helps/{help}/assign', 'HelpsController@assign')->name('help.assign');
             Route::put('/helps/{help}/reject', 'HelpsController@reject')->name('help.reject');
@@ -64,7 +66,7 @@ Route::group([
             Route::post('needs/{need}/help', 'HelpsController@store')->name('help.store');
             
             Route::delete('/helps/{help}', 'HelpsController@destroy')->name('help.destroy');
-            
+            Route::put('/helps/{help}/complete', 'HelpsController@complete')->name('help.complete');            
         });          
     });
 });

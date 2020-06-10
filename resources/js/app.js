@@ -40,6 +40,7 @@ Vue.component('navdrawer', require('./modals/Navdrawer.vue').default);
 Vue.component('need-action-buttons', require('./components/NeedActionButtons.vue').default);
 Vue.component('need-card', require('./components/NeedCard.vue').default);
 Vue.component('need-form', require('./views/NeedForm.vue').default);
+Vue.component('need-owner-buttons', require('./components/NeedOwnerButtons.vue').default);
 Vue.component('tab', require('./components/Tab.vue').default);
 Vue.component('tabs', require('./components/Tabs.vue').default);
 Vue.component('tags', require('./components/Tags.vue').default);

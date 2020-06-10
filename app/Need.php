@@ -2,6 +2,9 @@
 
 namespace App;
 
+
+use App\Exceptions\NeedNotAssignable;
+use App\Exceptions\NeedNotCompletable;
 use Carbon\Carbon;
 use Conner\Tagging\Taggable;
 use DateTime;
@@ -103,6 +106,76 @@ class Need extends Model
     public function getOwnerAttribute()
     {
         return $this->creator->id === auth()->id();
+    }
+
+    /**
+     *  Determine if the Need is Assigned
+     * 
+     * @return boolean
+     */
+    public function getAssignedAttribute()
+    {
+        return $this->state_id == 2;
+    }
+
+    /**
+     *  Detemine whether the Need in Assignable
+     * 
+     * @return boolean
+     */
+    public function getAssignableAttribute()
+    {
+        // Determine whether the Need has Assgned or Completed Helps
+        return ! $this->helps->whereIn('state_id', [2,3])->isEmpty() && !$this->completed;
+    }
+
+    /**
+     *  Set Need as Assigned
+     * 
+     * @return boolean
+     */
+    public function assign()
+    {        
+        if (!$this->assignable) {
+            throw new NeedNotAssignable('Der Bedarf hat keine vermittelte oder abgeschlossene Hilfen.');
+        }
+
+        return $this->update(['state_id' => 2]);
+    }
+
+    /**
+     *  Determine if the Need is Completed
+     * 
+     * @return boolean
+     */
+    public function getCompletedAttribute()
+    {
+        return $this->state_id == 3;
+    }
+
+    /**
+     *  Detemine whether the Need in Completable
+     * 
+     * @return boolean
+     */
+    public function getCompletableAttribute()
+    {
+        // Determine whether the Need is Assgned and All Helps are Completed
+        return $this->helps->whereIn('state_id', [1,2])->isEmpty() && $this->assigned;
+    }
+
+    /**
+     *  Set Need as Completed
+     * 
+     * @return boolean
+     */
+    public function complete()
+    {        
+        if (!$this->completable) {
+            throw new NeedNotCompletable('Der Bedarf darf nicht abgeschlossen werden');
+        }
+
+        return $this->update(['state_id' => 3]);
     }
 
 }
