@@ -176,4 +176,16 @@ class NeedsController extends Controller
             return $e->getMessage();
         }
     }
+
+    /**
+     *  Set the Need as Opened
+     * 
+     * @param Need $need
+     */
+    public function reopen(Need $need)
+    {
+        $this->authorize('update', $need);
+
+        $need->update(['state_id' => 1]);
+    }
 }

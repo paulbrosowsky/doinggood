@@ -27,6 +27,10 @@ export default {
                 .put(`/needs/${this.need.id}/assign`)
                 .then(() => {
                     flash('Dein Bedarf wurde als vermittelt markiert');
+
+                    setTimeout(() => {                        
+                        window.location.reload();
+                    }, 3000); 
                 })
                 .catch((errors)=> console.log(errors));            
         },

@@ -2745,6 +2745,9 @@ __webpack_require__.r(__webpack_exports__);
     assign: function assign() {
       axios.put("/needs/".concat(this.need.id, "/assign")).then(function () {
         flash('Dein Bedarf wurde als vermittelt markiert');
+        setTimeout(function () {
+          window.location.reload();
+        }, 3000);
       })["catch"](function (errors) {
         return console.log(errors);
       });
@@ -3667,6 +3670,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     need: {
@@ -3802,6 +3809,28 @@ __webpack_require__.r(__webpack_exports__);
         setTimeout(function () {
           _this5.loading = false;
           window.location.href = "/needs";
+        }, 2000);
+      });
+    },
+    reopen: function reopen() {
+      var _this6 = this;
+
+      this.$modal.show('confirm-dialog', {
+        title: 'Willst du dein Bedarf nochmal eröffnen?',
+        handler: function handler() {
+          return _this6.reopenHandler();
+        }
+      });
+    },
+    reopenHandler: function reopenHandler() {
+      var _this7 = this;
+
+      this.loading = true;
+      axios.put("/needs/".concat(this.need.id, "/reopen")).then(function () {
+        flash('Dein Bedarf wurde wideder eröffnet.');
+        setTimeout(function () {
+          _this7.loading = false;
+          window.location.href = "/needs/".concat(_this7.need.id);
         }, 2000);
       });
     }
@@ -43605,15 +43634,21 @@ var render = function() {
       _vm._v(" "),
       _vm.formType == "edit"
         ? _c("div", { staticClass: "container md:rounded-xl" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-red w-full md:w-auto",
-                attrs: { type: "input" },
-                on: { click: _vm.deleteNeed }
-              },
-              [_vm._v(" \n            Bedarf Löschen\n        ")]
-            )
+            _c("div", { staticClass: "flex" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-red w-full mr-2 md:w-auto",
+                  attrs: { type: "input" },
+                  on: { click: _vm.deleteNeed }
+                },
+                [_vm._v(" \n                Bedarf Löschen\n            ")]
+              ),
+              _vm._v(" "),
+              _c("button", { staticClass: "btn", on: { click: _vm.reopen } }, [
+                _vm._v("Wieder eröffnen")
+              ])
+            ])
           ])
         : _vm._e(),
       _vm._v(" "),

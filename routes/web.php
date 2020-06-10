@@ -54,6 +54,7 @@ Route::group([
             Route::delete('needs/{need}', 'NeedsController@destroy')->name('need.destroy');
             Route::put('needs/{need}/assign', 'NeedsController@assign')->name('need.assign');
             Route::put('needs/{need}/complete', 'NeedsController@complete')->name('need.complete');
+            Route::put('needs/{need}/reopen', 'NeedsController@reopen')->name('need.reopen');
 
             Route::put('/helps/{help}/assign', 'HelpsController@assign')->name('help.assign');
             Route::put('/helps/{help}/reject', 'HelpsController@reject')->name('help.reject');

@@ -97,9 +97,13 @@
         </form>  
 
         <div class="container md:rounded-xl" v-if="formType == 'edit'">
-            <button type="input" class="btn btn-red w-full md:w-auto" @click="deleteNeed"> 
-                Bedarf Löschen
-            </button>
+            <div class="flex">
+                <button type="input" class="btn btn-red w-full mr-2 md:w-auto" @click="deleteNeed"> 
+                    Bedarf Löschen
+                </button>
+                <button class="btn" @click="reopen">Wieder eröffnen</button>
+            </div>
+            
         </div>
 
         <loading :loading="loading"></loading>      
@@ -258,6 +262,27 @@ export default {
                     setTimeout(() => {
                         this.loading = false;
                         window.location.href = `/needs`;
+                    }, 2000); 
+                });
+        },
+
+        reopen(){
+            this.$modal.show('confirm-dialog', {
+                title: 'Willst du dein Bedarf nochmal eröffnen?',                
+                handler: () => this.reopenHandler()
+            });
+        },
+
+        reopenHandler(){
+            this.loading = true;
+            axios
+                .put(`/needs/${this.need.id}/reopen`)
+                .then(()=>{
+                    flash('Dein Bedarf wurde wideder eröffnet.');
+
+                    setTimeout(() => {
+                        this.loading = false;
+                        window.location.href = `/needs/${this.need.id}`
                     }, 2000); 
                 });
         },
