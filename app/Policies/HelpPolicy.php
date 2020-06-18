@@ -55,4 +55,18 @@ class HelpPolicy
     {        
         return $user->id == $help->user_id;
     }
+
+    /**
+     *  Determine whether the User Can Comment the Help
+     * 
+     * @param User $user
+     * @param Help $help
+     * @return  boolean
+     */
+    public function comment(User $user, Help $help)
+    {        
+        return $user->id == $help->user_id 
+                || $user->id == $help->need->creator->id 
+                && $help->completed;
+    }
 }

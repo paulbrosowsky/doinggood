@@ -33,7 +33,7 @@ class Need extends Model
     /**
      *  A Need Belongs to Many Categories
      * 
-     * @return morphToMany
+     * @return belogsTo
      */
     public function creator()
     {

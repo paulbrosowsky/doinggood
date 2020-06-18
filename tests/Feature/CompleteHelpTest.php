@@ -58,6 +58,15 @@ class CompleteHelpTest extends TestCase
         $this->complete(['message' => ''])->assertSessionHasErrors('message');
     }
 
+    /** @test */
+    function owner_create_a_comment_upon_completing()
+    {
+        $this->complete();
+
+        $this->assertDatabaseHas('comments', ['body' => 'Super']);
+        $this->assertCount(1, $this->help->fresh()->comments);
+    }
+
     public function complete($overrides = [])
     {
         $this->signIn($this->user);

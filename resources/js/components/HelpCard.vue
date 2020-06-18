@@ -53,22 +53,44 @@
                                 @click="completeModal"
                                 v-if="helpOwner && assigned && !completed"
                             >fertig</button>
+
+                            <button 
+                                class="btn btn-blue mr-2" 
+                                @click="commentModal"
+                                v-if="needOwner || helpOwner && completed"
+                            >Kommentrieren</button>
                         </div>
                     
-                </div> 
-            </div>                                            
-            
-        </div>     
+                </div>                 
+            </div>             
+        </div>    
+
+        <div class="border-t-2 pt-3 mt-3 " v-if="comments.length > 0">
+            <comment 
+                class="mb-5" 
+                v-for="(comment, index) in comments" 
+                :key="index"
+                :comment="comment"
+                :help="help"
+                :need="need"
+                :auth="auth"
+            ></comment>            
+        </div>       
        
     </div>
 </template>
 <script>
+import Comment from "./Comment";
+
 export default {
+    components:{ Comment },
+    
     props:['help', 'feedCount', 'auth', 'need'],
 
     data(){
         return{
-            user: this.help.user            
+            user: this.help.user,
+            comments: this.help.comments            
         }
     },
 
@@ -131,7 +153,7 @@ export default {
             });
         },
 
-        withdraw(body){          
+        withdraw(body){       
             
             axios
                 .delete(`/helps/${this.help.id}`, {data:{ message: body }})
@@ -156,6 +178,25 @@ export default {
                 .put(`/helps/${this.help.id}/complete`, { message: body })
                 .then(()=>{
                     flash('Deine Hilfe wurde als abgeschlossen markiert.');
+                    window.location.reload();
+                });
+        },
+
+        commentModal(){
+            this.$modal.show('message-form', {
+                title: 'Kommentieren',                   
+                placeholder: 'Wie ist es gelaufen? ...', 
+                action:  'comment',
+                messageId: this.help.id                
+            });
+        },
+
+        comment(body){         
+            
+            axios
+                .post(`/helps/${this.help.id}/comment`, { body: body })
+                .then(()=>{
+                    flash('Kommentar gespeichert');
                     window.location.reload();
                 });
         },

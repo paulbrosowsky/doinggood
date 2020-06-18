@@ -12,7 +12,12 @@ class Help extends Model
      */
     protected $guarded = [];
 
-    protected $appends=['owner'];
+    protected $appends = ['owner'];
+
+    /**
+     *  Eager load with the Help Model
+     */
+    protected $with = ['comments'];
 
     /**
      *  Help Belongs to User
@@ -42,6 +47,15 @@ class Help extends Model
     public function need()
     {
         return $this->belongsTo(Need::class);
+    }
+
+    /**
+     *  Help has many comments
+     * @return hasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
      /**
@@ -84,6 +98,12 @@ class Help extends Model
         $this->update(['state_id' => 3]);
 
         $this->need->creator->notify(new HelpWasCompleted($this, $message));
+
+        Comment::create([
+            'user_id' => auth()->id(),
+            'help_id' => $this->id,
+            'body' => $message
+        ]);
     }
 
 

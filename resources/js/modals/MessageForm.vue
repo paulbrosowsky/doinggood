@@ -61,7 +61,8 @@ export default {
             this.title = event.params.title;
             this.placeholder = event.params.placeholder;
             this.action = event.params.action;
-            this.messageId = event.params.messageId;                       
+            this.messageId = event.params.messageId; 
+            this.text = event.params.text;                      
         },    
         
         beforeClose(){            

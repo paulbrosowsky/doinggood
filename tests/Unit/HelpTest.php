@@ -36,4 +36,13 @@ class HelpTest extends TestCase
     {
         $this->assertInstanceOf('App\Need', $this->help->need);
     }
+
+    /** @test */
+    function it_has_many_comments()
+    {
+        $this->assertInstanceOf(
+            'Illuminate\Database\Eloquent\Collection',
+            $this->help->comments
+        );
+    }
 }
