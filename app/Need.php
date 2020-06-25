@@ -2,18 +2,18 @@
 
 namespace App;
 
-
-use App\Exceptions\NeedNotAssignable;
-use App\Exceptions\NeedNotCompletable;
+use DateTime;
 use Carbon\Carbon;
 use Conner\Tagging\Taggable;
-use DateTime;
+use Laravel\Scout\Searchable;
+use App\Exceptions\NeedNotAssignable;
+use App\Exceptions\NeedNotCompletable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Need extends Model
 {
-    use Categorizable, Taggable;
+    use Categorizable, Taggable, Searchable;
     
     /**
      *  Prevent this Coumns from writing
@@ -176,6 +176,29 @@ class Need extends Model
         }
 
         return $this->update(['state_id' => 3]);
+    }
+
+    /**
+     *  Define Searcheble Fields
+     *  @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->only(
+            'id',
+            'title',
+            'title_image',
+            'state',
+            'created_at'          
+        );
+
+        $array['categories'] = $this->categories->map(function($category){
+            return $category->only('name', 'color', 'icon');
+        })->toArray();
+
+        $array['tags'] = $this->tagNames;
+
+        return $array;
     }
 
 }

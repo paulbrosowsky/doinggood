@@ -5,9 +5,9 @@ import VModal from 'vue-js-modal';
 import  Datetime from 'vue-datetime';
 import {DateTime} from 'luxon';
 import 'vue-datetime/dist/vue-datetime.css';
-// import InstantSearch from 'vue-instantsearch';
+import InstantSearch from 'vue-instantsearch';
 
-// Vue.use(InstantSearch);
+Vue.use(InstantSearch);
 Vue.use(VueMasonry);
 Vue.use(VModal);
 Vue.use(Datetime);
@@ -41,6 +41,8 @@ Vue.component('need-action-buttons', require('./components/NeedActionButtons.vue
 Vue.component('need-card', require('./components/NeedCard.vue').default);
 Vue.component('need-form', require('./views/NeedForm.vue').default);
 Vue.component('need-owner-buttons', require('./components/NeedOwnerButtons.vue').default);
+Vue.component('search', require('./views/Search.vue').default);
+Vue.component('sidebar', require('./components/Sidebar.vue').default);
 Vue.component('tab', require('./components/Tab.vue').default);
 Vue.component('tabs', require('./components/Tabs.vue').default);
 Vue.component('tags', require('./components/Tags.vue').default);

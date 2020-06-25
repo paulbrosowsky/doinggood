@@ -1,17 +1,19 @@
 <template>
     <div class="mb-10">
         <div class="relative bg-gray-500 rounded-xl overflow-hidden pb-2/3">
-           
+
+            <a :href="`/needs/${need.id}`">
                 <img class="absolute w-full h-full object-cover" :src="need.title_image" alt="">
+            </a>               
              
-                <div v-if="need.state_id != 1">
-                    <div class="absolute w-full h-full bg-white opacity-75"></div>                  
-                    <span                                           
-                        class="absolute right-0 border-2 rounded-full text-sm font-bold px-3 py-1 m-5"                    
-                        v-text="need.state.name"
-                        :style="{borderColor:need.state.color, color:need.state.color}"
-                    ></span>             
-                </div>
+            <div v-if="need.state.id != 1">
+                <div class="absolute w-full h-full bg-white opacity-75"></div>                  
+                <span                                           
+                    class="absolute right-0 border-2 rounded-full text-sm font-bold px-3 py-1 m-5"                    
+                    v-text="need.state.name"
+                    :style="{borderColor:need.state.color, color:need.state.color}"
+                ></span>             
+            </div>
           
         </div> 
         <div class="mx-3 my-3">
