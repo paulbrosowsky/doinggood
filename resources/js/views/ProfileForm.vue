@@ -1,7 +1,5 @@
 <template>
-
     <div>
-
         <div class="container mb-5 md:rounded-xl"> 
             <h4 class="text-gray-500">Was habt ihr vor?</h4>
             <div class="flex flex-col mx-auto py-2 md:w-2/3">
@@ -25,10 +23,22 @@
             <category-select 
                 class="mt-5" 
                 :categories="categories" 
-                :selected="user.categories" 
-                v-show="form.helper"
-                @update="updateCategories"
-            ></category-select>                  
+                :selected="user.categories"
+                 @update="updateCategories"
+                 v-show="form.helper"
+            ></category-select>   
+
+            <div class="md:flex items-center">
+                <div class="flex-1 mb-2 md:mb-0 md:mr-2">
+                    <label class="text-gray-500 text-sm font-semibold ml-2">Standort</label>
+                    <location @change="updateLocation" :value="form.location"></location>
+                </div>
+                <div class="md:w-1/4" v-show="form.helper">
+                    <label class="text-gray-500 text-sm font-semibold ml-2">Wirkradius</label>
+                    <select-input @change="updateActivityArea" :selected="form.activity_area"></select-input>
+                </div>
+            </div>
+            
         </div>
 
         <div class="container md:rounded-xl">  
@@ -76,7 +86,7 @@
                         class="mt-1"
                         placeholder="Ezählt etwas mehr ..."
                         :editorId="'description'"
-                        :text="form.description"
+                        :text="form.description" 
                         @update="updateDescription"
                     ></text-editor>
                 </div>
@@ -144,10 +154,12 @@
     
 </template>
 <script>    
+    import SelectInput from '../components/SelectInput';
 
-    export default {        
+    export default {  
+        components:{SelectInput},
 
-        props:[ 'user', 'categories', 'tags'],
+        props:[ 'user', 'categories', 'tags'],    
 
         data(){
             return{
@@ -161,7 +173,12 @@
                     web_link: this.user.web_link,
                     facebook_link: this.user.facebook_link,
                     instagram_link: this.user.instagram_link,
-                    twitter_link: this.user.twitter_link
+                    twitter_link: this.user.twitter_link,
+
+                    location: this.user.location,
+                    lat: '',
+                    lng: '',
+                    activity_area: this.user.activity_area
                 },   
                 
                 errors:[]
@@ -195,9 +212,20 @@
                         this.errors = error.response.data.errors;                        
                     });
             },
-            
+           
             cancel(){
                 window.history.back();
+            },
+
+            updateLocation(location){
+                this.form.location = location.suggestion.value;
+                this.form.lat = location.suggestion.latlng.lat;
+                this.form.lng = location.suggestion.latlng.lng;                
+            },
+
+            updateActivityArea(value){
+                console.log(location.suggestion);
+                this.form.activity_area = value; 
             }
         }
         

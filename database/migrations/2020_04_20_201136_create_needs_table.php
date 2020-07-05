@@ -22,6 +22,9 @@ class CreateNeedsTable extends Migration
             $table->string('title_image')->nullable();
             $table->timestamp('deadline');
             $table->string('state_id')->default(1);
+            $table->string('location')->nullable();
+            $table->float('lat')->nullable();
+            $table->float('lng')->nullable();
             $table->timestamps();
         });
     }

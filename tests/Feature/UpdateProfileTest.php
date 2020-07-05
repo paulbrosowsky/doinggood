@@ -55,6 +55,7 @@ class UpdateProfileTest extends TestCase
     /** @test */
     function users_may_update_own_profile()
     {
+        $this->withoutExceptionHandling();
         $this->updateProfile();
 
         tap($this->user->fresh(), function($user){
@@ -62,7 +63,11 @@ class UpdateProfileTest extends TestCase
             $this->assertEquals('Description Text', $user->description);
             $this->assertEquals('Excerpt Text', $user->excerpt);
             $this->assertTrue($user->helper);
-            $this->assertEquals('https://web.link', $user->web_link);            
+            $this->assertEquals('https://web.link', $user->web_link);  
+            $this->assertEquals('Trier', $user->location);
+            $this->assertEquals(12.345, $user->lat);
+            $this->assertEquals(-12.345, $user->lng);
+            $this->assertEquals(10, $user->activity_area);            
         });
     }   
 
@@ -92,6 +97,23 @@ class UpdateProfileTest extends TestCase
     {
         $this->updateProfile([ 'web_link' => 'not_valid',])
             ->assertSessionHasErrors('web_link');
+    } 
+
+     /** @test */
+    function lat_lng_are_numeric()
+    {
+        $this->updateProfile([ 'lat' => '' ])
+            ->assertSessionHasErrors('lat');
+
+        $this->updateProfile([ 'lng' => 'text' ])
+            ->assertSessionHasErrors('lng');
+    }
+
+      /** @test */
+    function activity_area_is_integer()
+    {
+        $this->updateProfile([ 'activity_area' => 23.56 ])
+            ->assertSessionHasErrors('activity_area');
     }
 
     /** @test */
@@ -135,6 +157,10 @@ class UpdateProfileTest extends TestCase
             'facebook_link' => 'https://facebook.link',
             'instagram_link' => 'https://instagram.link',
             'tweeter_link' => 'https://tweeter.link',
+            'location' => 'Trier',
+            'lat' => 12.345,
+            'lng' => -12.345,
+            'activity_area' => 10 
         ], $overrides)); 
     }
 

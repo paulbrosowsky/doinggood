@@ -34,6 +34,7 @@ Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('help-card', require('./components/HelpCard.vue').default);
 Vue.component('image-upload', require('./components/ImageUpload.vue').default);
 Vue.component('loading', require('./components/Loading.vue').default);
+Vue.component('location', require('./components/Location.vue').default);
 Vue.component('message-form', require('./modals/MessageForm.vue').default);
 Vue.component('navbar', require('./components/Navbar.vue').default);
 Vue.component('navdrawer', require('./modals/Navdrawer.vue').default);

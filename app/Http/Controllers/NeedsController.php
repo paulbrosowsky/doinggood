@@ -51,18 +51,24 @@ class NeedsController extends Controller
             'deadline' => ['required', 'date'],
             'categories' => ['required'],
             'categories.*.slug'=> ['exists:categories'],
+            'lat' => ['numeric', 'nullable'],
+            'lng' => ['numeric', ],
         ]);
 
         $need = Need::create([
             'user_id' => auth()->id(),
             'title' => $request->title,
             'project_description' => $request->project_description,
-            'need_description' => $request->need_description,
-            'deadline' => new DateTime($request->deadline)
+            'need_description' => $request->need_description,            
+            'deadline' => new DateTime($request->deadline),
+            'location' => $request->location,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
         ]);
 
         $need->updateCategories($request->categories);
         $need->retag($request->tags);
+        $need->searchable();
 
         return $need;
     }
@@ -118,13 +124,18 @@ class NeedsController extends Controller
             'deadline' => ['required', 'date'],
             'categories' => ['required'],
             'categories.*.slug'=> ['exists:categories'],
+            'lat' => ['numeric', 'nullable'],
+            'lng' => ['numeric', 'nullable'],
         ]);
         
         $need->update([            
             'title' => $request->title,
             'project_description' => $request->project_description,
             'need_description' => $request->need_description,
-            'deadline' => Carbon::parse($request->deadline)
+            'deadline' => Carbon::parse($request->deadline),
+            'location' => $request->location,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
         ]);
         
         $need->updateCategories($request->categories);        

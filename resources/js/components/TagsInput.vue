@@ -94,6 +94,10 @@
         &:hover::after{
             color: #f54336;
         }
-    }   
+    }  
+    
+    .multiselect--active{
+        z-index: 40;
+    }
        
 </style>

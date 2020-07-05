@@ -69,6 +69,9 @@ class ProfilesController extends Controller
             'facebook_link' => ['url', 'nullable'],
             'instagram_link' => ['url', 'nullable'],
             'tweeter_link' => ['url', 'nullable'],
+            'lat' => ['numeric', 'nullable'],
+            'lng' => ['numeric', 'nullable'],
+            'activity_area' => ['integer', 'nullable']
         ]);        
             
         $user->update([
@@ -80,6 +83,10 @@ class ProfilesController extends Controller
             'facebook_link' => $request->facebook_link,
             'instagram_link' => $request->instagram_link,
             'tweeter_link' => $request->tweeter_link,
+            'location' => $request->location,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'activity_area' => $request->activity_area
         ]);
             
         $user->updateCategories($request->categories); 

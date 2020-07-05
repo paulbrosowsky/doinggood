@@ -29,6 +29,10 @@ class CreateUsersTable extends Migration
             $table->string('instagram_link')->nullable();
             $table->string('tweeter_link')->nullable();
             $table->timestamp('unlocked_at')->nullable();
+            $table->string('location')->nullable();
+            $table->float('lat')->nullable();
+            $table->float('lng')->nullable();
+            $table->unsignedInteger('activity_area')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

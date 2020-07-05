@@ -19,13 +19,6 @@ class ViewNeedsTest extends TestCase
     }
 
     /** @test */
-    function users_can_see_all_needs()
-    {
-        $this->get(route('needs'))        
-            ->assertSee($this->need->title);
-    }
-
-    /** @test */
     function users_can_view_a_single_need()
     {
         $this->get(route('need', $this->need->id))

@@ -53,7 +53,10 @@ class CreateNeedTest extends TestCase
         tap(Need::first(), function($need){
             $this->assertEquals($need->title, 'New Need' );
             $this->assertEquals($need->project_description, 'New Project Description');
-            $this->assertEquals($need->need_description, 'New Nees Description');            
+            $this->assertEquals($need->need_description, 'New Nees Description'); 
+            $this->assertEquals('Trier', $need->location);
+            $this->assertEquals(12.345, $need->lat);
+            $this->assertEquals(-12.345, $need->lng);           
         });        
     }
 
@@ -132,7 +135,10 @@ class CreateNeedTest extends TestCase
             'project_description' => 'New Project Description',
             'need_description' => 'New Nees Description',
             'deadline' => now()->addDay(),
-            'categories' => $categories->toArray()
+            'categories' => $categories->toArray(),
+            'location' => 'Trier',
+            'lat' => 12.345,
+            'lng' => -12.345,
         ], $overrides));
     }
     

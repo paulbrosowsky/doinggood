@@ -52,6 +52,11 @@
                     ></datetime-input>
                 </div>
 
+                <div class="mb-2 ">
+                    <label class="text-gray-500 text-sm font-semibold ml-2">Standort</label>
+                    <location @change="updateLocation" :value="form.location"></location>
+                </div>
+
                 <div>
                     <label class="text-gray-500 text-sm font-semibold ml-2">Themen</label>
                     <tags-input 
@@ -133,7 +138,10 @@ export default {
                 project_description: this.need.project_description,
                 need_description:this.need.need_description,
                 deadline: this.need.deadline,
-                tags: this.need.tagNames
+                tags: this.need.tagNames,
+                location: this.need.location,
+                lat: this.need.lat,
+                lng: this.need.lng
             },
             errors:[],
             uploadImage: false,
@@ -184,6 +192,12 @@ export default {
 
         updateTags(tags){
             this.form.tags = tags;
+        },
+
+        updateLocation(location){
+            this.form.location = location.suggestion.value;
+            this.form.lat = location.suggestion.latlng.lat;
+            this.form.lng = location.suggestion.latlng.lng;                
         },
 
         submit(){

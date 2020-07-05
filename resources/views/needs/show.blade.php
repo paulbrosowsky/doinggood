@@ -20,7 +20,18 @@
                 <p class="text-xs text-gray-500 leading-none">wir brauchen </p>
                 <categories :categories="{{$need->categories}}"></categories>
 
-                <h2 class="leading-tight font-bold my-2 text-xl md:text-2xl">{{$need->title}}</h2>                 
+                <h2 class="leading-tight font-bold my-2 text-xl md:text-2xl">{{$need->title}}</h2>  
+                
+                {{-- Location Info --}}
+                @if (isset($need->location))
+                    <div class="flex items-center mb-5" >
+                        <svg class="h-8 fill-current text-gray-500 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 32c-88.004 0-160 70.557-160 156.801C96 306.4 256 480 256 480s160-173.6 160-291.199C416 102.557 344.004 32 256 32zm0 212.801c-31.996 0-57.144-24.645-57.144-56 0-31.357 25.147-56 57.144-56s57.144 24.643 57.144 56c0 31.355-25.148 56-57.144 56z"/></svg>
+                        <div>
+                            <p class="text-xs text-gray-500 leading-none">Standort</p>
+                            <p class=" leading-none">{{$need->location}}</p>
+                        </div>                                    
+                    </div>
+                @endif
 
                 <div class="flex items-center mt-5">
                     <svg class="h-8 fill-current text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M368.005 272h-96v96h96v-96zm-32-208v32h-160V64h-48v32h-24.01c-22.002 0-40 17.998-40 40v272c0 22.002 17.998 40 40 40h304.01c22.002 0 40-17.998 40-40V136c0-22.002-17.998-40-40-40h-24V64h-48zm72 344h-304.01V196h304.01v212z"/></svg>

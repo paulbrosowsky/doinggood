@@ -63,6 +63,9 @@ class UpdateNeedTest extends TestCase
             $this->assertEquals($need->project_description, 'Updated Project Description');
             $this->assertEquals($need->need_description, 'Updated Nees Description');
             $this->assertEquals($need->deadline, now()->format('c'));
+            $this->assertEquals('Trier', $need->location);
+            $this->assertEquals(12.345, $need->lat);
+            $this->assertEquals(-12.345, $need->lng); 
         });  
     }
 
@@ -100,9 +103,10 @@ class UpdateNeedTest extends TestCase
         $categories = factory('App\Category', 2)->create();
 
         $this->updateNeed(['categories' => $categories->toArray()]);
-        
-        $this->assertCount(2, $this->need->categories); 
-        $this->assertEquals($categories->first()->slug, $this->need->categories->first()->slug);       
+        $need = $this->need->fresh();
+
+        $this->assertCount(2, $need->categories); 
+        $this->assertEquals($categories->first()->slug, $need->categories->first()->slug);       
     }
 
     /** @test */
@@ -126,8 +130,8 @@ class UpdateNeedTest extends TestCase
         $this->withoutExceptionHandling();
         $this->updateNeed(['tags' => ['foo', 'bar']]);
 
-        $this->assertCount(2, $this->need->tagged);
-        $this->assertEquals($this->need->tagNames, ['Foo', 'Bar']);
+        $this->assertCount(2, $this->need->fresh()->tagged);
+        $this->assertEquals($this->need->fresh()->tagNames, ['Foo', 'Bar']);
     } 
     
     public function updateNeed($overrides = [])
@@ -141,7 +145,10 @@ class UpdateNeedTest extends TestCase
             'project_description' => 'Updated Project Description',
             'need_description' => 'Updated Nees Description',
             'deadline' => now(),
-            'categories' => $categories->toArray()
+            'categories' => $categories->toArray(),
+            'location' => 'Trier',
+            'lat' => 12.345,
+            'lng' => -12.345,
         ], $overrides));
     }
 }

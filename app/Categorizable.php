@@ -27,7 +27,7 @@ trait Categorizable
      *  @param array $categories
      */
     public function updateCategories($categories)
-    {
+    {        
         $this->categories()->detach();
         if ($categories) {
             foreach ($categories as $category) {            
