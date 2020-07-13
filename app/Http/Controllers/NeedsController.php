@@ -66,10 +66,11 @@ class NeedsController extends Controller
             'lng' => $request->lng,
         ]);
 
-        $need->updateCategories($request->categories);
         $need->retag($request->tags);
+        $need->updateCategories($request->categories);
+        $need->applyMatching();
         $need->searchable();
-
+        
         return $need;
     }
 
@@ -138,9 +139,10 @@ class NeedsController extends Controller
             'lng' => $request->lng,
         ]);
         
-        $need->updateCategories($request->categories);        
         $need->retag($request->tags);
-
+        $need->updateCategories($request->categories); 
+        $need->applyMatching();
+        
         return $need;
     }
 

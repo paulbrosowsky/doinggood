@@ -8,13 +8,14 @@ use Conner\Tagging\Taggable;
 use Laravel\Scout\Searchable;
 use App\Exceptions\NeedNotAssignable;
 use App\Exceptions\NeedNotCompletable;
+use App\Notifications\NeedMatchingAvailable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Need extends Model
 {
     use Categorizable, Taggable, Searchable;
-    
+
     /**
      *  Prevent this Coumns from writing
      */
@@ -29,6 +30,7 @@ class Need extends Model
      *  Append to the User Model 
      */
     protected $appends = ['tagNames', 'owner'];    
+
 
     /**
      *  A Need Belongs to Many Categories
@@ -199,6 +201,18 @@ class Need extends Model
         $array['tags'] = $this->tagNames;
 
         return $array;
+    }
+
+    /**
+     *  Find Matching Helperts and Notify Them
+     */
+    public function applyMatching()
+    {
+        $helpers = (new NeedMatching($this))->apply();
+       
+        $helpers->map(function($helper){
+            $helper->notify(new NeedMatchingAvailable($this));
+        });
     }
 
 }

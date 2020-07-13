@@ -102,9 +102,6 @@ class UpdateProfileTest extends TestCase
      /** @test */
     function lat_lng_are_numeric()
     {
-        $this->updateProfile([ 'lat' => '' ])
-            ->assertSessionHasErrors('lat');
-
         $this->updateProfile([ 'lng' => 'text' ])
             ->assertSessionHasErrors('lng');
     }
