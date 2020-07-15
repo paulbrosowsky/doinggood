@@ -28,14 +28,6 @@
                             Entdecken
                         </a>
 
-                        <a                                         
-                        href="{{ route('home')}}"
-                        class="{{ Route::currentRouteName() == 'about' 
-                            ? 'bg-gray-200 rounded-lg py-2 px-3'  
-                            : 'rounded-lg py-2 px-3 hover:bg-gray-200' }}"
-                    >
-                        Über uns
-                    </a>
                     </div>
                 </div> 
                 <div class="">            
