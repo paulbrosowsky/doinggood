@@ -2,7 +2,7 @@
 return [
 
     'administrators' => [
-        'andreas@example.com'
+        'paul.brosowsky@gmail.com'
     ]
     
 ];
