@@ -26,3 +26,7 @@
     }
 </script>
 
+<style lang="scss">
+    @import "~vue-datetime/dist/vue-datetime.css";
+</style>
+

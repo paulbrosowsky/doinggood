@@ -35,6 +35,7 @@
     }   
 </script>
 <style lang="scss">
+    /* purgecss start ignore */
     .algolia-places{
         .ap-input{
             height: 3em;
@@ -63,5 +64,6 @@
             }
         }
     }
+    /* purgecss end ignore */
    
 </style>

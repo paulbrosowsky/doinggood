@@ -38,9 +38,10 @@
     }
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-
 <style lang="scss">
+    /* purgecss start ignore */
+    @import "~vue-multiselect/dist/vue-multiselect.min.css";
+    
     .multiselect__tags{
         min-height: 50px;
         background-color: #e2e8f0;
@@ -99,5 +100,5 @@
     .multiselect--active{
         z-index: 40;
     }
-       
+    /* purgecss end ignore */
 </style>

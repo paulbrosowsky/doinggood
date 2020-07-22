@@ -4,7 +4,7 @@ import VueMasonry from 'vue-masonry-css';
 import VModal from 'vue-js-modal';
 import  Datetime from 'vue-datetime';
 import {DateTime} from 'luxon';
-import 'vue-datetime/dist/vue-datetime.css';
+
 import InstantSearch from 'vue-instantsearch';
 
 Vue.use(InstantSearch);

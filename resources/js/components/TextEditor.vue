@@ -63,6 +63,7 @@
 </script>
 
 <style lang="scss">
+    /* purgecss start ignore */
     // Placeholder 
     .dg-editor p.is-editor-empty:first-child::before {
         content: attr(data-empty-text);
@@ -84,5 +85,5 @@
             border: 2px solid #f7a81b;    
         }
     }  
-
+    /* purgecss end ignore */
 </style>
