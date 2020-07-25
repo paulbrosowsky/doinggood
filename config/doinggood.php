@@ -2,7 +2,8 @@
 return [
 
     'administrators' => [
-        'paul.brosowsky@gmail.com'
+        'paul.brosowsky@gmail.com',
+        'community@doinggoodchallenge.de'
     ]
     
 ];
