@@ -16,6 +16,15 @@ class Need extends Model
 {
     use Categorizable, Taggable, Searchable;
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($need){
+            $need->searchable();
+        });
+    }
+
     /**
      *  Prevent this Coumns from writing
      */

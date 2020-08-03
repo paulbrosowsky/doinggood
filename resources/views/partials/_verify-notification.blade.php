@@ -9,12 +9,12 @@
         @endif
         <div class="flex flex-col items-center md:flex-row ">
             <p class="flex-1 text-sm text-center text-dg-yellow leading-tight  mb-2 md:text-left md:mr-2">
-                Wir haben die eine Email mit Bestätigunglink gesendet. Bitte Überprüfe zuerst deinen Postfach.
+                Wir haben dir eine Email mit Bestätigungslink gesendet. Bitte überprüfe zuerst dein Postfach.
             </p>       
         
             <form class="-mb-5" method="POST" action="{{ route('verification.resend') }}">
                 @csrf
-                <button type="submit" class="btn btn-yellow">Sende Nochmal</button>.
+                <button type="submit" class="btn btn-yellow">Nochmal Senden</button>.
             </form>
         </div>
         

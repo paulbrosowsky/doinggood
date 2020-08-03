@@ -85,12 +85,14 @@
                 </div>  
 
                 <div class="w-full">
-                    <p class="text-xs leading-tight mb-2 mt-5 text-gray-700">Mit deiner Registrierung erstellst du ein neues Benutzerkonto, und gibst dein Einvertändnis mit unserem Datenschutz und unseren Nutzungsbedingungen.</p>
+                    <p class="text-xs leading-tight mb-2 mt-5 text-gray-700">
+                        Mit deiner Registrierung erstellst du ein neues Benutzerkonto und gibst dein Einverständnis zu unseren Datenschutz- und Nutzungsbedingungen.
+                    </p>
                     <button type="submit" class="btn btn-blue w-full">
                         Registrieren 
                     </button>                    
                 </div>
-            </form>
+            </form> 
         </div>
     </div>
 </div>
