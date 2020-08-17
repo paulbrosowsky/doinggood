@@ -51,17 +51,17 @@
                             <button 
                                 class="btn btn-yellow mr-2" 
                                 @click="completeModal"
-                                v-if="helpOwner && assigned && !completed"
+                                v-if="(needOwner || helpOwner) && assigned && !completed"
                             >fertig</button>
 
                             <button 
                                 class="btn btn-blue mr-2" 
                                 @click="commentModal"
-                                v-if="needOwner || helpOwner && completed"
+                                v-if="(needOwner || helpOwner) && completed"
                             >Kommentrieren</button>
                         </div>
                     
-                </div>                 
+                </div>                
             </div>             
         </div>    
 

@@ -43,6 +43,18 @@ class CompleteHelpTest extends TestCase
     }
 
     /** @test */
+    function need_creators_may_complete_helps()
+    {
+        $this->signIn($this->help->need->creator);
+        
+        $this->put(route('help.complete', $this->help->id),[
+            'message' => 'Super'
+        ]);
+   
+        $this->assertTrue($this->help->fresh()->completed);
+    }
+
+    /** @test */
     function email_to_need_owner_is_sent_upon_help_is_completed()
     {       
         Notification::fake();
@@ -51,6 +63,17 @@ class CompleteHelpTest extends TestCase
 
         Notification::assertSentTo($this->help->need->creator, HelpWasCompleted::class);
     }
+
+     /** @test */
+    function email_to_help_creator_is_sent_upon_help_is_completed()
+    {       
+        Notification::fake();
+
+        $this->complete();
+
+        Notification::assertSentTo($this->help->user, HelpWasCompleted::class);
+    }
+
 
     /** @test */
     function message_is_required()

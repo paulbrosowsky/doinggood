@@ -1,7 +1,7 @@
 <template>
     <div>
         <button class="btn btn-blue ml-2" @click="assign" v-if="!assigned && !completed">vermittelt</button>
-        <button class="btn btn-yellow ml-2" @click="complete" v-if="assigned && !completed"> 
+        <button class="btn btn-yellow ml-2" @click="complete" v-if="assigned && !completed && need.completable"> 
             abgeschlossen
         </button>
     </div>

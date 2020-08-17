@@ -67,9 +67,10 @@ Route::group([
             Route::post('needs/{need}/help', 'HelpsController@store')->name('help.store');
             
             Route::delete('/helps/{help}', 'HelpsController@destroy')->name('help.destroy');
-            Route::put('/helps/{help}/complete', 'HelpsController@complete')->name('help.complete');            
+                    
         });   
         
+        Route::put('/helps/{help}/complete', 'HelpsController@complete')->name('help.complete');   
         Route::post('helps/{help}/comment', 'CommentsController@store')->name('comment.store');
         Route::put('comments/{comment}', 'CommentsController@update')->name('comment.update');
         Route::delete('comments/{comment}', 'CommentsController@destroy')->name('comment.destroy');

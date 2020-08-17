@@ -69,8 +69,7 @@ class NeedsController extends Controller
         $need->retag($request->tags);
         $need->updateCategories($request->categories);
         $need->applyMatching();
-        $need->searchable();
-        
+
         return $need;
     }
 
@@ -128,21 +127,27 @@ class NeedsController extends Controller
             'lat' => ['numeric', 'nullable'],
             'lng' => ['numeric', 'nullable'],
         ]);
+
+
+        Need::withoutSyncingToSearch(function () use ($need, $request) {
+            $need->update([            
+                'title' => $request->title,
+                'project_description' => $request->project_description,
+                'need_description' => $request->need_description,
+                'deadline' => Carbon::parse($request->deadline),
+                'location' => $request->location,
+                'lat' => $request->lat,
+                'lng' => $request->lng,
+            ]);
+            
+            $need->retag($request->tags);
+
+            $need->updateCategories($request->categories); 
+        });
         
-        $need->update([            
-            'title' => $request->title,
-            'project_description' => $request->project_description,
-            'need_description' => $request->need_description,
-            'deadline' => Carbon::parse($request->deadline),
-            'location' => $request->location,
-            'lat' => $request->lat,
-            'lng' => $request->lng,
-        ]);
-        
-        $need->retag($request->tags);
-        $need->updateCategories($request->categories); 
+        $need->fresh()->searchable();
         $need->applyMatching();
-        
+
         return $need;
     }
 
@@ -154,7 +159,7 @@ class NeedsController extends Controller
     public function destroy(Need $need)
     {
         $this->authorize('update', $need);
-
+        
         $need->delete();
     }
 
@@ -169,6 +174,7 @@ class NeedsController extends Controller
 
         try{
             $need->assign(); 
+            $need->fresh()->searchable();
         }catch(NeedNotAssignable $e){   
             return $e->getMessage();
         }
@@ -184,7 +190,8 @@ class NeedsController extends Controller
         $this->authorize('update', $need);
 
         try{
-            $need->complete(); 
+            $need->complete();
+            $need->fresh()->searchable(); 
         }catch(NeedNotCompletable $e){   
             return $e->getMessage();
         }
@@ -200,5 +207,6 @@ class NeedsController extends Controller
         $this->authorize('update', $need);
 
         $need->update(['state_id' => 1]);
+        $need->fresh()->searchable();
     }
 }

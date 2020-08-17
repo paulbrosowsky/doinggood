@@ -10,6 +10,7 @@ use App\Exceptions\NeedNotAssignable;
 use App\Exceptions\NeedNotCompletable;
 use App\Notifications\NeedMatchingAvailable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class Need extends Model
@@ -20,16 +21,13 @@ class Need extends Model
     {
         parent::boot();
 
-        static::deleting(function($need){
-            $need->searchable();
-        });
     }
 
     /**
      *  Prevent this Coumns from writing
      */
     protected $guarded = [];
-    
+
     /**
      *  Eager load with the Model
      */ 
@@ -38,7 +36,7 @@ class Need extends Model
      /**
      *  Append to the User Model 
      */
-    protected $appends = ['tagNames', 'owner'];    
+    protected $appends = ['tagNames', 'owner', 'completable'];    
 
 
     /**

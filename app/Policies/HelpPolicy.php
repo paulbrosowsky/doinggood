@@ -41,7 +41,9 @@ class HelpPolicy
      */
     public function complete(User $user, Help $help)
     {         
-        return $user->id == $help->user_id && $help->completable;
+        return ($user->id == $help->user_id 
+                || $user->id == $help->need->creator->id) 
+                && $help->completable;
     }
 
     /**
@@ -65,8 +67,8 @@ class HelpPolicy
      */
     public function comment(User $user, Help $help)
     {        
-        return $user->id == $help->user_id 
-                || $user->id == $help->need->creator->id 
+        return ($user->id == $help->user_id 
+                || $user->id == $help->need->creator->id) 
                 && $help->completed;
     }
 }
