@@ -1,7 +1,13 @@
 <template>
     <div>
         <div class="container mb-5 md:rounded-xl"> 
-            <h4 class="text-gray-500">Was habt ihr vor?</h4>
+            <div class="flex items-center text-gray-500">
+                <h4 class="text-gray-500">Was habt ihr vor?</h4>
+                <a class="cursor-pointer ml-2" @click="$modal.show('info-box', helperInfo)" >
+                    <svg class="fill-current h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"/><path d="M235 339h42v42h-42zM276.8 318h-41.6c0-67 62.4-62.2 62.4-103.8 0-22.9-18.7-41.7-41.6-41.7S214.4 192 214.4 214h-41.6c0-46 37.2-83 83.2-83s83.2 37.1 83.2 83.1c0 52-62.4 57.9-62.4 103.9z"/></svg>
+                </a>
+            </div>
+            
             <div class="flex flex-col mx-auto py-2 md:w-2/3">
                 <button 
                     class="border-2 text-gray-600 rounded-full py-2 mb-2 hover:text-dg-blue hover:border-dg-blue focus:outline-none"
@@ -30,11 +36,22 @@
 
             <div class="md:flex items-center">
                 <div class="flex-1 mb-2 md:mb-0 md:mr-2">
-                    <label class="text-gray-500 text-sm font-semibold ml-2">Standort</label>
+                    <div class="flex text-gray-500 mb-2">
+                        <label class=" text-sm font-semibold ml-2">Standort</label>
+                        <a class="cursor-pointer ml-2" @click="$modal.show('info-box', locationInfo)" >
+                            <svg class="fill-current h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"/><path d="M235 339h42v42h-42zM276.8 318h-41.6c0-67 62.4-62.2 62.4-103.8 0-22.9-18.7-41.7-41.6-41.7S214.4 192 214.4 214h-41.6c0-46 37.2-83 83.2-83s83.2 37.1 83.2 83.1c0 52-62.4 57.9-62.4 103.9z"/></svg>
+                        </a>
+                    </div>
+                    
                     <location @change="updateLocation" :value="form.location"></location>
                 </div>
                 <div class="md:w-1/4" v-show="form.helper">
-                    <label class="text-gray-500 text-sm font-semibold ml-2">Wirkradius</label>
+                    <div class="flex text-gray-500 mb-2">
+                        <label class=" text-sm font-semibold ml-2">Wirkradius</label>
+                        <a class="cursor-pointer ml-2" @click="$modal.show('info-box', areaInfo)" >
+                            <svg class="fill-current h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"/><path d="M235 339h42v42h-42zM276.8 318h-41.6c0-67 62.4-62.2 62.4-103.8 0-22.9-18.7-41.7-41.6-41.7S214.4 192 214.4 214h-41.6c0-46 37.2-83 83.2-83s83.2 37.1 83.2 83.1c0 52-62.4 57.9-62.4 103.9z"/></svg>
+                        </a>
+                    </div>
                     <select-input @change="updateActivityArea" :selected="form.activity_area"></select-input>
                 </div>
             </div>
@@ -44,7 +61,12 @@
         <div class="container md:rounded-xl">  
             <form @submit.prevent="submit">
                 <div>
-                    <label class="text-gray-500 text-sm font-semibold ml-2">Name / Bezeichnung</label>
+                    <div class="flex text-gray-500 mb-2">
+                        <label class=" text-sm font-semibold ml-2">Name / Bezeichnung</label>
+                        <a class="cursor-pointer ml-2" @click="$modal.show('info-box', nameInfo)" >
+                            <svg class="fill-current h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"/><path d="M235 339h42v42h-42zM276.8 318h-41.6c0-67 62.4-62.2 62.4-103.8 0-22.9-18.7-41.7-41.6-41.7S214.4 192 214.4 214h-41.6c0-46 37.2-83 83.2-83s83.2 37.1 83.2 83.1c0 52-62.4 57.9-62.4 103.9z"/></svg>
+                        </a>
+                    </div>
                     <p class="text-sm text-red-500 mb-2 ml-2" v-if="errors.name">{{errors.name[0]}}</p>
                     <div class="input mt-1">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 256c52.805 0 96-43.201 96-96s-43.195-96-96-96-96 43.201-96 96 43.195 96 96 96zm0 48c-63.598 0-192 32.402-192 96v48h384v-48c0-63.598-128.402-96-192-96z"/></svg>
@@ -59,7 +81,12 @@
                 </div>
 
                 <div>
-                    <label class="text-gray-500 text-sm font-semibold ml-2">Kurzbeschreibung</label>
+                    <div class="flex text-gray-500 mb-2">
+                        <label class=" text-sm font-semibold ml-2">Kurzbeschreibung</label>
+                        <a class="cursor-pointer ml-2" @click="$modal.show('info-box', excerptInfo)" >
+                            <svg class="fill-current h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"/><path d="M235 339h42v42h-42zM276.8 318h-41.6c0-67 62.4-62.2 62.4-103.8 0-22.9-18.7-41.7-41.6-41.7S214.4 192 214.4 214h-41.6c0-46 37.2-83 83.2-83s83.2 37.1 83.2 83.1c0 52-62.4 57.9-62.4 103.9z"/></svg>
+                        </a>
+                    </div>
                     <p class="text-sm text-red-500 mb-2 ml-2" v-if="errors.excerpt">{{errors.excerpt[0]}}</p>
                     <textfield 
                         class="mt-1" 
@@ -71,7 +98,12 @@
                 </div>
 
                 <div>
-                    <label class="text-gray-500 text-sm font-semibold ml-2">Themen</label>
+                    <div class="flex text-gray-500 mb-2">
+                        <label class=" text-sm font-semibold ml-2">Themen</label>
+                        <a class="cursor-pointer ml-2" @click="$modal.show('info-box', tagsInfo)" >
+                            <svg class="fill-current h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"/><path d="M235 339h42v42h-42zM276.8 318h-41.6c0-67 62.4-62.2 62.4-103.8 0-22.9-18.7-41.7-41.6-41.7S214.4 192 214.4 214h-41.6c0-46 37.2-83 83.2-83s83.2 37.1 83.2 83.1c0 52-62.4 57.9-62.4 103.9z"/></svg>
+                        </a>
+                    </div>
                     <tags-input 
                         class="mb-2"
                         :options="tags" 
@@ -81,7 +113,12 @@
                 </div>
 
                 <div class="mb-2">
-                    <label class="text-gray-500 text-sm font-semibold ml-2">Beschreibung</label>                    
+                    <div class="flex text-gray-500 mb-2">
+                        <label class=" text-sm font-semibold ml-2">Beschreibung</label>
+                        <a class="cursor-pointer ml-2" @click="$modal.show('info-box', descriptionInfo)" >
+                            <svg class="fill-current h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"/><path d="M235 339h42v42h-42zM276.8 318h-41.6c0-67 62.4-62.2 62.4-103.8 0-22.9-18.7-41.7-41.6-41.7S214.4 192 214.4 214h-41.6c0-46 37.2-83 83.2-83s83.2 37.1 83.2 83.1c0 52-62.4 57.9-62.4 103.9z"/></svg>
+                        </a>
+                    </div>                   
                     <text-editor 
                         class="mt-1"
                         placeholder="Ezählt etwas mehr ..."
@@ -132,12 +169,12 @@
 
                 <div>
                     <label class="text-gray-500 text-sm font-semibold ml-2">Link zum Tweeter-Profil</label>
-                    <p class="text-sm text-red-500 mb-2 ml-2" v-if="errors.twitter_link">{{errors.twitter_link[0]}}</p>
+                    <p class="text-sm text-red-500 mb-2 ml-2" v-if="errors.tweeter_link">{{errors.tweeter_link[0]}}</p>
                     <div class="input mt-1">
                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6-18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6.8 15 2.5 22.1-80.5-4-151.9-42.6-199.6-101.3-8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7-16-.4-31-4.8-44-12.1v1.2c0 47 33.4 86.1 77.7 95-8.1 2.2-16.7 3.4-25.5 3.4-6.2 0-12.3-.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3-33.1 26-74.9 41.5-120.3 41.5-7.8 0-15.5-.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-.1-8.4-.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
                         <input class="pl-12 pr-5"
                             type="text"                            
-                            v-model="form.twitter_link"                            
+                            v-model="form.tweeter_link"                            
                             placeholder="https://www.twitter.com/..."
                         >
                     </div>
@@ -173,7 +210,7 @@
                     web_link: this.user.web_link,
                     facebook_link: this.user.facebook_link,
                     instagram_link: this.user.instagram_link,
-                    twitter_link: this.user.twitter_link,
+                    tweeter_link: this.user.tweeter_link,
 
                     location: this.user.location,
                     lat: '',
@@ -181,9 +218,90 @@
                     activity_area: this.user.activity_area
                 },   
                 
-                errors:[]
+                errors:[],
+
+                helperInfo: {
+                    title: 'Was habt ihr vor?', 
+                    text: `Ihr könnt euch entweder als nach „Unterstützung Suchende“ oder als potenzielle
+                            Unterstützer/Förderer registrieren. Wenn Ihr beide Funktionen einnehmen möchtet, müsst
+                            Ihr eine zweite Registrierung mit einem anderen User vornehmen.` 
+                },
+
+                areaInfo: {
+                    title: 'Wirkradius',
+                    text: `Geben Sie hier Ihren regionalen Bezugsrahmen an. Möchten Sie nur lokale Projekte
+                            unterstützen oder engagieren Sie sich bundesweit? Werden Unterstützungsbedarfe
+                            eingestellt, die innerhalb des Wirkradius Wirkradius liegen – und weiteren Kriterien
+                            entsprechen – informieren wir Sie per Email über den neuen Bedarf, natürlich nur, wenn Sie
+                            das möchten.`
+                }
             }
-        },       
+        },      
+
+        computed:{
+            locationInfo(){
+                let helperText = `Der Standort ist Grundlage für die Umkreissuche, charakterisiert aber auch Ihre Organisation.`;
+
+                let searcherText = `Wählt hier euren Standort aus, das wird später für Förderer wichtig, die euch mit Sachen
+                                oder Kompetenz vor Ort unterstützen möchten.`;
+                return {
+                    title: 'Standort',
+                    text: this.form.helper ? helperText : searcherText
+                }
+            },
+
+            nameInfo(){
+                let helperText = `Tragen Sie hier den Namen Ihrer Organisation ein, zum Beispiel „Rotary Club xy“.`;
+                let searcherText = `Tragt hier den Namen für eure Organisation oder Gruppe ein, zum Beispiel „SozialAG der xxx Realschule“.`
+                return {
+                    title: 'Name / Bezeichnung',
+                    text: this.form.helper ? helperText : searcherText
+                }
+            },
+
+            excerptInfo(){
+                let helperText = `Bitte stellen Sie hier kurz Ihre Organisation vor. Diese Beschreibung wird in Ihrem Profil direkt angezeigt.`;
+                let searcherText = `Beschreibt hier allgemein eure Aktivitäten (konkrete Bedarfe könnt ihr später noch
+                                    detaillierter beschreiben). Diese Beschreibung wird in eurem Profil direkt angezeigt` ;
+                return {
+                    title: 'Kurzbeschreibung',
+                    text: this.form.helper ? helperText : searcherText
+                }
+            },
+
+            tagsInfo(){
+                let helperText =    `Wenn Sie Ihre Unterstützung auf bestimmte Themenbereiche eingrenzen möchten, können
+                                    Sie dies hier angeben. Wird ein Bedarf eingestellt, der einem Ihrer Fokusthemen entspricht,
+                                    erhalten Sie automatisch eine Benachrichtung – natürlich nur, wenn Sie das möchten. Auch
+                                    wenn Sie keine E-Mail-Benachrichtungen erhalten wollen, sollten Sie hier Ihre Fokusthemen
+                                    angeben, um Ihre Organisation besser zu charakterisieren.`;
+                let searcherText = `Hier solltet ihr den Themenschwerpunkt eures sozialen Engagements eintragen.
+                                    Unterstützer, die sich für ein bestimmtes Thema interessieren, können euch so besser finden.`
+                return {
+                    title: 'Themen',
+                    text: this.form.helper ? helperText : searcherText
+                }
+            },
+
+            descriptionInfo(){
+                let helperText =    `Bitte stellen Sie hier Ihre Organisation vor. Sie haben hierdurch die Möglichkeit, ihre
+                                    Organisation und Ihr Engagement bekannter zu machen. Die Informationen sind nicht
+                                    öffentlich. Sie können nur von registrierten Usern eingesehen werden und wenn Sie sich bei
+                                    einem der hier vorgestellten Bedarfe engagieren bzw. engagiert haben.`;
+                let searcherText = `Beschreibt hier allgemein eure Aktivitäten (konkrete Bedarfe könnt ihr später noch
+                                    detaillierter beschreiben).
+                                    Warum engagiert ihr euch? In welchem Rahmen (zum Beispiel im Unterricht oder in eurer
+                                    Freizeit? Wie viele seid Ihr? Wie organisiert ihr euch? Wie lange gibt es euch schon?
+                                    Gebt den potenziellen Unterstützern ein möglichst anschauliches Bild eurer Motivation und
+                                    eurer Aktivitäten. Hier könnt ihr sie von euch überzeugen!
+                                    Nutzt möglichst auch die nachfolgenden Links auf eure „Social Media“-Auftritte, um ein
+                                    umfassendes Bild von euch und euren Aktivitäten zu vermitteln.`;
+            return{
+                    title: 'Beschreibung',
+                    text: this.form.helper ? helperText : searcherText
+                }
+            },
+        },
 
         methods:{
             updateExcerpt(text){             
@@ -203,12 +321,15 @@
             },
 
             submit(){
+                window.loading();
                 axios
                     .post(`/profiles/${this.user.username}`, this.form)
                     .then(()=>{
+                        window.loading();
                         window.location.href = `/profiles/${this.user.username}`;
                     })
                     .catch((error)=>{
+                        window.loading();
                         this.errors = error.response.data.errors;                        
                     });
             },

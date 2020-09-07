@@ -71,7 +71,7 @@ class CompleteHelpTest extends TestCase
 
         $this->complete();
 
-        Notification::assertSentTo($this->help->user, HelpWasCompleted::class);
+        Notification::assertSentTo($this->help->need->creator, HelpWasCompleted::class);
     }
 
 

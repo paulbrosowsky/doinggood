@@ -85,9 +85,11 @@ export default {
 
     methods:{
         updateEmail() {
+            window.loading();
             axios
                 .post(`/account/update/email`, {email: this.email})
                 .then(() => {
+                    window.loading();
                     flash('Bitte bestätige noch deine neue Email-Adresse.');
                     
                     setTimeout(() => {
@@ -100,12 +102,14 @@ export default {
         },
 
         updatePassword() {
+            window.loading();
             axios
                 .post(`/account/update/password`, {
                     password: this.password,
                     password_confirmation: this.password_confirmation
                  })
                 .then(() => {
+                    window.loading();
                     flash('Dein Password wurde geändert');
 
                     setTimeout(() => {
@@ -126,9 +130,11 @@ export default {
         },
 
         deleteHandler(){
+            window.loading();
             axios
                 .delete('/account/destroy')
                 .then(()=>{
+                    window.loading();
                     flash('Dein Benuzerkonto wurde gelöscht, Schade. Wir hoffen dich bald wieder zusehen.');
 
                     setTimeout(() => {

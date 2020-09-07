@@ -32,7 +32,7 @@
                         @include('partials._verify-notification') 
                     </div>
                 @endif
-                
+            
                 @yield('content')
             </main>
 

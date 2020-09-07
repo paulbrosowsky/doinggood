@@ -117,10 +117,12 @@ export default {
             window.location.href = `/profiles/${this.user.username}`;
         },
 
-        assign(){            
+        assign(){  
+            window.loading();          
             axios
                 .put(`/helps/${this.help.id}/assign`)
                 .then(()=>{
+                    window.loading(); 
                     flash('Du hast dein Bedarf erfolgreich vermittelt.');
                     window.location.reload();
                 })
@@ -136,9 +138,11 @@ export default {
         },
 
         reject(body){
+            window.loading();
             axios
                 .put(`/helps/${this.help.id}/reject`, {message: body} )
                 .then(()=>{
+                    window.loading();
                     flash('Die Hilfe wurde abgelehnt.');
                     window.location.reload();
                 })
@@ -154,10 +158,11 @@ export default {
         },
 
         withdraw(body){       
-            
+            window.loading();
             axios
                 .delete(`/helps/${this.help.id}`, {data:{ message: body }})
                 .then(()=>{
+                    window.loading();
                     flash('Deine Hilfe wurde zurückgezogen.');
                     window.location.reload();
                 })
@@ -172,11 +177,12 @@ export default {
             });
         },
 
-        complete(body){          
-            
+        complete(body){ 
+            window.loading();         
             axios
                 .put(`/helps/${this.help.id}/complete`, { message: body })
                 .then(()=>{
+                    window.loading();
                     flash('Deine Hilfe wurde als abgeschlossen markiert.');
                     window.location.reload();
                 });
@@ -192,10 +198,11 @@ export default {
         },
 
         comment(body){         
-            
+            window.loading();
             axios
                 .post(`/helps/${this.help.id}/comment`, { body: body })
                 .then(()=>{
+                    window.loading();
                     flash('Kommentar gespeichert');
                     window.location.reload();
                 });

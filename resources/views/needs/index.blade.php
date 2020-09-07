@@ -68,7 +68,8 @@
                     <h4 class="font-semibold mb-2">Status</h4>
                     <ais-refinement-list
                         attribute="state.name" 
-                        :class-names="{              
+                        :class-names="{      
+                            'ais-RefinementList-list': 'pl-0',          
                             'ais-RefinementList-item': 'flex justify-between mb-2',
                             'ais-RefinementList-label': 'cursor-pointer', 
                             'ais-RefinementList-count': 'text-sm font-bold text-dg-yellow ml-1'
@@ -79,7 +80,8 @@
                     <h4 class="font-semibold mb-2">Bedarf</h4>
                     <ais-refinement-list
                         attribute="categories.name"
-                        :class-names="{              
+                        :class-names="{      
+                            'ais-RefinementList-list': 'pl-0',         
                             'ais-RefinementList-item': 'flex justify-between mb-2',
                             'ais-RefinementList-label': 'cursor-pointer', 
                             'ais-RefinementList-count': 'text-sm font-bold text-dg-yellow ml-1'
@@ -94,7 +96,8 @@
                         :limit="10"
                         show-more
                         :show-more-limit="20"
-                        :class-names="{              
+                        :class-names="{ 
+                            'ais-RefinementList-list': 'pl-0',             
                             'ais-RefinementList-item': 'flex justify-between mb-2',
                             'ais-RefinementList-label': 'cursor-pointer', 
                             'ais-RefinementList-count': 'text-sm font-bold text-dg-yellow ml-1',

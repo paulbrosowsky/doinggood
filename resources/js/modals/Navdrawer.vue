@@ -18,7 +18,6 @@
                 <h4 class="font-semibold mt-5" v-text="user.name"></h4>
             </div>
             
-
             <div class="flex flex-col items-center mb-10">
                 <a 
                     class="nav-link mb-1" 
@@ -44,11 +43,6 @@
                     :class="route == 'about' ? 'bg-gray-200' : ''"
                     v-if="!user"
                 >Über uns</a>
-
-                <a 
-                    class="nav-link"
-                    :class="route == 'about' ? 'bg-gray-200' : ''"
-                >Kontakt</a>
 
                 <a 
                     class="nav-link" 
@@ -81,8 +75,10 @@
 
         methods:{
             logout(){
+                window.loading();
                 axios.post('/logout')
                     .then(()=>{
+                        window.loading();
                         this.goto('/');
                     });
             },

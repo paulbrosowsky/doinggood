@@ -4,15 +4,9 @@
 
             <div class="mr-10">
                 <a class="flex items-center"  href="{{ url('/') }}">
-                    <div class="w-12 h-12">
-                        <img src="/storage/assets/logo_short.png" alt="">
+                    <div class="w-32">
+                        <img src="/storage/assets/logo.png" alt="">
                     </div>
-                        
-                    <div class="text-sm uppercase leading-none ml-2" style="font-family: 'Poppins', sans-serif"> 
-                        <p>Doing</p>    
-                        <p>Good</p>  
-                        <p>Community</p>   
-                    </div>  
                 </a>            
             </div> 
 

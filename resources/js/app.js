@@ -23,6 +23,10 @@ window.flash = function(message, level = 'success') {
     window.Event.$emit('flash', { message, level });
 };
 
+window.loading = function() {
+    window.Event.$emit('loading');
+}
+
 Vue.component('accordion', require('./components/Accordion.vue').default);
 Vue.component('avatar', require('./components/Avatar.vue').default);
 Vue.component('categories', require('./components/Categories.vue').default);
@@ -33,6 +37,7 @@ Vue.component('edit-profile', require('./views/EditProfile.vue').default);
 Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('help-card', require('./components/HelpCard.vue').default);
 Vue.component('image-upload', require('./components/ImageUpload.vue').default);
+Vue.component('info-box', require('./modals/InfoBox.vue').default);
 Vue.component('loading', require('./components/Loading.vue').default);
 Vue.component('location', require('./components/Location.vue').default);
 Vue.component('message-form', require('./modals/MessageForm.vue').default);

@@ -25,9 +25,19 @@
         },
 
         props:{
-            loading: { default:false},            
+            // loading: { default:false},            
             size: { default:'48px' }, 
             position: { default: 'fixed' },  
+        },
+
+        data(){
+            return{
+                loading: false
+            }
+        },
+
+        created(){
+            window.Event.$on('loading', () => this.loading = !this.loading);
         }
     }
 </script>

@@ -24,8 +24,6 @@
 </template>
 <script>
     import { PerfectScrollbar } from 'vue2-perfect-scrollbar';
-    import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css';
-
     export default {
         components: {
             PerfectScrollbar
@@ -55,6 +53,9 @@
     }
 </script>
 <style>
+    /* purgecss start ignore */
+    @import '~vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css';
+
     .dg-sidebar{
         box-shadow: -1px 0 3px 0 rgba(0, 0, 0, 0.1), -1px 0 2px 0 rgba(0, 0, 0, 0.06);
     }

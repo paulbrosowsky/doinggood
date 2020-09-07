@@ -5,6 +5,6 @@
 
 @if (auth()->check())
     <confirm-dialog></confirm-dialog>
-
+    <info-box></info-box>
     <message-form></message-form>
 @endif

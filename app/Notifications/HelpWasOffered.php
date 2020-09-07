@@ -46,7 +46,7 @@ class HelpWasOffered extends Notification
     {
         return (new MailMessage)
                     ->from($this->user->email, $this->user->name)                  
-                    ->subject('Inderesse zu deinem Bedarf')
+                    ->subject('Interesse an deinem Bedarf')
                     ->greeting("Hallo {$notifiable->name},")
                     ->line("{$this->user->name} hat Interesse zu deiem Bedarf {$this->need->title}") 
                     ->line(new HtmlString($this->message))

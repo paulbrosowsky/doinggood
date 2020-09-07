@@ -23,16 +23,20 @@ export default {
 
     methods:{
         assign(){
+            window.loading();
             axios
                 .put(`/needs/${this.need.id}/assign`)
                 .then(() => {
                     flash('Dein Bedarf wurde als vermittelt markiert');
 
-                    setTimeout(() => {                        
+                    setTimeout(() => {    
+                        window.loading();                    
                         window.location.reload();
                     }, 3000); 
                 })
-                .catch((errors)=> console.log(errors));            
+                .catch((errors)=> {
+                    window.loading();   
+                });            
         },
 
         complete(){
@@ -43,12 +47,14 @@ export default {
         },
 
         completeHandler(){
+            window.loading();  
             axios
                 .put(`/needs/${this.need.id}/complete`)
                 .then(()=>{
                     flash('Dein Bedarf wurde als abgeschlossen markiert');
 
                     setTimeout(() => {
+                        window.loading();  
                         window.location.reload();
                     }, 3000); 
                 });

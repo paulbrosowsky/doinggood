@@ -119,13 +119,11 @@
 
                     
                                         
-                </div>
-
+                    </div>
                 </accordion>  
-                
                     @can('unlock')
                         @if(!$user->isUnlocked)
-                            <div class="flex justify-end mt-5">
+                            <div class="flex justify-end mt-5 mx-5">
                                 <form method="POST" action="{{route('profile.unlock', $user->username)}}">
                                     @csrf
                                     @method('patch')
@@ -135,8 +133,6 @@
                             </div>
                         @endif                    
                     @endcan
-                
-
             </div>
         </section>
       

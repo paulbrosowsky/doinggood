@@ -39,11 +39,13 @@ export default {
             });
         },
 
-        destroyHandler(){            
+        destroyHandler(){  
+            window.loading()           
             axios
                 .delete(`/comments/${this.comment.id}`)
                 .then(()=>{
                     flash('Dein Kommentar wurde gelöscht.');
+                    window.loading() 
                     window.location.reload();
                 });
         },
@@ -59,9 +61,11 @@ export default {
         },
 
         update(body){ 
+            window.loading() 
             axios
                 .put(`/comments/${this.comment.id}`, { body: body })
                 .then(()=>{
+                    window.loading() 
                     flash('Deine Kommentar wurde geändert');
                     window.location.reload();
                 });

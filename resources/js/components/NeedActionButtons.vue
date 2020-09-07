@@ -4,18 +4,10 @@
             <button class="btn mr-2" @click="askQuestionModal">Frage stellen</button>
             <button class="btn btn-yellow" @click="offerHelpModal">Interesse ziegen</button> 
         </div>
-
-        <loading v-if="loading"></loading>
     </div>   
 </template>
 <script>
     export default {
-
-        data(){
-            return{
-                loading: false
-            }
-        },
 
         methods:{
             askQuestionModal(){
@@ -27,17 +19,17 @@
             },
 
             askQuestion(body){                
-                this.loading = true;
+                window.loading();
 
                 axios
                     .post(`${window.location.href}/question`, {body: body})
                     .then(()=> {
                         flash('Deine Frage wurde geschickt.');  
-                        this.loading = false; 
+                        window.loading(); 
                         
                         this.$modal.hide('message-form');
                     })
-                    .catch(()=> this.loading = false)
+                    .catch(()=> window.loading())
                 
             },
 
@@ -50,18 +42,18 @@
             },
 
             offerHelp(message){                
-                this.loading = true;
+                window.loading();
 
                 axios
                     .post(`${window.location.href}/help`, {message: message})
                     .then(()=> {
                         flash('Dein Angebot wurde geschickt.');  
-                        this.loading = false; 
+                        window.loading(); 
                         
                         this.$modal.hide('message-form');
                         window.location.reload();
                     })
-                    .catch(()=> this.loading = false)
+                    .catch(()=> window.loading())
                 
             },
 

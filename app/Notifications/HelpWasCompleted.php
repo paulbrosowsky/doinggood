@@ -41,11 +41,13 @@ class HelpWasCompleted extends Notification
      */
     public function toMail($notifiable)
     {
+        $sender = auth()->user()->name;
+        
         return (new MailMessage)
                     ->from($this->help->user->email, $this->help->user->name) 
                     ->subject('Hilfe abgeschlossen.')
                     ->greeting("Hallo {$notifiable->name},")                    
-                    ->line("{$this->help->user->name} hat die Hilfe für den Bedarf {$this->help->need->title} als abgeschlossen markiert.")
+                    ->line("{$sender} hat die Hilfe für den Bedarf {$this->help->need->title} als abgeschlossen markiert. Mit der Nachricht:")
                     ->line(new HtmlString($this->message)) 
                     ->line("Wie ist es gelaufen? Du kannst deine Eindrucke gerne am deinem Bedarf hinterlassen, oder dem Helfer per Email direkt mitteilen. ")
                     ->action('Zum Bedarf', route('need', $this->help->need->id) ); 
