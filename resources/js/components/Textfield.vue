@@ -14,7 +14,7 @@
             :class="maxLenghtAcheived" 
             v-if="maxLength"
         >
-            {{`${value.length} / ${maxLength}`}}
+            {{`${currentValue} / ${maxLength}`}}
         </p>
     </div>
 </template>
@@ -33,8 +33,14 @@
         },
 
         computed:{
+            currentValue(){
+                return this.value ? this.value.length : 0;
+            },
+
             maxLenghtAcheived(){
-                return  this.value.length == this.maxLength ? 'text-red-500' : '';
+                if (this.value) {
+                   return  this.value.length == this.maxLength ? 'text-red-500' : '';
+                }
             }
         },
 
