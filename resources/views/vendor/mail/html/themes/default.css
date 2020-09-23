@@ -11,7 +11,7 @@ body *:not(html):not(style):not(br):not(tr):not(code) {
 body {
     -webkit-text-size-adjust: none;
     background-color: #ffffff;
-    color: #718096;
+    color: #000;
     height: 100%;
     line-height: 1.4;
     margin: 0;
@@ -38,7 +38,7 @@ a img {
 /* Typography */
 
 h1 {
-    color: #3d4852;
+    color: #000;
     font-size: 18px;
     font-weight: bold;
     margin-top: 0;
@@ -154,6 +154,7 @@ img {
 
 .subcopy p {
     font-size: 14px;
+    
 }
 
 /* Footer */
@@ -222,20 +223,23 @@ img {
 
 .button {
     -webkit-text-size-adjust: none;
-    border-radius: 4px;
-    color: #fff;
-    display: inline-block;
-    overflow: hidden;
+    color: #ffffff;
+    border-color: rgba(0,0,0,0);
+    border-radius: 100px;
+    letter-spacing: 2px;
+    font-size: 13px;
+    text-transform: uppercase;
     text-decoration: none;
+    padding-top: 16px;
+    padding-right: 30px;
+    padding-bottom: 16px;
+    padding-left: 30px;
+    font-family: 'Montserrat',Helvetica,Arial,Lucida,sans-serif!important;
 }
 
 .button-blue,
 .button-primary {
-    background-color: #2d3748;
-    border-bottom: 8px solid #2d3748;
-    border-left: 18px solid #2d3748;
-    border-right: 18px solid #2d3748;
-    border-top: 8px solid #2d3748;
+    background-color: #f7a81b;
 }
 
 .button-green,

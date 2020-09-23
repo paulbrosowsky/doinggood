@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\HasWPContent;
 use App\Need;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,10 +12,17 @@ use Illuminate\Support\HtmlString;
 
 class HelpWasRejected extends Notification
 {
-    use Queueable;
+    use Queueable, HasWPContent;
 
     protected $need;
     protected $message;
+   protected $url = 'email/7';
+
+    protected $defaultContent =  [
+        "subject" => "Hilfe abgelehnt.",
+        "line1" => "Es geht und den Bedarf:",
+        "button" => "zum Bedarf"
+    ]; 
 
     public function __construct(Need $need, $message)
     {
@@ -41,12 +49,13 @@ class HelpWasRejected extends Notification
      */
     public function toMail($notifiable)
     {
+        $contents = $this->getContents();
+
         return (new MailMessage)
                     ->from($this->need->creator->email, $this->need->creator->name) 
-                    ->subject('Hilfe abgelehnt.')
-                    ->greeting("Hallo {$notifiable->name},")                    
-                    ->line("{$this->need->creator->name} hat deine Hilfe für den Bedarf {$this->need->title} abgelehnt.")
-                    ->line(new HtmlString($this->message)) 
-                    ->action('Zum Bedarf', route('need', $this->need->id) ); 
+                    ->subject($contents['subject'])
+                    ->line(new HtmlString($this->message))                 
+                    ->action($contents['button'], route('need', $this->need->id))
+                    ->line("{$contents['line1']} {$this->need->title}"); 
     }   
 }

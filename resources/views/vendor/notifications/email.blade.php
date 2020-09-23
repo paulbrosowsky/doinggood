@@ -1,14 +1,7 @@
 @component('mail::message')
 {{-- Greeting --}}
-@if (! empty($greeting))
 # {{ $greeting }}
-@else
-@if ($level === 'error')
-# @lang('Whoops!')
-@else
-# @lang('Hello!')
-@endif
-@endif
+
 
 {{-- Intro Lines --}}
 @foreach ($introLines as $line)
@@ -40,19 +33,13 @@
 @endforeach
 
 {{-- Salutation --}}
-@if (! empty($salutation))
 {{ $salutation }}
-@else
-@lang('Regards'),<br>
-{{ config('app.name') }}
-@endif
 
 {{-- Subcopy --}}
 @isset($actionText)
 @slot('subcopy')
 @lang(
-    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
-    'into your web browser:',
+    "Wenn du den \":actionText\" Button nicht anklicken kannst, verwende diesen Link in deinem Browser:\n",
     [
         'actionText' => $actionText,
     ]

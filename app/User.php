@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Notifications\ConfirmYourEmail;
+use App\Notifications\ResetPassword;
 use Conner\Tagging\Taggable;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -214,5 +215,15 @@ class User extends Authenticatable implements MustVerifyEmail
             'total' => $this->needs->count()                            
         ];
 
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new ConfirmYourEmail());
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

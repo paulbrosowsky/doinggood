@@ -3,30 +3,32 @@
 namespace App\Notifications;
 
 use App\HasWPContent;
-use App\Need;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class HelpWasAssigned extends Notification
+class ResetPassword extends Notification
 {
     use Queueable, HasWPContent;
 
-    protected $need;
-    protected $url = 'email/10';
+    protected $token;
+
+    protected $url = 'email/2';
 
     protected $defaultContent =  [
-        "subject" => "Hilfe angenommen.",
+        "subject" => "Passwort vergessen",
         "greeting" => "Hallo!",
-        "line1" => "Jetzt kann es losgehen! Deine Hilfe für den Bedarf wurde angenommen.",
-        "button" => "Zum Bedarf",
+        "line1" => "Hast du dein Passwort vergessen?",
+        "line2" => "Dieser Link wird nach 5 Minuten ablaufen.",
+        "line3" => "Wenn du dein Passwort nicht zurücksetzen möchtest, kannst du diese Email einfach ignorieren.",
+        "button" => "Passwort zurücksetzen",
         "salutation" => "Beste Grüße DGC-Team"
     ];
     
-    public function __construct(Need $need)
+    public function __construct($data)
     {
-        $this->need = $need;
+        $this->token = $data;
     }
 
     /**
@@ -48,14 +50,21 @@ class HelpWasAssigned extends Notification
      */
     public function toMail($notifiable)
     {
+        $resetUrl = url(config('app.url') . route('password.reset', [
+            'token' => $this->token,
+            'email' => $notifiable->getEmailForPasswordReset(),
+        ], false));
+
         $contents = $this->getContents();
-     
+
         return (new MailMessage)
                     ->subject($contents['subject'])
-                    ->greeting($contents['greeting'])                 
-                    ->line($contents['line1']) 
-                    ->action('Zum Bedarf', route('need', $this->need->id) )
+                    ->greeting($contents['greeting'])
+                    ->line($contents['line1'])
+                    ->action($contents['button'], $resetUrl)
+                    ->line($contents['line3'])
+                    ->line($contents['line2'])
                     ->salutation($contents['salutation']);
                     
-    }   
+    }
 }

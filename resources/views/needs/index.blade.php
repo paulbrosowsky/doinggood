@@ -55,7 +55,7 @@
                 <ais-current-refinements
                 :included-attributes="['state.name', 'categories.name', 'tags']"
                 :class-names="{
-                    'ais-CurrentRefinements-list': 'flex flex-wrap mb-3',
+                    'ais-CurrentRefinements-list': 'flex flex-wrap mb-3 pl-0',
                     'ais-CurrentRefinements-item':'flex flex-wrap',
                     'ais-CurrentRefinements-category': 'text-sm bg-gray-600 text-white font-semibold leading-none wor rounded-full py-2 px-3 mr-2 mb-2',
                     'ais-CurrentRefinements-label': 'hidden',                                    

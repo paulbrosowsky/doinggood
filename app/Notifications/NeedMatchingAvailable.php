@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\HasWPContent;
 use App\Need;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,9 +11,18 @@ use Illuminate\Notifications\Notification;
 
 class NeedMatchingAvailable extends Notification
 {
-    use Queueable;
+    use Queueable, HasWPContent;
 
     protected $need;
+    protected $url = 'email/11';
+
+    protected $defaultContent =  [
+        "subject" => "Das könnte dich interessieren.",
+        "greeting" => "Hallo",
+        "line1" => "Dieser Bedarf könnte dich interesseiren:",
+        "button" => "Zum Bedarf",
+        "salutation" => "Beste Grüße DGC-Team"
+    ];
 
     /**
      * Create a new notification instance.
@@ -43,12 +53,13 @@ class NeedMatchingAvailable extends Notification
      */
     public function toMail($notifiable)
     {
-        $app = config('app.name');
+        $contents = $this->getContents();
+        
         return (new MailMessage)
-                    ->subject('Das könnte dich interessieren.')
-                    ->greeting("Hallo {$notifiable->name},") 
-                    ->line("Dieses Bedarf könnte dich interesseiren: {$this->need->title}")
-                    ->action('Zum Bedarf', route('need', $this->need->id) )
-                    ->salutation("Viele Grüße $app"); 
+                    ->subject($contents['subject'])
+                    ->greeting($contents['greeting'])
+                    ->line("{$contents['line1']} {$this->need->title}")
+                    ->action($contents['button'], route('need', $this->need->id))
+                    ->salutation($contents['salutation']); 
     }   
 }

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\HasWPContent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -9,17 +10,17 @@ use Illuminate\Notifications\Notification;
 
 class ProfileUnlocked extends Notification
 {
-    use Queueable;
+    use Queueable, HasWPContent;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+    protected $url = 'email/4';
+
+    protected $defaultContent =  [
+        "subject" => "Dein Benutzerprofil wurde freigeschaltet",
+        "greeting" => "Hallo!",
+        "line1" => "Jetzt kann es los gehen, dein Benutzerprofil wurde soweben freigeschaltet",
+        "button" => "zum Profil",
+        "salutation" => "Beste Grüße DGC-Team",
+    ];
 
     /**
      * Get the notification's delivery channels.
@@ -40,14 +41,15 @@ class ProfileUnlocked extends Notification
      */
     public function toMail($notifiable)
     {
-        $appName = config('app.name');
         $url = route('profile', $notifiable->username);
-
+        $contents = $this->getContents();
+        
         return (new MailMessage)
-                    ->subject('Dein Benutzerprofil wurde freigeschaltet')                    
-                    ->line("Jetzt kann es los gehen, dein Benutzerprofil bei {$appName} wurde soweben freigeschaltet")
-                    ->action('Zum Profil', $url)
-                    ->salutation("Viele Grüße {$appName}");  
+                    ->subject($contents['subject'])
+                    ->greeting($contents['greeting'])
+                    ->line($contents['line1'])
+                    ->action($contents['button'], $url)
+                    ->salutation($contents['salutation']);
     }
 
     

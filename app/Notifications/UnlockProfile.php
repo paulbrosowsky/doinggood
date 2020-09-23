@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\HasWPContent;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,9 +11,19 @@ use Illuminate\Notifications\Notification;
 
 class UnlockProfile extends Notification
 {
-    use Queueable;
+    use Queueable, HasWPContent;
 
     protected $user;
+
+    protected $url = 'email/3';
+
+    protected $defaultContent =  [
+        "subject" => "Neuer Benutzer registriert.",
+        "line1" => "hat sich gerade registriert.",
+        "line2" => "Bitte schaue dir das Profil an, und gebe es frei.",
+        "button" => "zum Profil",
+        "salutation" => "Beste Grüße DGC-Team"
+    ];
 
     /**
      * Create a new notification instance.
@@ -43,14 +54,14 @@ class UnlockProfile extends Notification
      */
     public function toMail($notifiable)
     {
-        $appName = config('app.name');
         $url = route('profile', $this->user->username);
-
+        $contents = $this->getContents();
+        
         return (new MailMessage)
-                    ->subject('Neuer Benutzer bei DoingGoodCommunity')
-                    ->line("{$this->user->name} hat sich gerade bei {$appName} registriert.")
-                    ->line("Bitte schaue dir das Profil an, und gebe es frei. {$this->user->name} wartet auf dich.")
-                    ->action('Zum Profil', $url)
-                    ->salutation("Viele Grüße {$appName}");                    
+                    ->subject($contents['subject'])
+                    ->line("{$this->user->name} {$contents['line1']}")
+                    ->line($contents['line2'])
+                    ->action($contents['button'], $url)
+                    ->salutation($contents['salutation']);                  
     }   
 }

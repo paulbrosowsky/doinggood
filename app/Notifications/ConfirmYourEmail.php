@@ -3,32 +3,26 @@
 namespace App\Notifications;
 
 use App\HasWPContent;
-use App\Help;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\HtmlString;
 
-class HelpWasWithdrawn extends Notification
+class ConfirmYourEmail extends VerifyEmail
 {
     use Queueable, HasWPContent;
 
-    protected $help;
-    protected $message;
-    protected $url = 'email/8';
+    protected $url = 'email/1';
 
     protected $defaultContent =  [
-        "subject" => "Hilfe zurückgezogen.",
-        "line1" => "Es geht und deinen Bedarf:",
-        "button" => "zum Bedarf"
+        "subject" => "Bestätige deine Email-Adresse",
+        "greeting" => "Hallo!",
+        "line1" => "Bitte bestätige noch deine Email-Adresse",
+        "line2" => "Wenn du keinen Account beantragt hast, ist keine weitere Handlung nötig.",
+        "button" => "Email bestätigen",
+        "salutation" => "Beste Grüße DGC-Team"
     ];
-
-    public function __construct(Help $help, $message)
-    {
-        $this->help = $help;
-        $this->message = $message;
-    }
 
     /**
      * Get the notification's delivery channels.
@@ -48,15 +42,18 @@ class HelpWasWithdrawn extends Notification
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
-    {       
+    {
+        $verificationUrl = $this->verificationUrl($notifiable);
+
         $contents = $this->getContents();
         
         return (new MailMessage)
-                    ->from($this->help->user->email, $this->help->user->name) 
                     ->subject($contents['subject'])
-                    ->line(new HtmlString($this->message))                 
-                    ->action($contents['button'], route('need', $this->help->need->id))
-                    ->line("{$contents['line1']} {$this->help->need->title}"); 
+                    ->greeting($contents['greeting'])
+                    ->line($contents['line1'])
+                    ->action($contents['button'], $verificationUrl)
+                    ->line($contents['line2'])
+                    ->salutation($contents['salutation']);
     }
-   
+
 }

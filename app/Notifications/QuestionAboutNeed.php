@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\HasWPContent;
 use App\Need;
 use App\User;
 use Illuminate\Bus\Queueable;
@@ -12,11 +13,22 @@ use Illuminate\Support\HtmlString;
 
 class QuestionAboutNeed extends Notification
 {
-    use Queueable;
+    use Queueable, HasWPContent;
    
     protected $user;
     protected $need;
     protected $body;
+    protected $url = 'email/5';
+    protected $defaultContent =  [
+        "subject" => "Frage zu deinem Bedarf",
+        "greeting" => false,
+        "line1" => "Es geht um deinen Bedarf:",
+        "line2" => false,
+        "line3" => false,
+        "button" => "zum Bedarf",
+        "salutation" => false,
+    ];
+
    
     public function __construct(User $user, Need $need, $body)
     {
@@ -44,13 +56,14 @@ class QuestionAboutNeed extends Notification
      */
     public function toMail($notifiable)
     {
-        
+        $contents = $this->getContents();
+
         return (new MailMessage)
                     ->from($this->user->email, $this->user->name)
-                    ->subject('Frage zu deinem Bedarf')
-                    ->greeting("Hallo {$notifiable->name},")
-                    ->line("{$this->user->name} hat eine Frage zu deiem Bedarf {$this->need->title}")                                      
+                    ->subject($contents['subject'])
                     ->line(new HtmlString($this->body))
-                    ->action('Zum Bedarf', route('need', $this->need->id) );                    
+                    ->action($contents['button'], route('need', $this->need->id))  
+                    ->line("{$contents['line1']} {$this->need->title}");                                     
+                                    
     }    
 }

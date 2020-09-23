@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class StaticPagesController extends Controller
 {
@@ -13,7 +14,10 @@ class StaticPagesController extends Controller
      */
     public function imprint()
     {
-        return view('static-pages.imprint');
+        $response = Http::get('https://doinggoodchallenge.de/wp-json/community/api/impressum');
+        $content = $response->successful() ? nl2br($response->json()) : null;
+    
+        return view('static-pages.imprint', compact('content'));
     }
 
     /**
@@ -23,7 +27,10 @@ class StaticPagesController extends Controller
      */
     public function privacy()
     {
-        return view('static-pages.privacy');
+        $response = Http::get('https://doinggoodchallenge.de/wp-json/community/api/datenschutz');
+        $content = $response->successful() ? nl2br($response->json()) : null;
+
+        return view('static-pages.privacy', compact('content'));
     }
 
     /**

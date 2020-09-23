@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\HasWPContent;
 use App\Help;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,10 +12,21 @@ use Illuminate\Support\HtmlString;
 
 class HelpWasCompleted extends Notification
 {
-    use Queueable;
+    use Queueable, HasWPContent;
 
     protected $help;
     protected $message;
+    protected $url = 'email/9';
+
+    protected $defaultContent =  [
+        "subject" => "Hilfe abgeschlossen.",
+        "greeting" => "Hallo",
+        "line1" => "hat die Hilfe für den Bedarf",
+        "line2" => "als abgeschlossen markiert. Mit der Nachricht:",
+        "line3" => "Wie ist es gelaufen? Du kannst deine Eindrucke gerne am deinem Bedarf hinterlassen, oder dem Helfer per Email direkt mitteilen.",
+        "button" => "Zum Bedarf",
+        "salutation" => "Beste Grüße DGC-Team"
+    ];
 
     public function __construct(Help $help, $message)
     {
@@ -41,15 +53,17 @@ class HelpWasCompleted extends Notification
      */
     public function toMail($notifiable)
     {
-        $sender = auth()->user()->name;
-        
+        $contents = $this->getContents();
+        $sender = $this->help->user->name;
+
         return (new MailMessage)
                     ->from($this->help->user->email, $this->help->user->name) 
-                    ->subject('Hilfe abgeschlossen.')
-                    ->greeting("Hallo {$notifiable->name},")                    
-                    ->line("{$sender} hat die Hilfe für den Bedarf {$this->help->need->title} als abgeschlossen markiert. Mit der Nachricht:")
-                    ->line(new HtmlString($this->message)) 
-                    ->line("Wie ist es gelaufen? Du kannst deine Eindrucke gerne am deinem Bedarf hinterlassen, oder dem Helfer per Email direkt mitteilen. ")
-                    ->action('Zum Bedarf', route('need', $this->help->need->id) ); 
+                    ->subject($contents['subject'])
+                    ->greeting($contents['greeting'])
+                    ->line("{$sender} {$contents['line1']} \"{$this->help->need->title}\" {$contents['line2']}")
+                    ->line(new HtmlString($this->message))
+                    ->action($contents['button'], route('need', $this->help->need->id))  
+                    ->line($contents['line3'])
+                    ->salutation($contents['salutation']); 
     }   
 }
