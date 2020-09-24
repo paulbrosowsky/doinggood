@@ -44,7 +44,9 @@ class NeedMatching
      */
     public function helpers()
     {
-        return $this->builder = DB::table('users')->where('helper', true);
+        return $this->builder = DB::table('users')
+                                ->where('helper', true)
+                                ->where('enable_matching', true);
     }
 
      /**

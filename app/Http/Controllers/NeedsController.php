@@ -45,7 +45,7 @@ class NeedsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {              
+    {            
         $request->validate([
             'title' => ['required', 'max:140'],
             'deadline' => ['required', 'date'],
@@ -54,7 +54,7 @@ class NeedsController extends Controller
             'lat' => ['numeric', 'nullable'],
             'lng' => ['numeric', ],
         ]);
-
+        
         $need = Need::create([
             'user_id' => auth()->id(),
             'title' => $request->title,
@@ -68,6 +68,7 @@ class NeedsController extends Controller
 
         $need->retag($request->tags);
         $need->updateCategories($request->categories);
+       
         $need->applyMatching();
 
         return $need;

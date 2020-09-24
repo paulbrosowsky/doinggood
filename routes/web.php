@@ -85,14 +85,14 @@ Route::get('/privacy', 'StaticPagesController@privacy')->name('privacy');
 Route::get('/terms', 'StaticPagesController@terms')->name('terms');
 Route::get('/faq', 'StaticPagesController@faq')->name('faq');
 
-Route::get('mail', function () {     
-    $admin = App\User::where('email', config('doinggood.administrators')[0])
-        ->first();   
+// Route::get('mail', function () {     
+//     $admin = App\User::where('email', config('doinggood.administrators')[0])
+//         ->first();   
         
-    $user = App\User::where('id', 2)->first();
-    $need = App\Need::first();
-    $help = App\Help::first();
+//     $user = App\User::where('id', 2)->first();
+//     $need = App\Need::first();
+//     $help = App\Help::first();
         
-    return (new App\Notifications\HelpWasCompleted($help, 'hallo'))
-                ->toMail($user);
-});
+//     return (new App\Notifications\HelpWasCompleted($help, 'hallo'))
+//                 ->toMail($user);
+// });

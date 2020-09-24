@@ -30,8 +30,8 @@
                 class="mt-5" 
                 :categories="categories" 
                 :selected="user.categories"
-                 @update="updateCategories"
-                 v-show="form.helper"
+                @update="updateCategories"
+                v-show="form.helper"
             ></category-select>   
 
             <div class="md:flex items-center">
@@ -54,6 +54,18 @@
                     </div>
                     <select-input @change="updateActivityArea" :selected="form.activity_area"></select-input>
                 </div>
+            </div>
+
+            <div class="mt-5" v-show="form.helper">         
+                <label class="flex" for="remember">                                
+                    <input 
+                        class="h-10 mt-4" 
+                        type="checkbox" 
+                        v-model="form.enable_matching"
+                    >
+                    <span class="ml-2">Ich möchte Email-Benachrichtigungen über passende Bedarfe bekommen.</span>
+                </label>
+                
             </div>
             
         </div>
@@ -215,7 +227,8 @@
                     location: this.user.location,
                     lat: '',
                     lng: '',
-                    activity_area: this.user.activity_area
+                    activity_area: this.user.activity_area,
+                    enable_matching: this.user.enable_matching
                 },   
                 
                 errors:[],

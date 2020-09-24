@@ -10,7 +10,6 @@ use App\Exceptions\NeedNotAssignable;
 use App\Exceptions\NeedNotCompletable;
 use App\Notifications\NeedMatchingAvailable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class Need extends Model

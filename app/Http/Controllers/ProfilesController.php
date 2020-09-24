@@ -86,7 +86,8 @@ class ProfilesController extends Controller
             'location' => $request->location,
             'lat' => $request->lat,
             'lng' => $request->lng,
-            'activity_area' => $request->activity_area
+            'activity_area' => $request->activity_area,
+            'enable_matching' => $request->enable_matching
         ]);
             
         $user->updateCategories($request->categories); 

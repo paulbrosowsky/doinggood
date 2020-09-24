@@ -79,7 +79,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'helper' => 'boolean'
+        'helper' => 'boolean',
+        'enable_matching' => 'boolean'
     ];
 
     /**

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Notifications\ConfirmYourEmail;
 use App\Notifications\UnlockProfile;
 use App\User;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
@@ -113,7 +113,7 @@ class RegistrationTest extends TestCase
         Notification::fake();
         $this->registerUser();
 
-        Notification::assertSentTo(User::first(), VerifyEmail::class);
+        Notification::assertSentTo(User::first(), ConfirmYourEmail::class);
     }
     
     /** @test */
