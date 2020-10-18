@@ -194,7 +194,7 @@
 
                 <div class="flex justify-end mt-5">
                     <button class="btn mr-2" @click.prevent="cancel">Abbrechen</button>
-                    <button class="btn btn-yellow" type="submit">Ändern</button>
+                    <button class="btn btn-yellow" type="submit">Speichern</button>
                 </div>               
 
             </form>
@@ -297,7 +297,7 @@
             },
 
             descriptionInfo(){
-                let helperText =    `Bitte stellen Sie hier Ihre Organisation vor. Sie haben hierdurch die Möglichkeit, ihre
+                let helperText =   `Bitte stellen Sie hier Ihre Organisation vor. Sie haben hierdurch die Möglichkeit, ihre
                                     Organisation und Ihr Engagement bekannter zu machen. Die Informationen sind nicht
                                     öffentlich. Sie können nur von registrierten Usern eingesehen werden und wenn Sie sich bei
                                     einem der hier vorgestellten Bedarfe engagieren bzw. engagiert haben.`;

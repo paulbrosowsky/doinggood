@@ -3,6 +3,7 @@
         <nav 
             class="dg-sidebar fixed h-full w-full bg-white top-0 right-0 mt-16 z-20 md:w-80"               
             v-show="show"
+            v-cloak
         >  
             <div class="h-full">
                 <div class="flex items-center bg-gray-200 px-2 pb-3 pt-5 md:pt-3">                        
@@ -17,9 +18,7 @@
                     </perfect-scrollbar> 
                               
             </div>
-           
-            
-            </nav>
+        </nav>
     </transition>
 </template>
 <script>

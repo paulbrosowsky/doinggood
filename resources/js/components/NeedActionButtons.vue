@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="flex">
-            <button class="btn mr-2" @click="askQuestionModal">Frage stellen</button>
-            <button class="btn btn-yellow" @click="offerHelpModal">Interesse ziegen</button> 
+            <!-- <button class="btn mr-2" @click="askQuestionModal">Frage stellen</button> -->
+            <button class="btn btn-yellow" @click="offerHelpModal">Interesse zeigen</button> 
         </div>
     </div>   
 </template>

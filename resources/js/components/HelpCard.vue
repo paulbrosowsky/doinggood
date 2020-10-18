@@ -34,13 +34,13 @@
                                 class="btn btn-red mr-2" 
                                 @click="rejectModal"
                                 v-if="needOwner && !completed"
-                            >Ablehnen</button>
+                            >Abbrechen</button>
 
                             <button 
                                 class="btn btn-yellow" 
                                 @click="assign"                                 
                                 v-if="needOwner && !assigned && !completed
-                            ">Vermitteln</button>
+                            ">Annehmen</button>
 
                             <button 
                                 class="btn btn-red mr-2" 
@@ -52,7 +52,7 @@
                                 class="btn btn-yellow mr-2" 
                                 @click="completeModal"
                                 v-if="(needOwner || helpOwner) && assigned && !completed"
-                            >fertig</button>
+                            >Feedback</button>
 
                             <button 
                                 class="btn btn-blue mr-2" 

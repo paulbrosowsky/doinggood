@@ -9,7 +9,7 @@ class NeedMatching
     /** 
      * Availiable Matching Parameters
      */
-    protected $parameters =  ['helpers', 'categories', 'location'];
+    protected $parameters =  ['helpers', 'categories', 'location', 'tags'];
 
     protected $need;
 

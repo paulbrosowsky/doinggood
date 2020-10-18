@@ -62,8 +62,9 @@
             </div>           
             
             
-                <div class="w-full mt-5">
-                    <accordion>  
+            <div class="w-full mt-5">
+                @if ($user->web_link || $user->facebook_link || $user->instagram_link || $user->tweeter_link || $user->description || isset($user->location) || !$user->categories->isEmpty())
+                <accordion>  
                     <div class=" container md:rounded-xl"> 
                                            
                         @if ($user->helper && !$user->categories->isEmpty())
@@ -83,6 +84,7 @@
                                 </div>                                    
                             </div>
                         @endif 
+
                         <p>{!! $user->description !!}</p>
                         
                         @if ($user->web_link || $user->facebook_link || $user->instagram_link || $user->tweeter_link)
@@ -116,23 +118,21 @@
                                 </div> 
                             </div> 
                         @endif
-
-                    
-                                        
                     </div>
                 </accordion>  
-                    @can('unlock')
-                        @if(!$user->isUnlocked)
-                            <div class="flex justify-end mt-5 mx-5">
-                                <form method="POST" action="{{route('profile.unlock', $user->username)}}">
-                                    @csrf
-                                    @method('patch')
+                @endif
+                @can('unlock')
+                    @if(!$user->isUnlocked)
+                        <div class="flex justify-end mt-5 mx-5">
+                            <form method="POST" action="{{route('profile.unlock', $user->username)}}">
+                                @csrf
+                                @method('patch')
 
-                                    <button type="submit" class="btn btn-red"> Profil Freischalten </button>
-                                </form>
-                            </div>
-                        @endif                    
-                    @endcan
+                                <button type="submit" class="btn btn-red"> Profil Freischalten </button>
+                            </form>
+                        </div>
+                    @endif                    
+                @endcan
             </div>
         </section>
       
