@@ -17,7 +17,7 @@
    
 </template>
 <script>
-    import ClipLoader from 'vue-spinner/src/ClipLoader.vue';
+    import ClipLoader from './ClipLoader';
     
     export default {        
         components: {
