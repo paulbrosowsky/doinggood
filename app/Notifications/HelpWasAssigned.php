@@ -14,7 +14,7 @@ class HelpWasAssigned extends Notification
     use Queueable, HasWPContent;
 
     protected $need;
-    protected $url = 'email/10';
+    protected $url = 'email/7';
 
     protected $defaultContent =  [
         "subject" => "Hilfe angenommen.",

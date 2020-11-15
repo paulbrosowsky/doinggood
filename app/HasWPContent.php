@@ -9,7 +9,7 @@ trait HasWPContent {
 
     public function getContents()
     {
-        $url = config('doinggood.wp_api_url') .'/'. $this->url;
+        $url = config('doinggood.wp_api.url') .'/'. $this->url ."?token=". config('doinggood.wp_api.token');
 
         $response = Http::get($url);
 

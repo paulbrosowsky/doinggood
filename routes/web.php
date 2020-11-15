@@ -63,13 +63,14 @@ Route::group([
         Route::group([
             'middleware' => 'is.helper:1'
         ], function(){            
-            Route::post('needs/{need}/question', 'NeedQuestionsController@create')->name('need.question');  
+              
             Route::post('needs/{need}/help', 'HelpsController@store')->name('help.store');
             
             Route::delete('/helps/{help}', 'HelpsController@destroy')->name('help.destroy');
                     
         });   
-        
+
+        Route::post('needs/{need}/users/{user}', 'UserContactsController@create')->name('user.contact');
         Route::put('/helps/{help}/complete', 'HelpsController@complete')->name('help.complete');   
         Route::post('helps/{help}/comment', 'CommentsController@store')->name('comment.store');
         Route::put('comments/{comment}', 'CommentsController@update')->name('comment.update');

@@ -16,7 +16,7 @@ class HelpWasCompleted extends Notification
 
     protected $help;
     protected $message;
-    protected $url = 'email/9';
+    protected $url = 'email/10';
 
     protected $defaultContent =  [
         "subject" => "Hilfe abgeschlossen.",

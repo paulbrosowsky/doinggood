@@ -39,6 +39,7 @@
                 >Einstellungen</a>
 
                 <a 
+                    href="https://doinggoodchallenge.de/ueber-uns-kontakt/"
                     class="nav-link" 
                     :class="route == 'about' ? 'bg-gray-200' : ''"
                     v-if="!user"

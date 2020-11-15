@@ -63,7 +63,7 @@
              />
             </div>
 
-            <sidebar >
+            <sidebar v-cloak>
                 <div class="mb-10">
                     <h4 class="font-semibold mb-2">Status</h4>
                     <ais-refinement-list

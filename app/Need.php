@@ -35,7 +35,7 @@ class Need extends Model
      /**
      *  Append to the User Model 
      */
-    protected $appends = ['tagNames', 'owner', 'completable'];    
+    protected $appends = ['tagNames', 'owner', 'completable', 'isHelper'];    
 
 
     /**
@@ -170,6 +170,16 @@ class Need extends Model
     {
         // Determine whether the Need is Assgned and All Helps are Completed
         return $this->helps->whereIn('state_id', [1,2])->isEmpty() && $this->assigned;
+    }
+
+    /**
+     *  Determine whether the current User has any Helps at the Need
+     *
+     * @return boolean
+     */
+    public function getIsHelperAttribute()
+    {
+        return  $this->helps()->where('user_id', auth()->id())->exists();
     }
 
     /**

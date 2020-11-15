@@ -71,6 +71,7 @@ export default {
 
         submit(){
             if(this.text){
+               console.log(this.submitEvent);
                 Event.$emit( this.submitEvent , {
                     action: this.action,
                     body: this.text

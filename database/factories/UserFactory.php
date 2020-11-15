@@ -29,6 +29,7 @@ $factory->define(User::class, function (Faker $faker) {
         'description' => $faker->paragraph(10),
         'excerpt' => $faker->paragraph(3),
         'unlocked_at' => now(),
-        'helper' => false 
+        'helper' => false,
+        'enable_matching' => true
     ];
 });

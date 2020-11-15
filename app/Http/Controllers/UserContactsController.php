@@ -3,24 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Need;
-use App\Notifications\QuestionAboutNeed;
+use App\Notifications\UserContact;
+use App\User;
 use Illuminate\Http\Request;
 
-class NeedQuestionsController extends Controller
+class UserContactsController extends Controller
 {
     /**
-     *  Ask Question About an Need
+     *  Contact Users
      * 
      * @param Need $need
      * @param Request $request
      */
-    public function create(Need $need, Request $request)
+    public function create(Need $need, User $user, Request $request)
     {          
         $request->validate([
             'body' => ['required']
         ]);
 
-        $need->creator->notify(new QuestionAboutNeed(
+        $user->notify(new UserContact(
             auth()->user(), 
             $need,
             $request->body

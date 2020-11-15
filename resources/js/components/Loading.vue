@@ -1,10 +1,10 @@
 <template>
-    <div class="w-full h-full flex justify-center items-center top-0 left-0 z-20" 
+    <div class="w-full h-full flex justify-center items-center top-0 left-0 z-40" 
         :class="this.position" 
         v-if="loading"
     >
         <clip-loader 
-            class="z-30" 
+            class="z-50" 
             :loading="loading" 
             :color="'#f7a81b'" 
             :size="size"

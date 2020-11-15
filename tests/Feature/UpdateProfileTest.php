@@ -157,7 +157,8 @@ class UpdateProfileTest extends TestCase
             'location' => 'Trier',
             'lat' => 12.345,
             'lng' => -12.345,
-            'activity_area' => 10 
+            'activity_area' => 10 ,
+            'enable_matching' => true
         ], $overrides)); 
     }
 

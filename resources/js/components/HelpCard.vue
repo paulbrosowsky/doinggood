@@ -30,6 +30,8 @@
                         </div>
 
                         <div class="flex md:mb-3 md:-mt-3" >
+                            <contact-form v-if="needOwner" :user="user.username" :icon="true" class="mr-2"></contact-form>
+
                             <button 
                                 class="btn btn-red mr-2" 
                                 @click="rejectModal"

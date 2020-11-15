@@ -11,7 +11,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\HtmlString;
 
-class QuestionAboutNeed extends Notification
+class UserContact extends Notification
 {
     use Queueable, HasWPContent;
    

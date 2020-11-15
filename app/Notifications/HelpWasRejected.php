@@ -16,7 +16,7 @@ class HelpWasRejected extends Notification
 
     protected $need;
     protected $message;
-   protected $url = 'email/7';
+   protected $url = 'email/8';
 
     protected $defaultContent =  [
         "subject" => "Hilfe abgelehnt.",

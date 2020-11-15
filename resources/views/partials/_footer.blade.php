@@ -11,12 +11,12 @@
                 <a class="mx-2 hover:text-dg-blue" href="{{route('privacy')}}">
                     Datenschutz
                 </a> 
-                <a class="mx-2 hover:text-dg-blue" href="{{route('terms')}}">
+                {{-- <a class="mx-2 hover:text-dg-blue" href="{{route('terms')}}">
                     Nutzungsbedingungen
-                </a> 
-                {{-- <a class="mx-2 hover:text-dg-blue" href="{{route('faq')}}">
-                    FAQ
                 </a>  --}}
+                <a class="mx-2 hover:text-dg-blue" href="https://doinggoodchallenge.de/ueber-uns-kontakt/">
+                    Über uns
+                </a> 
             </div>
            
         </div>

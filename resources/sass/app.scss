@@ -59,6 +59,9 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration { display: none; }
 
+.vm--container {
+    z-index: 30 !important;
+}
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";
@@ -93,7 +96,7 @@ h3 {
     }
 
     svg{
-        @apply .h-4 .fill-current .mr-2
+        @apply .h-4 .fill-current
     }
 }
 

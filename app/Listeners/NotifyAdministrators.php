@@ -30,10 +30,10 @@ class NotifyAdministrators
         $administrators = config('doinggood.administrators');
        
         array_map(function($email) use ($event){  
-            $user =  User::where('email', $email)->first();          
+            $notify =  User::where('email', $email)->first();          
              
-            if(isset($user)){
-                $user->notify(new UnlockProfile($event->user));  
+            if(isset($notify)){
+                $notify->notify(new UnlockProfile($event->user));  
             }            
                            
         }, $administrators); 

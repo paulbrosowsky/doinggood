@@ -16,7 +16,7 @@ class HelpWasWithdrawn extends Notification
 
     protected $help;
     protected $message;
-    protected $url = 'email/8';
+    protected $url = 'email/9';
 
     protected $defaultContent =  [
         "subject" => "Hilfe zurückgezogen.",

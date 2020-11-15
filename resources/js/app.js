@@ -32,6 +32,7 @@ Vue.component('avatar', require('./components/Avatar.vue').default);
 Vue.component('categories', require('./components/Categories.vue').default);
 Vue.component('category-select', require('./components/CategorySelect.vue').default);
 Vue.component('confirm-dialog', require('./modals/ConfirmDialog.vue').default);
+Vue.component('contact-form', require('./components/ContactForm.vue').default);
 Vue.component('DatetimeInput', require('./components/DatetimeInput.vue').default);
 Vue.component('edit-profile', require('./views/EditProfile.vue').default);
 Vue.component('flash', require('./components/Flash.vue').default);

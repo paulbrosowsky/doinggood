@@ -43,7 +43,7 @@
         </div>
 
         <flash message="{{ session('flash') }}"></flash>
-        
+        <loading></loading>
         @include('partials._modals')
     </div>
 </body>

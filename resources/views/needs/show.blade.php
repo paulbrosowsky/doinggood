@@ -67,18 +67,25 @@
                 <h4 class="text-gray-500 mb-3">Über uns</h4>
 
                 <div class="flex items-center mb-5">
-                    <avatar 
-                        :image="{{ json_encode($need->creator->avatar) }}" 
-                        :badge="{{json_encode( $need->creator->helper)}}" 
-                        size="md"
-                    ></avatar>
+                    <a href="{{route('profile', $need->creator->username)}}" class="cursor-pointer">
+                        <avatar 
+                            :image="{{ json_encode($need->creator->avatar) }}" 
+                            :badge="{{json_encode( $need->creator->helper)}}" 
+                            size="sm"
+                        ></avatar>
+                    </a>
                     
                     <div class="ml-5">
-                        <h4 class="font-semibold mb-2">{{$need->creator->name}}</h4>
                         <a href="{{route('profile', $need->creator->username)}}">
-                            <button class="btn btn-blue">zum Profil</button>
+                            <h4 class="font-semibold mb-2">{{$need->creator->name}}</h4>
                         </a>
-                        
+                        {{-- <a href="{{route('profile', $need->creator->username)}}">
+                            <button class="btn btn-blue">zum Profil</button>
+                        </a> --}}
+                        @if ($need->isHelper)
+                            <contact-form :user="{{ json_encode($need->creator->username) }}"></contact-form>
+                        @endif
+                       
                     </div>                
                 </div>
 
