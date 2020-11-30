@@ -35,7 +35,6 @@
                             @else
                             <p>Bedarfe</p>
                             @endif
-
                         </div>
                     </div>
                     <div class="text-center">
@@ -50,6 +49,11 @@
                         </div>
                     </div>
                 </div>
+                @if($user->id == auth()->id())
+                    <div class="mb-5">
+                        <x-new-need-button></x-new-need-button>
+                    </div>
+                @endif
 
                 <p class="text-center">{{ $user->excerpt }}</p>   
                

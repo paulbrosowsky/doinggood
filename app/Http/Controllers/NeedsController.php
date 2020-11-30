@@ -70,6 +70,7 @@ class NeedsController extends Controller
         $need->updateCategories($request->categories);
        
         $need->applyMatching();
+        $need->fresh()->searchable();
 
         return $need;
     }

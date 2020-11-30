@@ -32,17 +32,8 @@
             
             <div class="flex items-center justify-between w-full mx-auto mb-5 md:w-2/3">                
                 <div class="flex items-center mt-2">
-                    @if (auth()->check() && !auth()->user()->helper)
-                
-                        <a href="{{route('need.create')}}">
-                            <button class="flex items-center text-sm font-bold uppercase text-dg-blue border-r-2 border-gray-300 pr-2 mr-2 hover:text-blue-700 focus:outline-none">
-                                <svg class="h-6 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M363 277h-86v86h-42v-86h-86v-42h86v-86h42v86h86v42z"/><path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422c-44.3 0-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256c0-44.3 17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"/></svg>
-                                <span class="hidden md:block">Neuer Bedarf </span> 
-                                <span class="md:hidden">Neu</span>   
-                            </button>
-                        </a>
-                    @endif   
-                    <button class="flex items-center text-sm font-bold uppercase text-gray-600 hover:text-gray-800 focus:outline-none" @click="toggleSidebar">
+                    <x-new-need-button></x-new-need-button>
+                    <button class="flex items-center text-sm font-bold uppercase text-gray-600 border-l-2 border-gray-300 ml-2 pl-2 cursor-waithover:text-gray-800 focus:outline-none" @click="toggleSidebar">
                         <svg class="h-6 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M32 384h272v32H32zM400 384h80v32h-80zM384 447.5c0 17.949-14.327 32.5-32 32.5-17.673 0-32-14.551-32-32.5v-95c0-17.949 14.327-32.5 32-32.5 17.673 0 32 14.551 32 32.5v95z"/><g><path d="M32 240h80v32H32zM208 240h272v32H208zM192 303.5c0 17.949-14.327 32.5-32 32.5-17.673 0-32-14.551-32-32.5v-95c0-17.949 14.327-32.5 32-32.5 17.673 0 32 14.551 32 32.5v95z"/></g><g><path d="M32 96h272v32H32zM400 96h80v32h-80zM384 159.5c0 17.949-14.327 32.5-32 32.5-17.673 0-32-14.551-32-32.5v-95c0-17.949 14.327-32.5 32-32.5 17.673 0 32 14.551 32 32.5v95z"/></g></svg>
                         <span>Filtern </span>  
                     </button>   

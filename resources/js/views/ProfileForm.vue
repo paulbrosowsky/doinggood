@@ -104,7 +104,7 @@
                         class="mt-1" 
                         :text="form.excerpt" 
                         :max-length="255"
-                        placeholder="Ezählt kurz über euch ..." 
+                        :placeholder="excerptPlaceholder" 
                         @input="updateExcerpt"
                     ></textfield>
                 </div>
@@ -120,6 +120,7 @@
                         class="mb-2"
                         :options="tags" 
                         :selected="user.tagNames" 
+                        :placeholder="tagsPlaceholder"
                         @update="updateTags"
                     ></tags-input>
                 </div>
@@ -133,7 +134,7 @@
                     </div>                   
                     <text-editor 
                         class="mt-1"
-                        placeholder="Ezählt etwas mehr ..."
+                        :placeholder="descriptionPlaceholder"
                         :editorId="'description'"
                         :text="form.description" 
                         @update="updateDescription"
@@ -244,7 +245,7 @@
                     title: 'Wirkradius',
                     text: `Geben Sie hier Ihren regionalen Bezugsrahmen an. Möchten Sie nur lokale Projekte
                             unterstützen oder engagieren Sie sich bundesweit? Werden Unterstützungsbedarfe
-                            eingestellt, die innerhalb des Wirkradius Wirkradius liegen – und weiteren Kriterien
+                            eingestellt, die innerhalb des Wirkradius liegen – und weiteren Kriterien
                             entsprechen – informieren wir Sie per Email über den neuen Bedarf, natürlich nur, wenn Sie
                             das möchten.`
                 }
@@ -313,6 +314,27 @@
                     title: 'Beschreibung',
                     text: this.form.helper ? helperText : searcherText
                 }
+            },
+
+            excerptPlaceholder() {
+                let helperText = `Kurze Beschreibung Ihrer Organisation`
+                let searcherText = `Beschreibt hier allgemein eure Aktivitäten`
+
+                return this.form.helper ? helperText : searcherText
+            },
+
+            tagsPlaceholder() {
+                let helperText = `Ihre Fokusthemen`
+                let searcherText = `Schwerpunkt eures sozialen Engagements`
+
+                return this.form.helper ? helperText : searcherText
+            },
+
+            descriptionPlaceholder() {
+                let helperText = `Mehr Informationen zu Ihrer Organisation und ihrem Engagement (vgl. auch Hilfetext)`
+                let searcherText = `Erzählt etwas mehr zu euren Aktivitäten (vgl. auch Leitfragen im Hilfetext)`
+
+                return this.form.helper ? helperText : searcherText
             },
         },
 

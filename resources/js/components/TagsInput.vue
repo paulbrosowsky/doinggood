@@ -9,7 +9,7 @@
         deselectLabel="entfernen"
         selectedLabel="gewählt"
         tagPlaceholder="Neues Thema erstellen"
-        placeholder="Wähle eure Themen aus ..."
+        :placeholder="placeholder"
         @tag="addTags"
         @input="$emit('update', selectedTags)"
     ></multiselect>
@@ -20,7 +20,7 @@
     export default {
         components: { Multiselect }, 
        
-        props:['options', 'selected'],
+        props:['options', 'selected', 'placeholder'],
 
         data(){
             return{

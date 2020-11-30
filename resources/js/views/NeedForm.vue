@@ -48,7 +48,7 @@
                             name="title"
                             v-model="form.title"
                             required 
-                            placeholder="Überschrift"
+                            placeholder="Titel für euer Vorhaben"
                         >
                     </div>
                 </div>
@@ -88,6 +88,7 @@
                         class="mb-2"
                         :options="tags" 
                         :selected="form.tags" 
+                        :placeholder="'Schwerpunkt eures Vorhabens'"
                         @update="updateTags"
                     ></tags-input>
                 </div>
@@ -101,7 +102,7 @@
                     </div>
                     <text-editor 
                         class="mt-1"
-                        placeholder="Erzählt etwas über ihr Projekt ..."
+                        placeholder="Erzählt mehr über euer Vorhaben ..."
                         :editorId="'project-description'"
                         :text="form.project_description"
                         @update="updateProjectDescription"
@@ -117,7 +118,7 @@
                     </div>
                     <text-editor 
                         class="mt-1"
-                        placeholder="Erzählt etwas über euren Bedarf ..."
+                        placeholder="Beschreibt hier möglichst detailliert, was ihr braucht ..."
                         :editorId="'need-description'"
                         :text="form.need_description"
                         @update="updateNeedDescription"
