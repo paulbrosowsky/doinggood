@@ -52,7 +52,7 @@ class CategoriesSeeder extends Seeder
             ]
 
         ])->each(function($category){
-            factory(Category::class)->create([
+            Category::create([
                 'name' => $category['name'],
                 'slug' => $category['slug'],
                 'color' => $category['color'],

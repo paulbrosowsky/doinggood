@@ -34,7 +34,7 @@ class StatesSeeder extends Seeder
             ]
 
         ])->each(function($category){
-            factory(State::class)->create([
+            State::create([
                 'name' => $category['name'],
                 'slug' => $category['slug'],
                 'color' => $category['color'],               
