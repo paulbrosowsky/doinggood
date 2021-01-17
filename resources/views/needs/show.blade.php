@@ -92,6 +92,14 @@
                 <p>{{$need->creator->excerpt}}</p>
             </section>   
         @endif
+        
+        @if (!auth()->check())  
+            <p class="p-5 text-sm text-dg-red">
+                Wenn Sie dieses Projekt interessiert und Sie helfen
+                möchten, registrieren Sie sich bitte auf unserer Plattform und melden Sie sich anschließend an. Sie
+                erhalten dann weitere Informationen und die Möglichkeit zur Kontaktaufnahme.
+            </p>
+        @endif
 
         @if (auth()->check())        
             <div class="flex justify-end items-center py-5 px-5">

@@ -73,7 +73,7 @@
                                            
                         @if ($user->helper && !$user->categories->isEmpty())
                             <div class="mb-5">
-                                <p class="text-xs text-gray-500 leading-none">wir bitten an</p>
+                                <p class="text-xs text-gray-500 leading-none">wir bieten an</p>
                                 <categories :categories="{{$user->categories}}"></categories>
                             </div>
                         @endif  

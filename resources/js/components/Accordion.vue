@@ -31,7 +31,7 @@
 
         data(){
             return{
-                show: false
+                show: true
             }
         }
         

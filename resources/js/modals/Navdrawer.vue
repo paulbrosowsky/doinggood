@@ -30,7 +30,7 @@
                     :class="route == 'profile' ? 'bg-gray-200' : ''"
                     v-if="user"
                     @click="goto('/profiles/'+user.username)"
-                >Profil</a>
+                >Meine Übersicht</a>
                 <a 
                     class="nav-link" 
                     :class="route == 'settings' ? 'bg-gray-200' : ''"

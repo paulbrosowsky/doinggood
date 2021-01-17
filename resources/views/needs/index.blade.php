@@ -33,7 +33,8 @@
             <div class="flex items-center justify-between w-full mx-auto mb-5 md:w-2/3">                
                 <div class="flex items-center mt-2">
                     <x-new-need-button></x-new-need-button>
-                    <button class="flex items-center text-sm font-bold uppercase text-gray-600 border-l-2 border-gray-300 ml-2 pl-2 cursor-waithover:text-gray-800 focus:outline-none" @click="toggleSidebar">
+                    <button 
+                        class="flex items-center text-sm font-bold uppercase text-gray-600  ml-2 pl-2 cursor-waithover:text-gray-800 focus:outline-none" @click="toggleSidebar">
                         <svg class="h-6 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M32 384h272v32H32zM400 384h80v32h-80zM384 447.5c0 17.949-14.327 32.5-32 32.5-17.673 0-32-14.551-32-32.5v-95c0-17.949 14.327-32.5 32-32.5 17.673 0 32 14.551 32 32.5v95z"/><g><path d="M32 240h80v32H32zM208 240h272v32H208zM192 303.5c0 17.949-14.327 32.5-32 32.5-17.673 0-32-14.551-32-32.5v-95c0-17.949 14.327-32.5 32-32.5 17.673 0 32 14.551 32 32.5v95z"/></g><g><path d="M32 96h272v32H32zM400 96h80v32h-80zM384 159.5c0 17.949-14.327 32.5-32 32.5-17.673 0-32-14.551-32-32.5v-95c0-17.949 14.327-32.5 32-32.5 17.673 0 32 14.551 32 32.5v95z"/></g></svg>
                         <span>Filtern </span>  
                     </button>   

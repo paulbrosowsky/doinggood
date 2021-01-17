@@ -28,8 +28,6 @@
                 <span>hochladen</span>
             </button>
         </div>        
-        
-        <loading :loading="loading"></loading>
     </div>
 </template>
 <script>
@@ -57,19 +55,18 @@
             return{
                 image: null,
                 error: null,
-                loading: false,
-
+            
                 dropzoneOptions:{
                     url: this.url,
                     paramName: 'image',
                     uploadMultiple: false, 
                     // previewTemplate: this.template(),                   
-                    resizeWidth: 1280,
-                    maxFilesize: 10,                    
+                    // resizeWidth: 1280,
+                    maxFilesize: 8,                    
                     acceptedFiles: '.jpg,.jpeg,.png,.gif',                  
                     autoProcessQueue: false,  
                     previewsContainer: false,                                      
-                    dictFileTooBig: 'Die Datei ist zu groß (max. 10MB)',
+                    dictFileTooBig: 'Die Datei ist zu groß (max. 8MB)',
                     dictInvalidFileType: 'Kein gültiges Bildformat',  
                     headers: { 
                         'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content  
@@ -101,7 +98,7 @@
             },
 
             getErrors(file, message, xhr){  
-                this.loading = false;             
+                window.loading();            
                 this.error = message;              
             },
 
@@ -113,15 +110,15 @@
             },
 
             uploadImage(){
-                this.loading = true;
                 this.$refs.imageUpload.processQueue();
+                window.loading();
             },
 
             completed(){
                 this.$refs.imageUpload.removeAllFiles();
                 this.error = null;  
                 this.image = null;
-                this.loading = false;  
+                window.loading();  
                 window.location.reload();
                 this.$emit('complete');
             }

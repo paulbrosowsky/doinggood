@@ -29,13 +29,16 @@
 
         <div class="flex flex-col mt-16"> 
             <main class="min-h-screen flex-1 w-full mx-auto py-10" style="max-width:1280px">                
-                @if(auth()->check() && !auth()->user()->fullyVerified)
-                    <div class="mx-auto mb-10 px-5 lg:w-1/2">
-                        @include('partials._unlock-notification') 
+                @if(auth()->check())
+                    @if (!auth()->user()->hasVerifiedEmail()) 
                         @include('partials._verify-notification') 
-                    </div>
+                    @endif    
+                    
+                    @if (!auth()->user()->settingsCompleted)
+                        @include('partials._complete-settings-notification')    
+                    @endif
                 @endif
-            
+                
                 @yield('content')
             </main>
 

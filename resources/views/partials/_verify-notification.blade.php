@@ -1,5 +1,4 @@
-@if (!auth()->user()->hasVerifiedEmail())    
-
+<div class="mx-auto mb-10 px-5 lg:w-1/2">
     <div class="border-2 border-dg-yellow rounded-xl py-3 px-5 mb-5">
         <h4 class="text-center text-lg font-semibold leading-tight text-dg-yellow mb-2 md:text-left">Bitte bestätige deine Email-Adresse</h4>
         @if (session('resent'))
@@ -19,4 +18,4 @@
         </div>
         
     </div>
-@endif
+</div>

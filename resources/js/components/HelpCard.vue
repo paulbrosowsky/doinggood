@@ -15,53 +15,46 @@
                 </a>                  
 
                 <div class="w-full justify-between flex">
-                    
-                        <div class="items-center text-gray-500 hidden md:flex" >
-                            <svg class="h-5 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 32c-88.004 0-160 70.557-160 156.801C96 306.4 256 480 256 480s160-173.6 160-291.199C416 102.557 344.004 32 256 32zm0 212.801c-31.996 0-57.144-24.645-57.144-56 0-31.357 25.147-56 57.144-56s57.144 24.643 57.144 56c0 31.355-25.148 56-57.144 56z"/></svg>
-                              
-                            <p class="leading-none">Trier</p>
-                            <span class="mx-1"> &bull;</span>
-                            
-                            <p>
-                                <strong>{{feedCount}}</strong>
-                                <span>Hilfen</span>
-                            </p>                            
-                                                                          
-                        </div>
+           
+                    <div class="hidden text-sm text-gray-500  md:flex" v-show="user.location">
+                        <svg class="h-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 32c-88.004 0-160 70.557-160 156.801C96 306.4 256 480 256 480s160-173.6 160-291.199C416 102.557 344.004 32 256 32zm0 212.801c-31.996 0-57.144-24.645-57.144-56 0-31.357 25.147-56 57.144-56s57.144 24.643 57.144 56c0 31.355-25.148 56-57.144 56z"/></svg>
+                        <p class="leading-none" v-text="user.location">Trier</p>
+                        
+                    </div>
+               
+                    <div class="flex md:mb-3 md:-mt-3" >
+                        <contact-form v-if="needOwner" :user="user.username" :icon="true" class="mr-2"></contact-form>
 
-                        <div class="flex md:mb-3 md:-mt-3" >
-                            <contact-form v-if="needOwner" :user="user.username" :icon="true" class="mr-2"></contact-form>
+                        <button 
+                            class="btn btn-red mr-2" 
+                            @click="rejectModal"
+                            v-if="needOwner && !completed"
+                        >Abbrechen</button>
 
-                            <button 
-                                class="btn btn-red mr-2" 
-                                @click="rejectModal"
-                                v-if="needOwner && !completed"
-                            >Abbrechen</button>
+                        <button 
+                            class="btn btn-yellow" 
+                            @click="assign"                                 
+                            v-if="needOwner && !assigned && !completed
+                        ">Annehmen</button>
 
-                            <button 
-                                class="btn btn-yellow" 
-                                @click="assign"                                 
-                                v-if="needOwner && !assigned && !completed
-                            ">Annehmen</button>
+                        <button 
+                            class="btn btn-red mr-2" 
+                            @click="withdrawModal"
+                            v-if="helpOwner && !completed"
+                        >Zurückziehen</button>
 
-                            <button 
-                                class="btn btn-red mr-2" 
-                                @click="withdrawModal"
-                                v-if="helpOwner && !completed"
-                            >Zurückziehen</button>
+                        <button 
+                            class="btn btn-yellow mr-2" 
+                            @click="completeModal"
+                            v-if="(needOwner || helpOwner) && assigned && !completed"
+                        >Abgeschlossen</button>
 
-                            <button 
-                                class="btn btn-yellow mr-2" 
-                                @click="completeModal"
-                                v-if="(needOwner || helpOwner) && assigned && !completed"
-                            >Feedback</button>
-
-                            <button 
-                                class="btn btn-blue mr-2" 
-                                @click="commentModal"
-                                v-if="(needOwner || helpOwner) && completed"
-                            >Kommentrieren</button>
-                        </div>
+                        <button 
+                            class="btn btn-blue mr-2" 
+                            @click="commentModal"
+                            v-if="(needOwner || helpOwner) && completed"
+                        >Kommentieren</button>
+                    </div>
                     
                 </div>                
             </div>             

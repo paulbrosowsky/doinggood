@@ -37,29 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      *  Append to the User Model 
      */
-    protected $appends = ['tagNames', 'isAdmin', 'isUnlocked', 'fullyVerified'];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    // protected $fillable = [
-    //     'name', 
-    //     'email', 
-    //     'password', 
-    //     'username', 
-    //     'description', 
-    //     'excerpt',
-    //     'helper',
-    //     'web_link',
-    //     'facebook_link',
-    //     'instagram_link',
-    //     'tweeter_link',
-    //     'avatar',
-    //     'unlocked_at',
-    //     'email_verified_at'
-    // ];
+    protected $appends = ['tagNames', 'isAdmin', 'isUnlocked', 'fullyVerified', 'settingsCompleted'];
 
     protected $guarded =[];
 
@@ -137,6 +115,18 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->isUnlocked && $this->hasVerifiedEmail();
     } 
+
+    public function getSettingsCompletedAttribute()
+    {
+        if ($this->helper) {
+            return $this->categories->isNotEmpty() 
+                        && $this->tags->isNotEmpty()
+                        && $this->location
+                        && $this->activity_area;
+        }
+
+        return  $this->tags->isNotEmpty();
+    }
     
     /**
      * A User has Many Needs
