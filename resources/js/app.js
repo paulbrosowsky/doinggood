@@ -50,6 +50,7 @@ Vue.component('need-form', require('./views/NeedForm.vue').default);
 Vue.component('need-owner-buttons', require('./components/NeedOwnerButtons.vue').default);
 Vue.component('search', require('./views/Search.vue').default);
 Vue.component('sidebar', require('./components/Sidebar.vue').default);
+Vue.component('status-bar', require('./components/StatusBar.vue').default);
 Vue.component('tab', require('./components/Tab.vue').default);
 Vue.component('tabs', require('./components/Tabs.vue').default);
 Vue.component('tags', require('./components/Tags.vue').default);

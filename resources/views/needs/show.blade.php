@@ -16,6 +16,11 @@
                 @endif
             </div>
 
+            @if ($need->owner)
+                <div class="my-10">
+                    <status-bar :status="{{ json_encode($need->status) }}"></status-bar>
+                </div>
+            @endif
             <div class="px-3">
                 <p class="text-xs text-gray-500 leading-none">wir brauchen </p>
                 <categories :categories="{{$need->categories}}"></categories>

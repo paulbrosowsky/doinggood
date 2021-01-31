@@ -9,6 +9,7 @@ use Laravel\Scout\Searchable;
 use App\Exceptions\NeedNotAssignable;
 use App\Exceptions\NeedNotCompletable;
 use App\Notifications\NeedMatchingAvailable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,7 +36,7 @@ class Need extends Model
      /**
      *  Append to the User Model 
      */
-    protected $appends = ['tagNames', 'owner', 'completable', 'isHelper'];    
+    protected $appends = ['tagNames', 'owner', 'completable', 'isHelper', 'status'];    
 
 
     /**
@@ -74,6 +75,29 @@ class Need extends Model
             return Storage::url($title_image);
         }
        return Storage::url('assets/default_need.png'); 
+    }
+
+    /**
+     * Get Need Status
+     *
+     * @return string
+     */
+    public function getStatusAttribute()
+    {
+        
+        if ($this->state->slug == 'vermittelt' || $this->state->slug == 'abgeschlossen') {
+            return $this->state->slug;
+        }
+
+        $helps = $this->helps()->whereHas('state', function(Builder $query) {
+            $query->where('slug', 'vermittelt')
+                ->orWhere('slug', 'abgeschlossen');
+        })->get();
+                                           
+        if ($helps->isNotEmpty()) {
+            return 'gefunden';
+        }
+        return 'false';
     }
 
     /**
