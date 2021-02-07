@@ -2,6 +2,7 @@
 
 use Conner\Tagging\Model\Tag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class TagsSeeder extends Seeder
@@ -16,9 +17,9 @@ class TagsSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         Tag::truncate();
 
-        collect([
+        $tags = collect([
             'Kinder',
-            'Senioren',
+            'Senioren', 
             'Schulgemeinschaft',
             'Jugendliche',
             'Geflüchtete',
@@ -29,8 +30,15 @@ class TagsSeeder extends Seeder
             'Gesellschaft',
             'Entwicklungshilfe',
             'Integration'
-        ])->each(function($tag){
-            Tag::create([ 'name' => $tag ]);
+        ]);
+        $tags->each(function($tag){
+            $tag = Conner\Tagging\Model\Tag::create([ 'name' => $tag ]);
+            Illuminate\Support\Facades\DB::table('tagging_tagged')->insert([
+                'taggable_id' => 9999999,
+                'taggable_type' => 'App\Need',
+                'tag_name' => $tag->name,
+                'tag_slug' => $tag->slug 
+            ]);
         });
 
         Schema::enableForeignKeyConstraints();
