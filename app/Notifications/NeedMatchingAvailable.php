@@ -21,6 +21,7 @@ class NeedMatchingAvailable extends Notification
         "greeting" => "Hallo",
         "line1" => "Dieser Bedarf könnte dich interesseiren:",
         "button" => "Zum Bedarf",
+        "line2" => "Wenn du diese Benachrichtigung nicht erhalten möchtest, bitte whle es in deinen Einstallungen ab.",
         "salutation" => "Beste Grüße DGC-Team"
     ];
 
@@ -60,6 +61,7 @@ class NeedMatchingAvailable extends Notification
                     ->greeting($contents['greeting'])
                     ->line("{$contents['line1']} {$this->need->title}")
                     ->action($contents['button'], route('need', $this->need->id))
+                    ->line($contents['line2'])
                     ->salutation($contents['salutation']); 
     }   
 }

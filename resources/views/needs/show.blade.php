@@ -100,9 +100,9 @@
         
         @if (!auth()->check())  
             <p class="p-5 text-sm text-dg-red">
-                Wenn Sie dieses Projekt interessiert und Sie helfen
-                möchten, registrieren Sie sich bitte auf unserer Plattform und melden Sie sich anschließend an. Sie
-                erhalten dann weitere Informationen und die Möglichkeit zur Kontaktaufnahme.
+                Wenn dich Projekte wie dieses interessieren und du gerne helfen möchtest, registriere dich bitte auf
+                unserer Plattform. Dann bekommst du weitere Informationen und kannst Kontakt mit den Projekten
+                und zu aktuellen Bedarfen aufnehmen.
             </p>
         @endif
 

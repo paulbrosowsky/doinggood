@@ -32,12 +32,9 @@ class TagsSeeder extends Seeder
             'Integration'
         ]);
         $tags->each(function($tag){
-            $tag = Conner\Tagging\Model\Tag::create([ 'name' => $tag ]);
-            Illuminate\Support\Facades\DB::table('tagging_tagged')->insert([
-                'taggable_id' => 9999999,
-                'taggable_type' => 'App\Need',
-                'tag_name' => $tag->name,
-                'tag_slug' => $tag->slug 
+            Conner\Tagging\Model\Tag::create([ 
+                'name' => $tag,
+                'count' => 1
             ]);
         });
 

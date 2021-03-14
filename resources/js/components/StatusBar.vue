@@ -51,13 +51,13 @@ export default {
         return{
             steps: [
                 {
-                    text: 'Bedaft wurde erstellt.'
+                    text: 'Bedarf wurde erstellt.'
                 },
                 {
                     text: 'Mindestens ein Helfer hat sich gemeldet, und die Hilfe wurde angenommen.'
                 },
                 {
-                    text: 'Es werden kine Helfer mehr gebraucht. Der Bedarf wurde als vermittelt markiert.'
+                    text: 'Es werden keine Helfer mehr gebraucht. Der Bedarf wurde als vermittelt markiert.'
                 },
                 {
                     text: 'Alle angenommen Hilfen wurden geleistet. Der Bedarf wurde als abgeschlossen markiert.',

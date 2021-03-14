@@ -1,10 +1,7 @@
 <?php
 return [
 
-    'administrators' => [
-        'paul.brosowsky@gmail.com',
-        'community@doinggoodchallenge.de'
-    ],
+    'administrators' => explode(";", env('DGC_ADMINS')),
 
     'wp_api' =>[
         'url' => env('WP_API_URL'),

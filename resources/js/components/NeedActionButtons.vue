@@ -30,7 +30,11 @@
                         this.$modal.hide('message-form');
                         window.location.reload();
                     })
-                    .catch(()=> window.loading())
+                    .catch(error => {
+                        flash(error.response.data.message);
+                        this.$modal.hide('message-form');
+                        window.loading()
+                    });
                 
             },
 

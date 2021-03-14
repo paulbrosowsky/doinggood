@@ -4,7 +4,11 @@
         
         <div class="flex flex-col items-center md:flex-row ">
             <p class="flex-1 text-sm text-center text-dg-blue leading-tight mb-3 md:text-left md:mr-2">                
-                Suchen Sie nach Unterschatüzung, oder wollen helfen. Teilen Sie uns Bitte mit, was Sie vor haben, indem Sie Ihren Profil verfolständigen. 
+                Du suchst nach Unterstützung für dein Projekt? Oder möchtest du
+                großartige Projekte finden und ihnen deine Unterstützung anbieten? Im
+                Profil legst du deine Rolle fest. Die weiteren Angaben dort helfen,
+                Projektbedarfe und Unterstützer möglichst schnell zusammenzubringen.
+                Bitte vervollständige daher zuerst dein Profil! 
             </p> 
             
             <a href="{{route('profile.edit', auth()->user()->username)}}">
@@ -12,6 +16,5 @@
             </a>                
         
         </div>
-        
     </div>
 </div>

@@ -18,7 +18,7 @@
 
         <div class="container mb-5 md:rounded-xl"> 
             <div class="flex text-gray-500 mb-2">
-                <h4 class=" text-gray-500 mb-5">Welche Art von Untestüzung braucht ihr?</h4>
+                <h4 class=" text-gray-500 mb-5">Welche Art von Unterstützung braucht ihr?</h4>
                 <a class="cursor-pointer ml-2" @click="$modal.show('info-box', tagsInfo)" >
                     <svg class="fill-current h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"/><path d="M235 339h42v42h-42zM276.8 318h-41.6c0-67 62.4-62.2 62.4-103.8 0-22.9-18.7-41.7-41.6-41.7S214.4 192 214.4 214h-41.6c0-46 37.2-83 83.2-83s83.2 37.1 83.2 83.1c0 52-62.4 57.9-62.4 103.9z"/></svg>
                  </a>
@@ -216,14 +216,9 @@ export default {
 
             tagsInfo:{
                 title: 'Themen',
-                text: `Wen oder was möchtet ihr mit eurem Projekt oder eurer Aktion unterstützen. Gebt hier den
-                        wichtigsten Themenbereich an, also zum Beispiel „Kinderhilfe“ oder „Naturschutz“.
-                        Potenzielle Förderer werden von uns automatisch benachrichtigt, wenn ihr einen Bedarf
-                        einstellt, der zu ihren Interessensgebieten passt. Je weniger Themenbereiche ihr hier
-                        einstellt, desto höher die Wahrscheinlichkeit eines „Matchings“. Auch deshalb ist es besser,
-                        wenn ihr zum Beispiel eine SozialAG mit vielen Aktivitäten sein, mehrere Bedarfe mit
-                        möglichst spezifischem Bedarf und Themenschwerpunkt hier einzustellen als alles in einer
-                        Beschreibung unterzubringen.`
+                text: `Bitte mindestens eine der Kategorien markieren. Eine Mehrfachauswahl ist
+                        möglich. Was ihr konkret benötigt, könnt ihr weiter unten noch detaillierter
+                        beschreiben.`
             },
 
             descriptionInfo:{
@@ -387,7 +382,7 @@ export default {
             axios
                 .put(`/needs/${this.need.id}/reopen`)
                 .then(()=>{
-                    flash('Dein Bedarf wurde wideder eröffnet.');
+                    flash('Dein Bedarf wurde wieder eröffnet.');
 
                     setTimeout(() => {
                         window.loading();

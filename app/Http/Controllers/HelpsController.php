@@ -24,6 +24,15 @@ class HelpsController extends Controller
         $request->validate([
             'message' => ['required']
         ]);
+        
+        // Users may only sumbit thier helps once a minute
+        $recentHelps = $need->helps()->where('user_id', auth()->id())
+                    ->where('created_at',  '>', now()->subMinutes(30))
+                    ->get();
+        
+        if (!$recentHelps->isEmpty()) {
+            return response()->json(['message' => 'Du hast gerade deine Hilfe angeboten.'], 429);
+        }
 
         $need->helps()->create([
             'user_id' => auth()->id(),

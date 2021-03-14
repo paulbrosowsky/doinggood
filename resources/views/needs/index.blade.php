@@ -102,7 +102,7 @@
             <ais-infinite-hits>
                 <div slot-scope="{ items, refineNext }">
                     <masonry
-                        :cols="{default: 3, 1500:3, 800: 2, 420: 1}"
+                        :cols="{default: 3, 1500: 3, 800: 2, 420: 1}"
                         :gutter="{default: '2rem', 700: '15px'}"
                     >                              
                         <need-card                                                 

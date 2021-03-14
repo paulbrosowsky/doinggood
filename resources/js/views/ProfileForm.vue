@@ -14,14 +14,14 @@
                     :class="form.helper ? '' : 'text-dg-blue border-dg-blue'"
                     @click="form.helper = !form.helper"
                 >
-                    Wir suchen nach Unterstüzung
+                    Wir suchen Unterstützung
                 </button>
                 <button 
                     class="border-2 text-gray-600 rounded-full py-2 hover:text-dg-yellow hover:border-dg-yellow focus:outline-none"
                     :class="form.helper ? 'text-dg-yellow border-dg-yellow' : ''"
                     @click="form.helper = !form.helper"
                 >
-                    Wir bieten Unterstüzung an
+                    Wir bieten Unterstützung an
                 </button>              
                 
             </div> 
@@ -181,7 +181,7 @@
                 </div>
 
                 <div>
-                    <label class="text-gray-500 text-sm font-semibold ml-2">Link zum Tweeter-Profil</label>
+                    <label class="text-gray-500 text-sm font-semibold ml-2">Link zum Twitter-Profil</label>
                     <p class="text-sm text-red-500 mb-2 ml-2" v-if="errors.tweeter_link">{{errors.tweeter_link[0]}}</p>
                     <div class="input mt-1">
                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6-18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6.8 15 2.5 22.1-80.5-4-151.9-42.6-199.6-101.3-8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7-16-.4-31-4.8-44-12.1v1.2c0 47 33.4 86.1 77.7 95-8.1 2.2-16.7 3.4-25.5 3.4-6.2 0-12.3-.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3-33.1 26-74.9 41.5-120.3 41.5-7.8 0-15.5-.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-.1-8.4-.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
@@ -236,28 +236,33 @@
 
                 helperInfo: {
                     title: 'Was habt ihr vor?', 
-                    text: `Ihr könnt euch entweder als nach „Unterstützung Suchende“ oder als potenzielle
-                            Unterstützer/Förderer registrieren. Wenn Ihr beide Funktionen einnehmen möchtet, müsst
-                            Ihr eine zweite Registrierung mit einem anderen User vornehmen.` 
+                    text: `Ihr könnt euch entweder als „nach Unterstützung Suchende“ oder als
+                            potenzielle Unterstützer/Förderer registrieren. Wenn ihr beide Funktionen
+                            einnehmen möchtet, müsst ihr eine zweite Registrierung mit einem anderen
+                            User vornehmen.
+                            Euer Profil als Unterstützer/Förderer ist erst vollständig, wenn ihr
+                            mindestens eine der Hilfskategorien (Geld, Sachen, Kompetenz) markiert
+                            habt.` 
                 },
 
                 areaInfo: {
                     title: 'Wirkradius',
-                    text: `Geben Sie hier Ihren regionalen Bezugsrahmen an. Möchten Sie nur lokale Projekte
-                            unterstützen oder engagieren Sie sich bundesweit? Werden Unterstützungsbedarfe
-                            eingestellt, die innerhalb des Wirkradius liegen – und weiteren Kriterien
-                            entsprechen – informieren wir Sie per Email über den neuen Bedarf, natürlich nur, wenn Sie
-                            das möchten.`
+                    text: `Gib hier deinen regionalen Bezugsrahmen an. Möchtest du nur lokale
+                            Projekte unterstützen oder dich zum Beispiel bundesweit engagieren?
+                            Werden Unterstützungsbedarfe eingestellt, die innerhalb des Wirkradius
+                            liegen – und weiteren Kriterien entsprechen – informieren wir dich per Email
+                            über den neuen Bedarf, natürlich nur, wenn du das möchtest.`
                 }
             }
         },      
 
         computed:{
             locationInfo(){
-                let helperText = `Der Standort ist Grundlage für die Umkreissuche, charakterisiert aber auch Ihre Organisation.`;
+                let helperText = `Der Standort ist Grundlage für die Umkreissuche bei automatischen
+                                Benachrichtigungen, charakterisiert aber auch deine Organisation.`;
 
-                let searcherText = `Wählt hier euren Standort aus, das wird später für Förderer wichtig, die euch mit Sachen
-                                oder Kompetenz vor Ort unterstützen möchten.`;
+                let searcherText = `Wählt hier euren Standort aus. Das wird später für Förderer wichtig, die
+                                    euch mit Sachen oder Kompetenz vor Ort unterstützen möchten.`;
                 return {
                     title: 'Standort',
                     text: this.form.helper ? helperText : searcherText
@@ -274,7 +279,9 @@
             },
 
             excerptInfo(){
-                let helperText = `Bitte stellen Sie hier kurz Ihre Organisation vor. Diese Beschreibung wird in Ihrem Profil direkt angezeigt.`;
+                let helperText = `Bitte stelle hier kurz deine Organisation (oder dich selbst) vor. Diese
+                                    Beschreibung wird direkt im Profil angezeigt.`;
+                                    
                 let searcherText = `Beschreibt hier allgemein eure Aktivitäten (konkrete Bedarfe könnt ihr später noch
                                     detaillierter beschreiben). Diese Beschreibung wird in eurem Profil direkt angezeigt` ;
                 return {
@@ -284,11 +291,14 @@
             },
 
             tagsInfo(){
-                let helperText =    `Wenn Sie Ihre Unterstützung auf bestimmte Themenbereiche eingrenzen möchten, können
-                                    Sie dies hier angeben. Wird ein Bedarf eingestellt, der einem Ihrer Fokusthemen entspricht,
-                                    erhalten Sie automatisch eine Benachrichtung – natürlich nur, wenn Sie das möchten. Auch
-                                    wenn Sie keine E-Mail-Benachrichtungen erhalten wollen, sollten Sie hier Ihre Fokusthemen
-                                    angeben, um Ihre Organisation besser zu charakterisieren.`;
+                let helperText =    `Wenn du deine Unterstützung auf bestimmte Themenbereiche eingrenzen
+                                        möchtest, kannst du dies hier angeben. Wird ein Bedarf eingestellt, der
+                                        einem deiner Fokusthemen entspricht, schicken wir dir automatisch eine
+                                        Benachrichtigung – natürlich nur, wenn du das möchtest und oben
+                                        angeklickt hast. Auch wenn du keine E-Mail-Benachrichtigungen erhalten
+                                        möchtest, solltest du hier deine Fokusthemen angeben, um deine
+                                        Organisation oder deine Person besser zu charakterisieren.`;
+
                 let searcherText = `Hier solltet ihr den Themenschwerpunkt eures sozialen Engagements eintragen.
                                     Unterstützer, die sich für ein bestimmtes Thema interessieren, können euch so besser finden.`
                 return {
@@ -298,17 +308,20 @@
             },
 
             descriptionInfo(){
-                let helperText =   `Bitte stellen Sie hier Ihre Organisation vor. Sie haben hierdurch die Möglichkeit, ihre
-                                    Organisation und Ihr Engagement bekannter zu machen. Die Informationen sind nicht
-                                    öffentlich. Sie können nur von registrierten Usern eingesehen werden und wenn Sie sich bei
-                                    einem der hier vorgestellten Bedarfe engagieren bzw. engagiert haben.`;
-                let searcherText = `Beschreibt hier allgemein eure Aktivitäten (konkrete Bedarfe könnt ihr später noch
-                                    detaillierter beschreiben).
-                                    Warum engagiert ihr euch? In welchem Rahmen (zum Beispiel im Unterricht oder in eurer
-                                    Freizeit? Wie viele seid Ihr? Wie organisiert ihr euch? Wie lange gibt es euch schon?
-                                    Gebt den potenziellen Unterstützern ein möglichst anschauliches Bild eurer Motivation und
-                                    eurer Aktivitäten. Hier könnt ihr sie von euch überzeugen!
-                                    Nutzt möglichst auch die nachfolgenden Links auf eure „Social Media“-Auftritte, um ein
+                let helperText =   `Bitte stelle hier deine Organisation oder dich selbst vor. Du hast hierdurch
+                                    die Möglichkeit, deine Organisation und dein Engagement bekannter zu
+                                    machen. Die Informationen sind nicht öffentlich. Sie können nur von
+                                    registrierten Usern eingesehen werden und wenn du dich bei einem der
+                                    hier vorgestellten Bedarfe engagierst bzw. engagiert hast.`;
+
+                let searcherText = `Beschreibt hier allgemein eure Aktivitäten als Gruppe oder Organisation
+                                    (konkrete Bedarfe bitte erst in den Bedarfsanfragen detailliert beschreiben).
+                                    Warum engagiert ihr euch? In welchem Rahmen (zum Beispiel im
+                                    Unterricht oder in eurer Freizeit)? Wie viele seid ihr? Wie organisiert ihr
+                                    euch? Wie lange gibt es euch schon?
+                                    Gebt den potenziellen Unterstützern ein möglichst anschauliches Bild eurer
+                                    Motivation und eurer Aktivitäten. Hier könnt ihr sie von euch überzeugen!
+                                    Nutzt möglichst auch Links auf eure „Social Media“-Kanäle, um ein
                                     umfassendes Bild von euch und euren Aktivitäten zu vermitteln.`;
             return{
                     title: 'Beschreibung',
