@@ -61,7 +61,8 @@ class HelpWasOffered extends Notification
                     ->subject($contents['subject'])
                     ->line(new HtmlString($this->message))
                     ->action($contents['button'], route('need', $this->need->id))  
-                    ->line("{$contents['line1']} {$this->need->title}");  
+                    ->line("{$contents['line1']} {$this->need->title}")
+                    ->line($contents['line2']); 
     }
     
 }
