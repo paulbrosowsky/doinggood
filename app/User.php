@@ -37,9 +37,15 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      *  Append to the User Model 
      */
-    protected $appends = ['tagNames', 'isAdmin', 'isUnlocked', 'fullyVerified', 'settingsCompleted'];
+    protected $appends = [
+        'tagNames', 
+        'isAdmin', 
+        'isUnlocked', 
+        'fullyVerified', 
+        'settingsCompleted'
+    ];
 
-    protected $guarded =[];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -205,7 +211,41 @@ class User extends Authenticatable implements MustVerifyEmail
             'completed' =>  $completedNeeds ,
             'total' => $this->needs->count()                            
         ];
+    }
 
+    /**
+     * Get Date of User Last Activity
+     *
+     * @return void
+     */
+    public function getLastActivityStampAttribute()
+    {
+        $dates = collect();
+        $dates->push($this->updated_at);
+
+        if ($this->helper) {
+            $lastHelp =  $this->helps()->orderBy('updated_at', 'DESC')->first();
+            if (isset($lastHelp)) {
+                $dates->push($lastHelp->updated_at);
+            }
+        } else {
+            $lastNeed = $this->needs()->orderBy('updated_at', 'DESC')->first()->updated_at;
+            if (isset($lastNeed)) {
+                $dates->push($lastNeed);
+            }
+    
+            $needIds = $this->needs->pluck('id')->toArray();
+            $lastHelp = Help::whereIn('need_id', $needIds)
+                        ->whereIn('state_id', [2,3])
+                        ->orderBy('updated_at', 'DESC')
+                        ->first();
+
+            if (isset($lastHelp)) {
+                $dates->push($lastHelp->updated_at);
+            }
+        }
+
+        return $dates->max()->format('d.m.Y');
     }
 
     public function sendEmailVerificationNotification()

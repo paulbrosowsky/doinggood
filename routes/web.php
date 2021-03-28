@@ -70,6 +70,15 @@ Route::group([
                     
         });   
 
+        Route::group([
+            'prefix' => 'admin',
+            'middleware' => 'is.admin'
+        ], function(){            
+              
+            Route::get('users', 'AdminUsersController@index')->name('admin.users');
+                    
+        }); 
+
         Route::post('needs/{need}/users/{user}', 'UserContactsController@create')->name('user.contact');
         Route::put('/helps/{help}/complete', 'HelpsController@complete')->name('help.complete');   
         Route::post('helps/{help}/comment', 'CommentsController@store')->name('comment.store');

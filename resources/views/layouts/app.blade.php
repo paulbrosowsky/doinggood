@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="10828788-83b3-466d-8824-0922b2d5c3f4" data-blockingmode="auto" type="text/javascript"></script>
+    {{-- <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="10828788-83b3-466d-8824-0922b2d5c3f4" data-blockingmode="auto" type="text/javascript"></script> --}}
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 
@@ -48,7 +48,7 @@
         <flash message="{{ session('flash') }}"></flash>
         <loading></loading>
         @include('partials._modals')
-        <script id="CookieDeclaration" src="https://consent.cookiebot.com/10828788-83b3-466d-8824-0922b2d5c3f4/cd.js" type="text/javascript" async></script>
+        {{-- <script id="CookieDeclaration" src="https://consent.cookiebot.com/10828788-83b3-466d-8824-0922b2d5c3f4/cd.js" type="text/javascript" async></script> --}}
     </div>
 </body>
 </html>

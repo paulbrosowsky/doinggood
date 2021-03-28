@@ -37,6 +37,13 @@
                     v-if="user"
                     @click="goto('/profiles/'+user.username+'/edit')"
                 >Einstellungen</a>
+            
+                <a 
+                    class="nav-link" 
+                    :class="route == 'settings' ? 'bg-gray-200' : ''"
+                    v-if="user ? user.isAdmin : ''"
+                    @click="goto('/admin/users')"
+                >Verwaltung</a>
 
                 <a 
                     href="https://doinggoodchallenge.de/ueber-uns-kontakt/"
