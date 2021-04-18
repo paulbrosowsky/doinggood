@@ -90,10 +90,10 @@ Route::group([
 Route::get('/needs', 'NeedsController@index')->name('needs');
 Route::get('/needs/{need}', 'NeedsController@show')->name('need');
 
-Route::get('/imprint', 'StaticPagesController@imprint')->name('imprint');
-Route::get('/privacy', 'StaticPagesController@privacy')->name('privacy');
-Route::get('/terms', 'StaticPagesController@terms')->name('terms');
-Route::get('/faq', 'StaticPagesController@faq')->name('faq');
+Route::get('/impressum', 'StaticPagesController@imprint')->name('imprint');
+Route::get('/datenschutz', 'StaticPagesController@privacy')->name('privacy');
+Route::get('/nutzungsbedingungen', 'StaticPagesController@terms')->name('terms');
+Route::get('/ueber-uns', 'StaticPagesController@about')->name('about');
 
 // Route::get('mail', function () {     
 //     $admin = App\User::where('email', config('doinggood.administrators')[0])

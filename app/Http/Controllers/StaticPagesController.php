@@ -48,7 +48,14 @@ class StaticPagesController extends Controller
      */
     public function terms()
     {
-        return view('static-pages.terms');
+        $response = Http::get(config('doinggood.wp_api.url') .'/nutzungsbedingungen?token='. config('doinggood.wp_api.token'));
+
+        $content = NULL;
+        if ($response->successful() && $response->json() != '"Token ist falsch, oder nicht gesetzt"') {
+            $content = nl2br($response->json());
+        }
+
+        return view('static-pages.terms', compact('content'));
     }
 
     /**
@@ -56,8 +63,15 @@ class StaticPagesController extends Controller
      *
      * @return view
      */
-    public function faq()
+    public function about()
     {
-        return view('static-pages.faq');
+        $response = Http::get(config('doinggood.wp_api.url') .'/ueber-uns?token='. config('doinggood.wp_api.token'));
+
+        $content = NULL;
+        if ($response->successful() && $response->json() != '"Token ist falsch, oder nicht gesetzt"') {
+            $content = nl2br($response->json());
+        }
+
+        return view('static-pages.about', compact('content'));
     }
 }
