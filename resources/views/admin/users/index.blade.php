@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    
     <div class="w-full mx-auto md:w-2/3">
+        
+        <a href="{{ route('admin.users.export') }}" class="btn btn-yellow mb-3 inline-block">
+            Benutzer exportieren
+        </a>
+        
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -57,7 +63,7 @@
                                             <span class="text-xs text-gray-500">aktiv</span>
                                         </div>
                                         <div class="text-sm ">
-                                            <span>{{ $user->feedCounter['active'] }}</span>
+                                            <span>{{ $user->feedCounter['completed'] }}</span>
                                             <span class="text-xs text-gray-500">abgeschl.</span>
                                         </div>
                                     </td>

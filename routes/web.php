@@ -76,7 +76,7 @@ Route::group([
         ], function(){            
               
             Route::get('users', 'AdminUsersController@index')->name('admin.users');
-                    
+            Route::get('users/export', 'AdminUsersController@export')->name('admin.users.export');        
         }); 
 
         Route::post('needs/{need}/users/{user}', 'UserContactsController@create')->name('user.contact');

@@ -17,7 +17,7 @@ class UserAvatarsController extends Controller
     public function update(User $user, Request $request)
     {  
         $request->validate([            
-            'image' => ['required', 'image', 'max:8000'], // max. Size 8 MB     
+            'image' => ['required', 'image', 'max:8000'], // max. size 8 MB     
         ]);
       
         //Delete Previous Avatars

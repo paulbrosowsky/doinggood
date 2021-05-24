@@ -96,11 +96,11 @@ class Help extends Model
     public function complete($message)
     {        
         $this->update(['state_id' => 3]);
-
+        
         if (auth()->id() === $this->user->id) {
-            $this->need->creator->notify(new HelpWasCompleted($this, $message));
+            $this->need->creator->notify(new HelpWasCompleted($this, auth()->user(), $message));
         } else {
-            $this->user->notify(new HelpWasCompleted($this, $message));
+            $this->user->notify(new HelpWasCompleted($this, auth()->user(), $message));
         }
     
         Comment::create([

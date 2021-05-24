@@ -27,7 +27,7 @@ class HelpsController extends Controller
         
         // Users may only sumbit thier helps once a minute
         $recentHelps = $need->helps()->where('user_id', auth()->id())
-                    ->where('created_at',  '>', now()->subMinutes(30))
+                    ->where('created_at',  '>', now()->subSeconds(60))
                     ->get();
         
         if (!$recentHelps->isEmpty()) {

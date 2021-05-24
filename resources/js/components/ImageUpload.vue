@@ -62,7 +62,7 @@
                     uploadMultiple: false, 
                     // previewTemplate: this.template(),                   
                     // resizeWidth: 1280,
-                    maxFilesize: 8,                    
+                    maxFilesize: 8, // max. size 8 MB                    
                     acceptedFiles: '.jpg,.jpeg,.png,.gif',                  
                     autoProcessQueue: false,  
                     previewsContainer: false,                                      
@@ -98,8 +98,8 @@
             },
 
             getErrors(file, message, xhr){  
-                window.loading();            
-                this.error = message;              
+                // window.loading();            
+                this.error = message.errors.image[0];             
             },
 
             cancel(){

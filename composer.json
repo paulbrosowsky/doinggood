@@ -13,11 +13,12 @@
         "caouecs/laravel-lang": "~6.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
-        "guzzlehttp/guzzle" : "^6.0",
+        "guzzlehttp/guzzle": "^6.0",
         "laravel/framework": "^7.0",
         "laravel/scout": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "maatwebsite/excel": "^3.1",
         "rtconner/laravel-tagging": "~4.0",
         "stevebauman/purify": "^3.0",
         "vinkla/hashids": "^8.1"

@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\HasWPContent;
 use App\Help;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -15,6 +16,7 @@ class HelpWasCompleted extends Notification
     use Queueable, HasWPContent;
 
     protected $help;
+    protected $user;
     protected $message;
     protected $url = 'email/10';
 
@@ -28,9 +30,10 @@ class HelpWasCompleted extends Notification
         "salutation" => "Beste Grüße DGC-Team"
     ];
 
-    public function __construct(Help $help, $message)
+    public function __construct(Help $help, User $user, $message)
     {
         $this->help = $help;
+        $this->user = $user;
         $this->message = $message;
     }
 
@@ -54,10 +57,10 @@ class HelpWasCompleted extends Notification
     public function toMail($notifiable)
     {
         $contents = $this->getContents();
-        $sender = $this->help->user->name;
+        $sender = $this->user->name;
 
         return (new MailMessage)
-                    ->from($this->help->user->email, $this->help->user->name) 
+                    ->from($this->user->email, $this->user->name) 
                     ->subject($contents['subject'])
                     ->greeting($contents['greeting'])
                     ->line("{$sender} {$contents['line1']} \"{$this->help->need->title}\" {$contents['line2']}")
