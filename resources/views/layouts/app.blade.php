@@ -48,7 +48,7 @@
         <flash message="{{ session('flash') }}"></flash>
         <loading></loading>
         @include('partials._modals')
-        {{-- <script id="CookieDeclaration" src="https://consent.cookiebot.com/10828788-83b3-466d-8824-0922b2d5c3f4/cd.js" type="text/javascript" async></script> --}}
+        <script id="CookieDeclaration" src="https://consent.cookiebot.com/10828788-83b3-466d-8824-0922b2d5c3f4/cd.js" type="text/javascript" async></script>
     </div>
 </body>
 </html>
